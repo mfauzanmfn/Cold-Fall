@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://dhimd754s1raf"]
+
+[ext_resource type="Script" uid="uid://puxuh7kcodmp" path="res://scripts/upgrade_Script.gd" id="1_3q44q"]
+
+[sub_resource type="Theme" id="Theme_wp5od"]
+
+[node name="Control" type="Control" unique_id=1164018203]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_3q44q")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=847591384]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 100
+
+[node name="Non-Stick Pan" type="Button" parent="HBoxContainer" unique_id=1976331275]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+theme = SubResource("Theme_wp5od")
+theme_override_font_sizes/font_size = 30
+text = "Non-stick Pan"
+
+[node name="Ayam Geprek Recipe" type="Button" parent="HBoxContainer" unique_id=670554963]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+theme = SubResource("Theme_wp5od")
+theme_override_font_sizes/font_size = 30
+text = "Ayam Geprek 
+Recipe"
+
+[connection signal="pressed" from="HBoxContainer/Non-Stick Pan" to="." method="_on_non_stick_pan_pressed"]
+[connection signal="pressed" from="HBoxContainer/Ayam Geprek Recipe" to="." method="_on_ayam_geprek_recipe_pressed"]

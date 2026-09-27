@@ -1,0 +1,209 @@
+[gd_scene format=3 uid="uid://ba5t8skrj86ph"]
+
+[ext_resource type="FontFile" uid="uid://bx4w1gtw2r0p2" path="res://assets/fonts/Pixelate-Regular.ttf" id="1_0apfo"]
+[ext_resource type="Script" uid="uid://bxt7wwnnm5hji" path="res://scripts/customer.gd" id="1_e1l8b"]
+[ext_resource type="Texture2D" uid="uid://bkup0xxouvxty" path="res://assets/typing_assets/test_texture/Pointer.png" id="3_gpd8f"]
+[ext_resource type="Material" uid="uid://b0dbx8dd2kl4s" path="res://assets/particles/test_particle.tres" id="3_gqoxd"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_gqoxd"]
+viewport_path = NodePath("CenterContainer/SubViewport")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_we8am"]
+viewport_path = NodePath("CenterContainer/SubViewport2")
+
+[sub_resource type="Curve" id="Curve_a7phj"]
+_limits = [-360.0, 360.0, 0.0, 1.0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.42, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_a7phj"]
+curve = SubResource("Curve_a7phj")
+
+[sub_resource type="Curve" id="Curve_we8am"]
+_limits = [-5.0, 251.51746, 0.0, 1.0]
+_data = [Vector2(0.05, 2), 0.0, 0.0, 0, 0, Vector2(0.099, -2), 0.0, 0.0, 0, 0, Vector2(0.15, 2), 0.0, 0.0, 0, 0, Vector2(0.2, -2), 0.0, 0.0, 0, 0, Vector2(0.25, 2), 0.0, 0.0, 0, 0, Vector2(0.3, -2), 0.0, 0.0, 0, 0, Vector2(0.35, 2), 0.0, 0.0, 0, 0, Vector2(0.4, 0), 0.0, 0.0, 0, 0]
+point_count = 8
+
+[sub_resource type="CurveTexture" id="CurveTexture_we8am"]
+curve = SubResource("Curve_we8am")
+
+[sub_resource type="Curve" id="Curve_5w47x"]
+_limits = [-33.25, 114.04, 0.0, 1.0]
+_data = [Vector2(0.447, 0.2), 0.0, 0.0, 0, 0, Vector2(1, 85.75252), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveXYZTexture" id="CurveXYZTexture_ru4s3"]
+curve_y = SubResource("Curve_5w47x")
+
+[sub_resource type="Curve" id="Curve_gqoxd"]
+_data = [Vector2(0, 0.5364238), 0.0, 0.0, 0, 0, Vector2(0.12913907, 1), 0.0, 0.0, 0, 0, Vector2(0.76821196, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_mwf5a"]
+curve = SubResource("Curve_gqoxd")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_a7phj"]
+particle_flag_disable_z = true
+emission_shape_offset = Vector3(0, 100, 0)
+angle_curve = SubResource("CurveTexture_a7phj")
+angular_velocity_min = -1.6093254e-05
+angular_velocity_max = 0.5999839
+angular_velocity_curve = SubResource("CurveTexture_we8am")
+directional_velocity_min = 1.0
+directional_velocity_max = 1.0
+directional_velocity_curve = SubResource("CurveXYZTexture_ru4s3")
+gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveTexture_mwf5a")
+
+[sub_resource type="Gradient" id="Gradient_gqoxd"]
+offsets = PackedFloat32Array(0, 0.0016233766)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_wp5od"]
+gradient = SubResource("Gradient_gqoxd")
+width = 192
+height = 32
+fill = 2
+
+[node name="Customer" type="Panel" unique_id=974175116]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_e1l8b")
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=1090740465]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SubViewport" type="SubViewport" parent="CenterContainer" unique_id=1329088875]
+disable_3d = true
+transparent_bg = true
+size = Vector2i(280, 280)
+
+[node name="Success" type="Label" parent="CenterContainer/SubViewport" unique_id=1175845452]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -120.0
+offset_top = -120.0
+offset_right = 120.0
+offset_bottom = 120.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("1_0apfo")
+text = "CRING"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SubViewport2" type="SubViewport" parent="CenterContainer" unique_id=1329439115]
+disable_3d = true
+transparent_bg = true
+size = Vector2i(280, 280)
+
+[node name="Fail" type="Label" parent="CenterContainer/SubViewport2" unique_id=1454153691]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -120.0
+offset_top = -120.0
+offset_right = 120.0
+offset_bottom = 120.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("1_0apfo")
+text = "BURNT"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Char_texture" type="TextureButton" parent="CenterContainer" unique_id=1849572494]
+custom_minimum_size = Vector2(220, 220)
+layout_mode = 2
+focus_mode = 0
+stretch_mode = 5
+
+[node name="EffectsContainer" type="CenterContainer" parent="CenterContainer/Char_texture" unique_id=1230803020]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SuccessEffect" type="GPUParticles2D" parent="CenterContainer/Char_texture/EffectsContainer" unique_id=1261957509]
+emitting = false
+amount = 1
+texture = SubResource("ViewportTexture_gqoxd")
+lifetime = 1.3
+one_shot = true
+explosiveness = 0.37
+randomness = 0.22
+process_material = ExtResource("3_gqoxd")
+
+[node name="FailEffect" type="GPUParticles2D" parent="CenterContainer/Char_texture/EffectsContainer" unique_id=875270892]
+emitting = false
+amount = 1
+texture = SubResource("ViewportTexture_we8am")
+lifetime = 1.4
+one_shot = true
+process_material = SubResource("ParticleProcessMaterial_a7phj")
+
+[node name="order" type="RichTextLabel" parent="CenterContainer/Char_texture" unique_id=1333664176]
+custom_maximum_size = Vector2(150, 150)
+layout_mode = 0
+offset_left = 240.0
+offset_top = -50.0
+offset_right = 390.0
+offset_bottom = 100.0
+theme_override_colors/default_color = Color(0.6509804, 0.32941177, 0.33333334, 1)
+theme_override_fonts/normal_font = ExtResource("1_0apfo")
+theme_override_font_sizes/normal_font_size = 40
+bbcode_enabled = true
+text = "[center][/center]"
+
+[node name="pointer" type="TextureRect" parent="CenterContainer/Char_texture" unique_id=1521388183]
+visible = false
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_top = -50.0
+offset_right = 20.0
+offset_bottom = -10.0
+grow_horizontal = 2
+texture = ExtResource("3_gpd8f")
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="." unique_id=2106297348]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -96.0
+offset_top = -170.0
+offset_right = 96.0
+offset_bottom = -138.0
+grow_horizontal = 2
+grow_vertical = 2
+texture_progress = SubResource("GradientTexture2D_wp5od")
+
+[node name="Timer" type="Timer" parent="." unique_id=111178944]
+wait_time = 15.0
+
+[connection signal="pressed" from="CenterContainer/Char_texture" to="." method="_on_char_texture_pressed"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

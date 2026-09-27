@@ -1,0 +1,121 @@
+[gd_scene format=3 uid="uid://ck1qhdjvpiye8"]
+
+[ext_resource type="Script" uid="uid://cnawi8h8dm48j" path="res://scripts/typing_scripts.gd" id="1_7j68c"]
+
+[sub_resource type="Gradient" id="Gradient_agbdb"]
+offsets = PackedFloat32Array(0.63286716, 0.63986015, 0.9965035, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_kvh76"]
+gradient = SubResource("Gradient_agbdb")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[sub_resource type="Gradient" id="Gradient_jux2l"]
+offsets = PackedFloat32Array(0.9962406, 1)
+colors = PackedColorArray(0, 1, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_wp5od"]
+gradient = SubResource("Gradient_jux2l")
+
+[sub_resource type="Gradient" id="Gradient_5sqi6"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(0.7058824, 0.08627451, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_5sqi6"]
+gradient = SubResource("Gradient_5sqi6")
+
+[node name="Typing" type="Control" unique_id=136107084]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_7j68c")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1396729787]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 4
+
+[node name="GridContainer" type="GridContainer" parent="VBoxContainer" unique_id=958397646]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+offset_transform_enabled = true
+columns = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/GridContainer" unique_id=712136357]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 450
+
+[node name="slot1" type="Control" parent="VBoxContainer/GridContainer/HBoxContainer" unique_id=956129843]
+layout_mode = 2
+
+[node name="slot2" type="Control" parent="VBoxContainer/GridContainer/HBoxContainer" unique_id=1248512814]
+layout_mode = 2
+
+[node name="Timer" type="Timer" parent="." unique_id=539344591]
+wait_time = 60.0
+one_shot = true
+autostart = true
+
+[node name="Timer_Label" type="Label" parent="." unique_id=2090182386]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -58.0
+offset_top = 81.0
+offset_right = -18.0
+offset_bottom = 136.0
+grow_horizontal = 0
+theme_override_font_sizes/font_size = 40
+
+[node name="TimerProgressBar" type="TextureProgressBar" parent="." unique_id=1351828042]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -82.0
+offset_top = 20.0
+offset_right = -18.0
+offset_bottom = 84.0
+grow_horizontal = 0
+fill_mode = 4
+texture_progress = SubResource("GradientTexture2D_kvh76")
+tint_under = Color(1, 1, 1, 0)
+tint_over = Color(1, 1, 1, 0)
+tint_progress = Color(0.99646384, 0.99646395, 0.99646395, 1)
+
+[node name="DelayTimer" type="Timer" parent="." unique_id=769117744]
+one_shot = true
+
+[node name="TypoShield_Marker" type="TextureRect" parent="." unique_id=1161732566]
+visible = false
+layout_mode = 0
+offset_left = 1079.0
+offset_top = 140.0
+offset_right = 1143.0
+offset_bottom = 204.0
+texture = SubResource("GradientTexture2D_wp5od")
+
+[node name="MediumWord_marker" type="TextureRect" parent="." unique_id=1825223155]
+visible = false
+layout_mode = 0
+offset_left = 1079.0
+offset_top = 240.0
+offset_right = 1143.0
+offset_bottom = 304.0
+texture = SubResource("GradientTexture2D_5sqi6")
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
