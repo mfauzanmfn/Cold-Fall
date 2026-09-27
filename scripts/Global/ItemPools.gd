@@ -1,6 +1,6 @@
 extends Node
 
-
+#test git
 var item_pool: Dictionary = {
 	"Basic" : [
 		{"text": "BAKWAN", "price": 100},
