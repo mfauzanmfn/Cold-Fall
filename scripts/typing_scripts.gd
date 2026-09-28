@@ -10,11 +10,9 @@ const CUST_PANEL = preload("uid://ba5t8skrj86ph")
 @onready var timer_progress_bar: TextureProgressBar = $TimerProgressBar
 var timer_wait_time: float
 
-var cust_pool = [
-	{"cust_texture": preload("res://assets/typing_assets/test_texture/test_char/cust_type_1.png")},
-	{"cust_texture": preload("res://assets/typing_assets/test_texture/test_char/cust_type_2.png")},
-	{"cust_texture": preload("res://assets/typing_assets/test_texture/test_char/cust_type_3.png")}
-]
+
+const CUSTOMER_POOL = preload("res://scripts/Resource/CustomerPool.gd")
+
 var item_pool 
 var selected_customer
 var unselected_customer_letter_index: int = 0
@@ -58,8 +56,8 @@ func _process(delta: float) -> void:
 	timer_progress_bar.value = 100 * (timer_wait_time - timer.time_left)/timer_wait_time
 
 func create_random_customer() -> Panel:
-	var cust_entry_number: int = randi() % cust_pool.size()
-	var cust_entry = cust_pool[cust_entry_number]
+	var cust_entry_number: int = randi() % CUSTOMER_POOL.cust_pool.size()
+	var cust_entry = CUSTOMER_POOL.cust_pool[cust_entry_number]
 	
 	var item_entry_number: int = randi() % item_pool.size()
 	var item_entry = item_pool[item_entry_number]
