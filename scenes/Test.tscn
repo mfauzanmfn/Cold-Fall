@@ -1,0 +1,67 @@
+[gd_scene format=3 uid="uid://bm6hq61nujjb0"]
+
+[ext_resource type="Script" uid="uid://dbl7tlwclxfs6" path="res://Script/test_DokiVN-2.gd" id="1_fqvlb"]
+
+[node name="Node2D" type="Node2D" unique_id=720338231]
+script = ExtResource("1_fqvlb")
+
+[node name="TextureRect2" type="TextureRect" parent="." unique_id=1679355144]
+offset_left = 30.0
+offset_top = 23.0
+offset_right = 531.0
+offset_bottom = 524.0
+expand_mode = 1
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1493033873]
+offset_left = 709.0
+offset_top = 2.0
+offset_right = 1147.0
+offset_bottom = 558.0
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=168253891]
+offset_left = -44.0
+offset_top = 482.0
+offset_right = 1179.0
+offset_bottom = 681.0
+color = Color(0.20152658, 0.20152658, 0.20152652, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1773554505]
+offset_left = 3.0
+offset_top = 483.0
+offset_right = 1152.0
+offset_bottom = 638.0
+
+[node name="Label" type="Label" parent="VBoxContainer" unique_id=1691297572]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="." unique_id=764078455]
+offset_left = 3.0
+offset_top = 508.0
+offset_right = 1154.0
+offset_bottom = 649.0
+
+[node name="Historypanel" type="Panel" parent="." unique_id=1552747182]
+offset_right = 1154.0
+offset_bottom = 651.0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Historypanel" unique_id=387002114]
+layout_mode = 1
+anchors_preset = -1
+offset_right = 1153.0
+offset_bottom = 648.0
+
+[node name="Historylabel" type="RichTextLabel" parent="Historypanel/ScrollContainer" unique_id=742842073]
+custom_minimum_size = Vector2(1155, 646.93)
+layout_mode = 2
+bbcode_enabled = true
+fit_content = true
+
+[node name="SkipButton" type="Button" parent="." unique_id=2107897405]
+offset_left = 1017.0
+offset_top = -1.0
+offset_right = 1153.0
+offset_bottom = 42.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "SKIP"
