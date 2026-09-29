@@ -1,0 +1,10 @@
+[
+  {"id": 1, "karakter": "MC", "ekspresi": "normal", "dialog": "Ini merupakan testing teks panjangggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg."},
+  {"id": 2, "karakter": "char_a", "ekspresi": "smile", "dialog": "Hei! Apa kabar!"},
+  {"id": 3, "karakter": "MC", "ekspresi": "normal", "dialog": "Eh? Kamu rupanya. Lama tak bertemu!."},
+  {"id": 4, "karakter": "char_a", "ekspresi": "talk", "dialog": "Btw..., boleh minjem uang gak?."},
+  {"id": 5, "karakter": "MC", "ekspresi": "angry", "dialog": "Maksud? Baru ketemu malah minta uang."},
+  {"id": 6, "karakter": "char_a", "ekspresi": "smile", "dialog": "hehe...."},
+  {"id": 7, "karakter": "char_a", "ekspresi": "-", "dialog": "Jadi..., gak boleh?"},
+  {"id": 8, "karakter": "MC", "ekspresi": "angry", "dialog": "Pake nanya..."}
+]
