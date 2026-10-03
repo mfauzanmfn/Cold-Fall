@@ -53,15 +53,15 @@ size_flags_vertical = 6
 offset_transform_enabled = true
 columns = 3
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/GridContainer" unique_id=712136357]
+[node name="SlotContainer" type="HBoxContainer" parent="VBoxContainer/GridContainer" unique_id=712136357]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 450
 
-[node name="slot1" type="Control" parent="VBoxContainer/GridContainer/HBoxContainer" unique_id=956129843]
+[node name="slot1" type="Control" parent="VBoxContainer/GridContainer/SlotContainer" unique_id=956129843]
 layout_mode = 2
 
-[node name="slot2" type="Control" parent="VBoxContainer/GridContainer/HBoxContainer" unique_id=1248512814]
+[node name="slot2" type="Control" parent="VBoxContainer/GridContainer/SlotContainer" unique_id=1248512814]
 layout_mode = 2
 
 [node name="Timer" type="Timer" parent="." unique_id=539344591]

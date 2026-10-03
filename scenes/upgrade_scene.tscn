@@ -41,5 +41,19 @@ theme_override_font_sizes/font_size = 30
 text = "Ayam Geprek 
 Recipe"
 
+[node name="TextureButton" type="Button" parent="." unique_id=1248647940]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -102.0
+offset_top = 50.0
+offset_right = -62.0
+offset_bottom = 90.0
+grow_horizontal = 0
+theme_override_font_sizes/font_size = 25
+text = "NEXT DAY"
+
 [connection signal="pressed" from="HBoxContainer/Non-Stick Pan" to="." method="_on_non_stick_pan_pressed"]
 [connection signal="pressed" from="HBoxContainer/Ayam Geprek Recipe" to="." method="_on_ayam_geprek_recipe_pressed"]
+[connection signal="pressed" from="TextureButton" to="." method="_on_texture_button_pressed"]
