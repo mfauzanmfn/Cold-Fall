@@ -1,10 +1,13 @@
 extends Control
 
 @onready var cust_container: HBoxContainer = $VBoxContainer/GridContainer/HBoxContainer
-@onready var slot_1: Control = $VBoxContainer/GridContainer/HBoxContainer/slot1
-@onready var slot_2: Control = $VBoxContainer/GridContainer/HBoxContainer/slot2
+@onready var slot_1: Control = $VBoxContainer/GridContainer/SlotContainer/slot1
+@onready var slot_2: Control = $VBoxContainer/GridContainer/SlotContainer/slot2
 @onready var typo_shield_marker: TextureRect = $TypoShield_Marker
 @onready var medium_word_marker: TextureRect = $MediumWord_marker
+
+@onready var slot_container: HBoxContainer = $VBoxContainer/GridContainer/SlotContainer
+var slot_count
 
 const CUST_PANEL = preload("uid://ba5t8skrj86ph")
 @onready var timer_progress_bar: TextureProgressBar = $TimerProgressBar
@@ -34,7 +37,8 @@ var gameover: bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	item_pool = ItemPools.get_unlocked_items()
+	item_pool = OrdersPool.get_unlocked_items()
+	slot_count = slot_container.get_child_count() 
 	selected_customer = create_random_customer()
 	slot_1.add_child(selected_customer)
 	selected_customer.set_next_character(selected_customer.current_letter_index)
@@ -59,11 +63,19 @@ func create_random_customer() -> Panel:
 	var cust_entry_number: int = randi() % CUSTOMER_POOL.cust_pool.size()
 	var cust_entry = CUSTOMER_POOL.cust_pool[cust_entry_number]
 	
-	var item_entry_number: int = randi() % item_pool.size()
-	var item_entry = item_pool[item_entry_number]
+	var menus = item_pool.keys()
+	
+	var menu_name = menus[randi() % menus.size()]
+	var menu_entry = item_pool[menu_name]
+	
+	var difficulties = menu_entry.keys()
+	var difficulty_name = difficulties[randi() % difficulties.size()]
+	
+	var orders = menu_entry[difficulty_name]
+	var selected_order = orders[randi() % orders.size()]
 	
 	var panel = CUST_PANEL.instantiate()
-	panel.selected.connect(_on_customer_pressed)
+	panel.selected.connect(_on_customer_switch)
 	panel.exited.connect(_on_customer_exited)
 	
 	var customer_timer = panel.get_node("Timer")
@@ -75,30 +87,41 @@ func create_random_customer() -> Panel:
 	var order_text = cust_texture.get_child(1)
 	
 	cust_texture.texture_normal = cust_entry.cust_texture
-	order_text.text = item_entry.text
-	panel.order_price = item_entry.price
+	order_text.text = selected_order.text
+	panel.order_price = selected_order.price
 	
 	return panel
 
+func _input(event: InputEvent) -> void:
+	if Input.is_action_just_pressed("ui_cancel"):
+		timer.paused = !timer.paused
+		return
+	if OS.is_debug_build():
+		if Input.is_action_just_pressed("ui_accept"):
+			timer.stop()
+			timer.timeout.emit()
+			return
+		elif Input.is_action_just_pressed("backlash"):
+			Player_Data.typo_shield = true
+			typo_shield_marker.visible = true
+			return
+		#elif Input.is_action_just_pressed("ui_text_backspace"):
+			#OrdersPool.unlocked_groups.append("Medium")
+			#medium_word_marker.visible = true
+			#item_pool = OrdersPool.get_unlocked_items()
+	if Input.is_action_just_pressed("switch_right"):
+		var switch_to = selected_customer.get_parent().get_index() + 1
+		if switch_to >= slot_count:
+			switch_to = 0
+		_on_customer_switch(slot_container.get_child(switch_to).get_child(0))
+	elif Input.is_action_just_pressed("switch_left"):
+		var switch_to = selected_customer.get_parent().get_index() - 1
+		if switch_to < 0:
+			switch_to = slot_count-1
+		_on_customer_switch(slot_container.get_child(switch_to).get_child(0))
+		
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.is_pressed() and not event.is_echo() and not gameover and delay_timer.is_stopped():
-		if event.keycode == KEY_ESCAPE:
-			timer.paused = !timer.paused
-			return
-		if OS.is_debug_build():
-			if event.keycode == KEY_ENTER:
-				timer.stop()
-				timer.timeout.emit()
-				return
-			elif event.keycode == KEY_BACKSLASH:
-				Player_Data.typo_shield = true
-				typo_shield_marker.visible = true
-				return
-			elif event.keycode == KEY_BACKSPACE:
-				ItemPools.unlocked_groups.append("Medium")
-				medium_word_marker.visible = true
-				item_pool = ItemPools.get_unlocked_items()
-		
 		var typed_event = event.unicode
 		if typed_event == 0:
 			return
@@ -107,6 +130,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		var next_character = prompt[selected_customer.current_letter_index].to_upper()
 		
 		if key_typed == next_character:
+			if selected_customer.timer.time_left < 5:
+				selected_customer.order_price = selected_customer.order_price * (4/5)
 			selected_customer.current_letter_index += 1
 			selected_customer.set_next_character(selected_customer.current_letter_index)
 			if selected_customer.current_letter_index == prompt.length():
@@ -127,7 +152,7 @@ func _unhandled_input(event: InputEvent) -> void:
 				await delay_timer.timeout
 				
 					
-				finished_customer.selected.disconnect(_on_customer_pressed)
+				finished_customer.selected.disconnect(_on_customer_switch)
 				finished_customer.exited.disconnect(_on_customer_exited)
 				
 				var slot = finished_customer.get_parent()
@@ -174,7 +199,7 @@ func _on_timer_timeout() -> void:
 	print("Jumlah Penghasilan: ", earnings)
 	print("Total uang dimiliki: ", Player_Data.money)
 	
-func _on_customer_pressed(panel: Panel):
+func _on_customer_switch(panel: Panel):
 	selected_customer.set_pointer_visible(false)
 	selected_customer = panel
 	selected_customer.set_pointer_visible(true)
