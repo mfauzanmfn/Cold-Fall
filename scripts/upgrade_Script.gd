@@ -19,7 +19,7 @@ func _on_non_stick_pan_pressed() -> void:
 
 
 func _on_ayam_geprek_recipe_pressed() -> void:
-	ItemPools.unlocked_groups.append("Medium")
+	OrdersPool.unlocked_groups.append("Medium")
 
 
 func _on_texture_button_pressed() -> void:

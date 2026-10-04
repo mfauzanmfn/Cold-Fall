@@ -42,12 +42,12 @@ func _ready() -> void:
 	selected_customer = create_random_customer()
 	slot_1.add_child(selected_customer)
 	selected_customer.set_next_character(selected_customer.current_letter_index)
-	selected_customer.set_pointer_visible(true)
 	
 	success_delay = selected_customer.success_effect.lifetime
 	fail_delay = selected_customer.fail_effect.lifetime
 	
 	slot_2.add_child(create_random_customer())
+	slot_2.get_child(0).become_unselected()
 	timer_wait_time = timer.wait_time
 	timer.start()
 	
@@ -66,12 +66,14 @@ func create_random_customer() -> Panel:
 	var menus = item_pool.keys()
 	
 	var menu_name = menus[randi() % menus.size()]
-	var menu_entry = item_pool[menu_name]
+	var menu_chosen = item_pool[menu_name]
 	
-	var difficulties = menu_entry.keys()
-	var difficulty_name = difficulties[randi() % difficulties.size()]
+	var difficulties = menu_chosen.keys()
+	var weights = PackedFloat32Array([70.0, 30.0])
+	var rng = RandomNumberGenerator.new()
+	var difficulty_chosen = difficulties[rng.rand_weighted(weights)]
 	
-	var orders = menu_entry[difficulty_name]
+	var orders = menu_chosen[difficulty_chosen]
 	var selected_order = orders[randi() % orders.size()]
 	
 	var panel = CUST_PANEL.instantiate()
@@ -162,10 +164,9 @@ func _unhandled_input(event: InputEvent) -> void:
 					selected_customer = create_random_customer()
 					slot.add_child(selected_customer)
 					selected_customer.set_next_character(selected_customer.current_letter_index)
-					selected_customer.set_pointer_visible(true)
 					
 				else:
-					finished_customer.set_pointer_visible(false)
+					finished_customer.become_unselected()
 					finished_customer.queue_free()
 					finished_customer = create_random_customer()
 					slot.add_child(finished_customer)
@@ -200,9 +201,9 @@ func _on_timer_timeout() -> void:
 	print("Total uang dimiliki: ", Player_Data.money)
 	
 func _on_customer_switch(panel: Panel):
-	selected_customer.set_pointer_visible(false)
+	selected_customer.become_unselected()
 	selected_customer = panel
-	selected_customer.set_pointer_visible(true)
+	selected_customer.become_selected()
 	selected_customer.set_next_character(selected_customer.current_letter_index)
 	
 func _on_customer_exited(panel: Panel):
@@ -212,9 +213,10 @@ func _on_customer_exited(panel: Panel):
 		selected_customer = create_random_customer()
 		panel_slot.add_child(selected_customer)
 		selected_customer.set_next_character(selected_customer.current_letter_index)	
-		selected_customer.set_pointer_visible(true)
+		selected_customer.become_selected()
 	else:
 		panel.queue_free()
 		panel = create_random_customer()
 		panel_slot.add_child(panel)
 		panel.set_next_character(panel.current_letter_index)	
+		panel.become_unselected()

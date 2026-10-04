@@ -2,8 +2,8 @@ extends Panel
 
 @onready var prompt: RichTextLabel = $CenterContainer/Char_texture/order
 @onready var prompt_text = prompt.text
-@onready var pointer: TextureRect = $CenterContainer/Char_texture/pointer
 @onready var char_texture: TextureButton = $CenterContainer/Char_texture
+@onready var char_container: CenterContainer = $CenterContainer
 
 var current_letter_index: int = 0
 
@@ -12,7 +12,7 @@ var current_letter_index: int = 0
 @export var red = Color('#a65455')
 
 @onready var timer: Timer = $Timer
-@onready var texture_progress_bar: TextureProgressBar = $TextureProgressBar
+@onready var texture_progress_bar: TextureProgressBar = $CenterContainer/Char_texture/TextureProgressBar
 
 @onready var success_effect: GPUParticles2D = $CenterContainer/Char_texture/EffectsContainer/SuccessEffect
 @onready var fail_effect: GPUParticles2D = $CenterContainer/Char_texture/EffectsContainer/FailEffect
@@ -22,8 +22,6 @@ var order_price: int
 signal selected
 signal exited
 
-func set_pointer_visible(cond: bool):
-	pointer.visible = cond
 
 func get_prompt() -> String:
 	return prompt_text
@@ -59,3 +57,13 @@ func _on_char_texture_pressed() -> void:
 
 func _on_timer_timeout() -> void:
 	exited.emit(self)
+
+func become_unselected():
+	var tween = get_tree().create_tween()
+	tween.tween_property(char_container, "scale", Vector2(0.9, 0.9), 0.5)
+	char_texture.modulate = Color(0.7, 0.7, 0.7)
+	
+func become_selected():
+	var tween = get_tree().create_tween()
+	tween.tween_property(char_container, "scale", Vector2(1, 1), 0.5)
+	char_texture.modulate = Color(1, 1, 1)
