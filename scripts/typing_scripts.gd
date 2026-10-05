@@ -6,6 +6,19 @@ extends Control
 @onready var typo_shield_marker: TextureRect = $TypoShield_Marker
 @onready var medium_word_marker: TextureRect = $MediumWord_marker
 
+var angka: Dictionary = {
+	"satu" : "1",
+	"dua" : "2",
+	"tiga" : "3",
+	"empat" : "4",
+	"lima" : "5",
+	"enam" : "6",
+	"tujuh" : "7",
+	"delapan" : "8",
+	"sembilan" : "9",
+	"sepuluh" : "10"
+}
+
 @onready var slot_container: HBoxContainer = $VBoxContainer/GridContainer/SlotContainer
 var slot_count
 
@@ -98,6 +111,11 @@ func _input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("ui_cancel"):
 		timer.paused = !timer.paused
 		return
+	if Input.is_action_just_pressed("arrow_up") and Player_Data.booster_available:
+		selected_customer.prompt.text = booster_active(selected_customer.prompt.text, selected_customer.current_letter_index)
+		selected_customer.set_next_character(selected_customer.current_letter_index)
+		Player_Data.booster_available = false
+		
 	if OS.is_debug_build():
 		if Input.is_action_just_pressed("ui_accept"):
 			timer.stop()
@@ -220,3 +238,20 @@ func _on_customer_exited(panel: Panel):
 		panel_slot.add_child(panel)
 		panel.set_next_character(panel.current_letter_index)	
 		panel.become_unselected()
+
+func booster_active(text, current_letter_index: int) -> String:
+	var result = []
+	for word in text.split(" "):
+		var stripped = word.strip_edges().rstrip(".,!?;:")
+		var suffix = word.substr(stripped.length())
+		var word_index = text.find(stripped)
+
+		if angka.has(stripped.to_lower()):
+			if word_index >= current_letter_index and word_index != -1:
+				result.append(angka[stripped.to_lower()] + suffix)
+			else:
+				result.append(word)
+		else:
+			result.append(word)
+			
+	return " ".join(result)

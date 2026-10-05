@@ -1,7 +1,6 @@
 extends Panel
 
 @onready var prompt: RichTextLabel = $CenterContainer/Char_texture/order
-@onready var prompt_text = prompt.text
 @onready var char_texture: TextureButton = $CenterContainer/Char_texture
 @onready var char_container: CenterContainer = $CenterContainer
 
@@ -24,16 +23,16 @@ signal exited
 
 
 func get_prompt() -> String:
-	return prompt_text
+	return prompt.text
 
 func set_next_character(next_character_index: int):
 	var blue_text = ""
 	if next_character_index > 0:
-		blue_text = get_bbcode_color_tag(blue) + prompt_text.substr(0, next_character_index) + "[/color]"
-	var green_text = get_bbcode_color_tag(green) + prompt_text.substr(next_character_index, 1) + "[/color]"
+		blue_text = get_bbcode_color_tag(blue) + prompt.text.substr(0, next_character_index) + "[/color]"
+	var green_text = get_bbcode_color_tag(green) + prompt.text.substr(next_character_index, 1) + "[/color]"
 	var red_text = ""
-	if next_character_index != prompt_text.length():
-		red_text = get_bbcode_color_tag(red) + prompt_text.substr(next_character_index + 1, prompt_text.length()) + "[/color]"
+	if next_character_index != prompt.text.length():
+		red_text = get_bbcode_color_tag(red) + prompt.text.substr(next_character_index + 1, prompt.text.length()) + "[/color]"
 	
 	prompt.parse_bbcode("[center]" + blue_text + green_text + red_text + "[/center]")
 	
