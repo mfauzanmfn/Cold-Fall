@@ -2,7 +2,6 @@
 
 [ext_resource type="FontFile" uid="uid://bx4w1gtw2r0p2" path="res://assets/fonts/Pixelate-Regular.ttf" id="1_0apfo"]
 [ext_resource type="Script" uid="uid://bxt7wwnnm5hji" path="res://scripts/customer.gd" id="1_e1l8b"]
-[ext_resource type="Texture2D" uid="uid://bkup0xxouvxty" path="res://assets/typing_assets/test_texture/Pointer.png" id="3_gpd8f"]
 [ext_resource type="Material" uid="uid://b0dbx8dd2kl4s" path="res://assets/particles/test_particle.tres" id="3_gqoxd"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_gqoxd"]
@@ -77,6 +76,8 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = 40.0
+offset_bottom = 40.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -128,6 +129,7 @@ vertical_alignment = 1
 
 [node name="Char_texture" type="TextureButton" parent="CenterContainer" unique_id=1849572494]
 custom_minimum_size = Vector2(220, 220)
+custom_maximum_size = Vector2(270, 480)
 layout_mode = 2
 focus_mode = 0
 stretch_mode = 5
@@ -161,11 +163,11 @@ one_shot = true
 process_material = SubResource("ParticleProcessMaterial_a7phj")
 
 [node name="order" type="RichTextLabel" parent="CenterContainer/Char_texture" unique_id=1333664176]
-custom_maximum_size = Vector2(150, 150)
+custom_maximum_size = Vector2(200, 150)
 layout_mode = 0
 offset_left = 240.0
 offset_top = -50.0
-offset_right = 390.0
+offset_right = 440.0
 offset_bottom = 100.0
 theme_override_colors/default_color = Color(0.6509804, 0.32941177, 0.33333334, 1)
 theme_override_fonts/normal_font = ExtResource("1_0apfo")
@@ -173,21 +175,7 @@ theme_override_font_sizes/normal_font_size = 40
 bbcode_enabled = true
 text = "[center][/center]"
 
-[node name="pointer" type="TextureRect" parent="CenterContainer/Char_texture" unique_id=1521388183]
-visible = false
-custom_minimum_size = Vector2(60, 60)
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -20.0
-offset_top = -50.0
-offset_right = 20.0
-offset_bottom = -10.0
-grow_horizontal = 2
-texture = ExtResource("3_gpd8f")
-
-[node name="TextureProgressBar" type="TextureProgressBar" parent="." unique_id=2106297348]
+[node name="TextureProgressBar" type="TextureProgressBar" parent="CenterContainer/Char_texture" unique_id=2106297348]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -195,15 +183,15 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -96.0
-offset_top = -170.0
+offset_top = -270.0
 offset_right = 96.0
-offset_bottom = -138.0
+offset_bottom = -238.0
 grow_horizontal = 2
 grow_vertical = 2
 texture_progress = SubResource("GradientTexture2D_wp5od")
 
 [node name="Timer" type="Timer" parent="." unique_id=111178944]
-wait_time = 15.0
+wait_time = 60.0
 
 [connection signal="pressed" from="CenterContainer/Char_texture" to="." method="_on_char_texture_pressed"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
