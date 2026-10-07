@@ -3,6 +3,8 @@ extends Control
 @onready var cust_container: HBoxContainer = $VBoxContainer/GridContainer/HBoxContainer
 @onready var slot_1: Control = $VBoxContainer/GridContainer/SlotContainer/slot1
 @onready var slot_2: Control = $VBoxContainer/GridContainer/SlotContainer/slot2
+@onready var slot_3: Control = $VBoxContainer/GridContainer/SlotContainer/slot3
+
 @onready var typo_shield_marker: TextureRect = $TypoShield_Marker
 @onready var medium_word_marker: TextureRect = $MediumWord_marker
 
@@ -61,6 +63,10 @@ func _ready() -> void:
 	
 	slot_2.add_child(create_random_customer())
 	slot_2.get_child(0).become_unselected()
+	
+	slot_3.add_child(create_random_customer())
+	slot_3.get_child(0).become_unselected()
+	
 	timer_wait_time = timer.wait_time
 	timer.start()
 	
@@ -101,7 +107,9 @@ func create_random_customer() -> Panel:
 	var cust_texture = center.get_child(2)
 	var order_text = cust_texture.get_child(1)
 	
-	cust_texture.texture_normal = cust_entry.cust_texture
+	panel.normal = cust_entry.normal
+	panel.dissapointed = cust_entry.dissapointed
+	cust_texture.texture_normal = panel.normal
 	order_text.text = selected_order.text
 	panel.order_price = selected_order.price
 	
@@ -110,6 +118,8 @@ func create_random_customer() -> Panel:
 func _input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("ui_cancel"):
 		timer.paused = !timer.paused
+		for slot in slot_container.get_children():
+			slot.get_child(0).timer.paused = !slot.get_child(0).timer.paused
 		return
 	if Input.is_action_just_pressed("arrow_up") and Player_Data.booster_available:
 		selected_customer.prompt.text = booster_active(selected_customer.prompt.text, selected_customer.current_letter_index)
@@ -154,6 +164,7 @@ func _unhandled_input(event: InputEvent) -> void:
 				selected_customer.order_price = selected_customer.order_price * (4/5)
 			selected_customer.current_letter_index += 1
 			selected_customer.set_next_character(selected_customer.current_letter_index)
+			
 			if selected_customer.current_letter_index == prompt.length():
 				combo += 1
 				if combo <= 2:
@@ -203,6 +214,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			selected_customer.current_letter_index = 0
 			delay_timer.wait_time = fail_delay
 			delay_timer.start()
+			selected_customer.char_texture.texture_normal = selected_customer.dissapointed
 			selected_customer.fail_effect.emitting = true
 			await delay_timer.timeout
 			combo = 0
@@ -211,8 +223,8 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _on_timer_timeout() -> void:
 	gameover = true
-	slot_1.get_child(0).queue_free()
-	slot_2.get_child(0).queue_free()
+	for slot in slot_container.get_children():
+		slot.get_child(0).queue_free()
 	print("selesai")
 	print("Jumlah berhasil: ", served_customer)
 	print("Jumlah Penghasilan: ", earnings)

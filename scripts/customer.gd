@@ -10,6 +10,9 @@ var current_letter_index: int = 0
 @export var green = Color('#639765')
 @export var red = Color('#a65455')
 
+var normal: CompressedTexture2D
+var dissapointed: CompressedTexture2D
+
 @onready var timer: Timer = $Timer
 @onready var texture_progress_bar: TextureProgressBar = $CenterContainer/Char_texture/TextureProgressBar
 
