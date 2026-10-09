@@ -4,7 +4,12 @@ extends Control
 @onready var slot_1: Control = $VBoxContainer/GridContainer/SlotContainer/slot1
 @onready var slot_2: Control = $VBoxContainer/GridContainer/SlotContainer/slot2
 @onready var slot_3: Control = $VBoxContainer/GridContainer/SlotContainer/slot3
+@onready var order_text: RichTextLabel = $OrderContainer/OrderText
+@onready var order_container: PanelContainer = $OrderContainer
 
+@export var blue = Color('#4682b4')
+@export var green = Color('#639765')
+@export var red = Color('#a65455')
 @onready var typo_shield_marker: TextureRect = $TypoShield_Marker
 @onready var medium_word_marker: TextureRect = $MediumWord_marker
 
@@ -52,20 +57,23 @@ var gameover: bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	order_container.modulate = Color(0)
 	item_pool = OrdersPool.get_unlocked_items()
 	slot_count = slot_container.get_child_count() 
-	selected_customer = create_random_customer()
-	slot_1.add_child(selected_customer)
-	selected_customer.set_next_character(selected_customer.current_letter_index)
+	
+	for slot in slot_container.get_children():
+		slot.add_child(create_random_customer())
+		slot.get_child(0).become_unselected()
+		set_next_character(slot.get_child(0).current_letter_index)
+	
+	selected_customer = slot_1.get_child(0)
+	selected_customer.become_selected()
+	order_text.text = selected_customer.prompt.text
+	set_next_character(selected_customer.current_letter_index)
+	print(order_text.text)
 	
 	success_delay = selected_customer.success_effect.lifetime
 	fail_delay = selected_customer.fail_effect.lifetime
-	
-	slot_2.add_child(create_random_customer())
-	slot_2.get_child(0).become_unselected()
-	
-	slot_3.add_child(create_random_customer())
-	slot_3.get_child(0).become_unselected()
 	
 	timer_wait_time = timer.wait_time
 	timer.start()
@@ -105,31 +113,35 @@ func create_random_customer() -> Panel:
 	
 	var center = panel.get_child(0)
 	var cust_texture = center.get_child(2)
-	var order_text = cust_texture.get_child(1)
+	var order = cust_texture.get_child(1)
 	
 	panel.normal = cust_entry.normal
 	panel.dissapointed = cust_entry.dissapointed
 	cust_texture.texture_normal = panel.normal
-	order_text.text = selected_order.text
+	order.text = selected_order.text
 	panel.order_price = selected_order.price
 	
 	return panel
 
 func _input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("ui_cancel"):
+		if order_container.modulate != Color(0):
+			order_container.modulate = Color(0)
+			return
 		timer.paused = !timer.paused
 		for slot in slot_container.get_children():
 			slot.get_child(0).timer.paused = !slot.get_child(0).timer.paused
 		return
 	if Input.is_action_just_pressed("arrow_up") and Player_Data.booster_available:
-		selected_customer.prompt.text = booster_active(selected_customer.prompt.text, selected_customer.current_letter_index)
-		selected_customer.set_next_character(selected_customer.current_letter_index)
+		selected_customer.order_text.text = booster_active(selected_customer.order_text.text, selected_customer.current_letter_index)
+		set_next_character(selected_customer.current_letter_index)
 		Player_Data.booster_available = false
 		
 	if OS.is_debug_build():
 		if Input.is_action_just_pressed("ui_accept"):
-			timer.stop()
-			timer.timeout.emit()
+			#timer.stop()
+			#timer.timeout.emit()
+			order_container.modulate = Color(1, 1, 1, 1)
 			return
 		elif Input.is_action_just_pressed("backlash"):
 			Player_Data.typo_shield = true
@@ -156,16 +168,14 @@ func _unhandled_input(event: InputEvent) -> void:
 		if typed_event == 0:
 			return
 		var key_typed = char(typed_event).to_upper()
-		var prompt = selected_customer.get_prompt()
-		var next_character = prompt[selected_customer.current_letter_index].to_upper()
+		var next_character = order_text.text[selected_customer.current_letter_index].to_upper()
 		
 		if key_typed == next_character:
 			if selected_customer.timer.time_left < 5:
 				selected_customer.order_price = selected_customer.order_price * (4/5)
 			selected_customer.current_letter_index += 1
-			selected_customer.set_next_character(selected_customer.current_letter_index)
-			
-			if selected_customer.current_letter_index == prompt.length():
+			set_next_character(selected_customer.current_letter_index)
+			if selected_customer.current_letter_index == order_text.text.length():
 				combo += 1
 				if combo <= 2:
 					earnings += selected_customer.order_price
@@ -192,19 +202,19 @@ func _unhandled_input(event: InputEvent) -> void:
 					finished_customer.queue_free()
 					selected_customer = create_random_customer()
 					slot.add_child(selected_customer)
-					selected_customer.set_next_character(selected_customer.current_letter_index)
+					set_next_character(selected_customer.current_letter_index)
 					
 				else:
 					finished_customer.become_unselected()
 					finished_customer.queue_free()
 					finished_customer = create_random_customer()
 					slot.add_child(finished_customer)
-					finished_customer.set_next_character(finished_customer.current_letter_index)
+					set_next_character(finished_customer.current_letter_index)
 				served_customer += 1
 			else:
-				if prompt[selected_customer.current_letter_index].to_upper() == " ":
+				if order_text.text[selected_customer.current_letter_index].to_upper() == " ":
 					selected_customer.current_letter_index += 1
-					selected_customer.set_next_character(selected_customer.current_letter_index)
+					set_next_character(selected_customer.current_letter_index)
 		else:
 			if Player_Data.typo_shield:
 				print("used typo shield")
@@ -218,7 +228,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			selected_customer.fail_effect.emitting = true
 			await delay_timer.timeout
 			combo = 0
-			selected_customer.set_next_character(selected_customer.current_letter_index)
+			set_next_character(selected_customer.current_letter_index)
 
 
 func _on_timer_timeout() -> void:
@@ -234,7 +244,9 @@ func _on_customer_switch(panel: Panel):
 	selected_customer.become_unselected()
 	selected_customer = panel
 	selected_customer.become_selected()
-	selected_customer.set_next_character(selected_customer.current_letter_index)
+	order_text.text = selected_customer.get_prompt()
+	set_next_character(selected_customer.current_letter_index)
+	
 	
 func _on_customer_exited(panel: Panel):
 	var panel_slot = panel.get_parent()
@@ -242,13 +254,13 @@ func _on_customer_exited(panel: Panel):
 		selected_customer.queue_free()
 		selected_customer = create_random_customer()
 		panel_slot.add_child(selected_customer)
-		selected_customer.set_next_character(selected_customer.current_letter_index)	
+		set_next_character(selected_customer.current_letter_index)	
 		selected_customer.become_selected()
 	else:
 		panel.queue_free()
 		panel = create_random_customer()
 		panel_slot.add_child(panel)
-		panel.set_next_character(panel.current_letter_index)	
+		set_next_character(panel.current_letter_index)	
 		panel.become_unselected()
 
 func booster_active(text, current_letter_index: int) -> String:
@@ -267,3 +279,17 @@ func booster_active(text, current_letter_index: int) -> String:
 			result.append(word)
 			
 	return " ".join(result)
+
+func set_next_character(next_character_index: int):
+	var blue_text = ""
+	if next_character_index > 0:
+		blue_text = get_bbcode_color_tag(blue) + order_text.text.substr(0, next_character_index) + "[/color]"
+	var green_text = get_bbcode_color_tag(green) + order_text.text.substr(next_character_index, 1) + "[/color]"
+	var red_text = ""
+	if next_character_index != order_text.text.length():
+		red_text = get_bbcode_color_tag(red) + order_text.text.substr(next_character_index + 1, order_text.text.length()) + "[/color]"
+	
+	order_text.parse_bbcode("[center]" + blue_text + green_text + red_text + "[/center]"	) 
+	
+func get_bbcode_color_tag(color: Color) -> String:	
+	return "[color=#" + color.to_html(false) + "]"

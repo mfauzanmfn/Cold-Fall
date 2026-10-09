@@ -26,24 +26,9 @@ signal exited
 
 
 func get_prompt() -> String:
+	prompt.parse_bbcode(prompt.text)
 	return prompt.text
 
-func set_next_character(next_character_index: int):
-	var blue_text = ""
-	if next_character_index > 0:
-		blue_text = get_bbcode_color_tag(blue) + prompt.text.substr(0, next_character_index) + "[/color]"
-	var green_text = get_bbcode_color_tag(green) + prompt.text.substr(next_character_index, 1) + "[/color]"
-	var red_text = ""
-	if next_character_index != prompt.text.length():
-		red_text = get_bbcode_color_tag(red) + prompt.text.substr(next_character_index + 1, prompt.text.length()) + "[/color]"
-	
-	prompt.parse_bbcode("[center]" + blue_text + green_text + red_text + "[/center]")
-	
-func get_bbcode_color_tag(color: Color) -> String:	
-	return "[color=#" + color.to_html(false) + "]"
-	
-	
-	
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	char_texture.pressed.connect(_on_char_texture_pressed)
