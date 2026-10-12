@@ -20,6 +20,7 @@ var dissapointed: CompressedTexture2D
 @onready var fail_effect: GPUParticles2D = $CenterContainer/Char_texture/EffectsContainer/FailEffect
 
 var order_price: int
+var typo_checkpoint: int = 0
 
 signal selected
 signal exited

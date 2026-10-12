@@ -3,6 +3,7 @@
 [ext_resource type="FontFile" uid="uid://bx4w1gtw2r0p2" path="res://assets/fonts/Pixelate-Regular.ttf" id="1_0apfo"]
 [ext_resource type="Script" uid="uid://bxt7wwnnm5hji" path="res://scripts/customer.gd" id="1_e1l8b"]
 [ext_resource type="Material" uid="uid://b0dbx8dd2kl4s" path="res://assets/particles/test_particle.tres" id="3_gqoxd"]
+[ext_resource type="Texture2D" uid="uid://ct80hl08adqt5" path="res://assets/Timer_progress/Customer_timer_progressbar.tres" id="4_gqoxd"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_gqoxd"]
 viewport_path = NodePath("CenterContainer/SubViewport")
@@ -53,15 +54,6 @@ directional_velocity_max = 1.0
 directional_velocity_curve = SubResource("CurveXYZTexture_ru4s3")
 gravity = Vector3(0, 0, 0)
 scale_curve = SubResource("CurveTexture_mwf5a")
-
-[sub_resource type="Gradient" id="Gradient_gqoxd"]
-offsets = PackedFloat32Array(0, 0.0016233766)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_wp5od"]
-gradient = SubResource("Gradient_gqoxd")
-width = 192
-height = 32
-fill = 2
 
 [node name="Customer" type="Panel" unique_id=974175116]
 anchors_preset = 15
@@ -188,7 +180,7 @@ offset_right = 96.0
 offset_bottom = -238.0
 grow_horizontal = 2
 grow_vertical = 2
-texture_progress = SubResource("GradientTexture2D_wp5od")
+texture_progress = ExtResource("4_gqoxd")
 
 [node name="Timer" type="Timer" parent="." unique_id=111178944]
 wait_time = 60.0

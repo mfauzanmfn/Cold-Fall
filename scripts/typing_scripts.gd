@@ -13,6 +13,9 @@ extends Control
 @onready var typo_shield_marker: TextureRect = $TypoShield_Marker
 @onready var medium_word_marker: TextureRect = $MediumWord_marker
 
+@onready var Customer_timer_bar: TextureProgressBar = $OrderContainer/TextureProgressBar
+@onready var dim_overlay: ColorRect = $DimOverlay
+
 var angka: Dictionary = {
 	"satu" : "1",
 	"dua" : "2",
@@ -85,7 +88,8 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	timer_label.text = "%d" % timer.time_left
 	timer_progress_bar.value = 100 * (timer_wait_time - timer.time_left)/timer_wait_time
-
+	Customer_timer_bar.value = selected_customer.texture_progress_bar.value
+	
 func create_random_customer() -> Panel:
 	var cust_entry_number: int = randi() % CUSTOMER_POOL.cust_pool.size()
 	var cust_entry = CUSTOMER_POOL.cust_pool[cust_entry_number]
@@ -127,6 +131,7 @@ func _input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("ui_cancel"):
 		if order_container.modulate != Color(0):
 			order_container.modulate = Color(0)
+			dim_overlay.visible = false
 			return
 		timer.paused = !timer.paused
 		for slot in slot_container.get_children():
@@ -142,6 +147,7 @@ func _input(event: InputEvent) -> void:
 			#timer.stop()
 			#timer.timeout.emit()
 			order_container.modulate = Color(1, 1, 1, 1)
+			dim_overlay.visible = true
 			return
 		elif Input.is_action_just_pressed("backlash"):
 			Player_Data.typo_shield = true
@@ -214,6 +220,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			else:
 				if order_text.text[selected_customer.current_letter_index].to_upper() == " ":
 					selected_customer.current_letter_index += 1
+					selected_customer.typo_checkpoint = selected_customer.current_letter_index
 					set_next_character(selected_customer.current_letter_index)
 		else:
 			if Player_Data.typo_shield:
@@ -228,9 +235,8 @@ func _unhandled_input(event: InputEvent) -> void:
 			selected_customer.fail_effect.emitting = true
 			await delay_timer.timeout
 			combo = 0
-			set_next_character(selected_customer.current_letter_index)
-
-
+			set_next_character(selected_customer.typo_checkpoint)
+			
 func _on_timer_timeout() -> void:
 	gameover = true
 	for slot in slot_container.get_children():
