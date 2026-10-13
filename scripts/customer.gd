@@ -1,6 +1,6 @@
 extends Panel
 
-@onready var prompt: RichTextLabel = $CenterContainer/Char_texture/order
+@onready var prompt: String
 @onready var char_texture: TextureButton = $CenterContainer/Char_texture
 @onready var char_container: CenterContainer = $CenterContainer
 
@@ -27,8 +27,7 @@ signal exited
 
 
 func get_prompt() -> String:
-	prompt.parse_bbcode(prompt.text)
-	return prompt.text
+	return prompt
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

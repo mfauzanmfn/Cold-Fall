@@ -16,6 +16,9 @@ extends Control
 @onready var Customer_timer_bar: TextureProgressBar = $OrderContainer/TextureProgressBar
 @onready var dim_overlay: ColorRect = $DimOverlay
 
+enum State {PAUSED, SELECTION, SERVING, GAMEOVER} 	
+var current_state: State = State.SELECTION
+
 var angka: Dictionary = {
 	"satu" : "1",
 	"dua" : "2",
@@ -55,7 +58,6 @@ var earnings: int = 0
 var success_delay
 var fail_delay
 var time_penalty: float = 5.0
-var gameover: bool = false
 
 
 # Called when the node enters the scene tree for the first time.
@@ -71,9 +73,8 @@ func _ready() -> void:
 	
 	selected_customer = slot_1.get_child(0)
 	selected_customer.become_selected()
-	order_text.text = selected_customer.prompt.text
+	order_text.text = selected_customer.prompt
 	set_next_character(selected_customer.current_letter_index)
-	print(order_text.text)
 	
 	success_delay = selected_customer.success_effect.lifetime
 	fail_delay = selected_customer.fail_effect.lifetime
@@ -84,11 +85,42 @@ func _ready() -> void:
 	if Player_Data.typo_shield:
 		typo_shield_marker.visible = true
 
+func set_state(new_state: State):
+	if current_state == new_state:
+		return
+	_exit_state(current_state)
+	current_state = new_state
+	_enter_state(new_state)
+func _enter_state(state: State):
+	match state:
+		State.PAUSED:
+			timer.paused = true
+			for slot in slot_container.get_children():
+				slot.get_child(0).timer.paused = true
+		State.SELECTION:
+			pass
+		State.SERVING:
+			order_container.modulate = Color(1, 1, 1, 1)
+			dim_overlay.visible = true
+		
+func _exit_state(state: State):
+	match state:
+		State.PAUSED:
+			timer.paused = false
+			for slot in slot_container.get_children():
+				slot.get_child(0).timer.paused = false
+		State.SELECTION:
+			pass
+		State.SERVING:
+			order_container.modulate = Color(0)
+			dim_overlay.visible = false
+		
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	timer_label.text = "%d" % timer.time_left
 	timer_progress_bar.value = 100 * (timer_wait_time - timer.time_left)/timer_wait_time
-	Customer_timer_bar.value = selected_customer.texture_progress_bar.value
+	if current_state != State.GAMEOVER:
+		Customer_timer_bar.value = selected_customer.texture_progress_bar.value
 	
 func create_random_customer() -> Panel:
 	var cust_entry_number: int = randi() % CUSTOMER_POOL.cust_pool.size()
@@ -117,134 +149,126 @@ func create_random_customer() -> Panel:
 	
 	var center = panel.get_child(0)
 	var cust_texture = center.get_child(2)
-	var order = cust_texture.get_child(1)
 	
 	panel.normal = cust_entry.normal
 	panel.dissapointed = cust_entry.dissapointed
 	cust_texture.texture_normal = panel.normal
-	order.text = selected_order.text
+	panel.prompt = selected_order.text
 	panel.order_price = selected_order.price
 	
 	return panel
-
-func _input(event: InputEvent) -> void:
-	if Input.is_action_just_pressed("ui_cancel"):
-		if order_container.modulate != Color(0):
-			order_container.modulate = Color(0)
-			dim_overlay.visible = false
-			return
-		timer.paused = !timer.paused
-		for slot in slot_container.get_children():
-			slot.get_child(0).timer.paused = !slot.get_child(0).timer.paused
-		return
-	if Input.is_action_just_pressed("arrow_up") and Player_Data.booster_available:
-		selected_customer.order_text.text = booster_active(selected_customer.order_text.text, selected_customer.current_letter_index)
-		set_next_character(selected_customer.current_letter_index)
-		Player_Data.booster_available = false
-		
-	if OS.is_debug_build():
-		if Input.is_action_just_pressed("ui_accept"):
-			#timer.stop()
-			#timer.timeout.emit()
-			order_container.modulate = Color(1, 1, 1, 1)
-			dim_overlay.visible = true
-			return
-		elif Input.is_action_just_pressed("backlash"):
-			Player_Data.typo_shield = true
-			typo_shield_marker.visible = true
-			return
-		#elif Input.is_action_just_pressed("ui_text_backspace"):
-			#OrdersPool.unlocked_groups.append("Medium")
-			#medium_word_marker.visible = true
-			#item_pool = OrdersPool.get_unlocked_items()
-	if Input.is_action_just_pressed("switch_right"):
-		var switch_to = selected_customer.get_parent().get_index() + 1
-		if switch_to >= slot_count:
-			switch_to = 0
-		_on_customer_switch(slot_container.get_child(switch_to).get_child(0))
-	elif Input.is_action_just_pressed("switch_left"):
-		var switch_to = selected_customer.get_parent().get_index() - 1
-		if switch_to < 0:
-			switch_to = slot_count-1
-		_on_customer_switch(slot_container.get_child(switch_to).get_child(0))
 		
 func _unhandled_input(event: InputEvent) -> void:
-	if event is InputEventKey and event.is_pressed() and not event.is_echo() and not gameover and delay_timer.is_stopped():
-		var typed_event = event.unicode
-		if typed_event == 0:
+	match current_state:
+		State.GAMEOVER:
 			return
-		var key_typed = char(typed_event).to_upper()
-		var next_character = order_text.text[selected_customer.current_letter_index].to_upper()
-		
-		if key_typed == next_character:
-			if selected_customer.timer.time_left < 5:
-				selected_customer.order_price = selected_customer.order_price * (4/5)
-			selected_customer.current_letter_index += 1
-			set_next_character(selected_customer.current_letter_index)
-			if selected_customer.current_letter_index == order_text.text.length():
-				combo += 1
-				if combo <= 2:
-					earnings += selected_customer.order_price
-				elif combo <= 5:
-					earnings += selected_customer.order_price * 1.2
-				else :
-					earnings += selected_customer.order_price * 1.5
-				
-				var customer_timer = selected_customer.get_meta("timer")
-				var finished_customer = selected_customer
-				customer_timer.paused = true
-				delay_timer.wait_time = success_delay
-				delay_timer.start()
-				finished_customer.success_effect.emitting = true
-				await delay_timer.timeout
-				
-					
-				finished_customer.selected.disconnect(_on_customer_switch)
-				finished_customer.exited.disconnect(_on_customer_exited)
-				
-				var slot = finished_customer.get_parent()
-				var was_selected = (finished_customer == selected_customer)
-				if was_selected:
-					finished_customer.queue_free()
-					selected_customer = create_random_customer()
-					slot.add_child(selected_customer)
-					set_next_character(selected_customer.current_letter_index)
-					
-				else:
-					finished_customer.become_unselected()
-					finished_customer.queue_free()
-					finished_customer = create_random_customer()
-					slot.add_child(finished_customer)
-					set_next_character(finished_customer.current_letter_index)
-				served_customer += 1
-			else:
-				if order_text.text[selected_customer.current_letter_index].to_upper() == " ":
-					selected_customer.current_letter_index += 1
-					selected_customer.typo_checkpoint = selected_customer.current_letter_index
-					set_next_character(selected_customer.current_letter_index)
-		else:
-			if Player_Data.typo_shield:
-				print("used typo shield")
-				Player_Data.typo_shield = false
-				typo_shield_marker.visible = false
+		State.PAUSED:
+			if event.is_action_pressed("ui_cancel"):
+				set_state(State.SELECTION)
+		State.SELECTION:
+			if Input.is_action_just_pressed("switch_right"):
+				var switch_to = selected_customer.get_parent().get_index() + 1
+				if switch_to >= slot_count:
+					switch_to = 0
+				_on_customer_switch(slot_container.get_child(switch_to).get_child(0))
+			elif Input.is_action_just_pressed("switch_left"):
+				var switch_to = selected_customer.get_parent().get_index() - 1
+				if switch_to < 0:
+					switch_to = slot_count-1
+				_on_customer_switch(slot_container.get_child(switch_to).get_child(0))
+			elif Input.is_action_just_pressed("ui_cancel"):
+				set_state(State.PAUSED)
+			elif Input.is_action_just_pressed("ui_accept"):
+				set_state(State.SERVING)
+		State.SERVING:
+			if event.is_action_pressed("ui_cancel"):
+				set_state(State.SELECTION)
 				return
-			selected_customer.current_letter_index = 0
-			delay_timer.wait_time = fail_delay
+			elif Input.is_action_just_pressed("arrow_up") and Player_Data.booster_available:
+				order_text.text = booster_active(order_text.text, selected_customer.current_letter_index)
+				set_next_character(selected_customer.current_letter_index)
+				Player_Data.booster_available = false
+				return
+			_handle_typing_input(event)
+		
+func _handle_typing_input(event: InputEvent):
+	var typed_event = event.unicode
+	if typed_event == 0:
+		return
+	var key_typed = char(typed_event).to_upper()
+	var next_character = order_text.text[selected_customer.current_letter_index].to_upper()
+	
+	if key_typed == next_character:
+		if selected_customer.timer.time_left < 5:
+			selected_customer.order_price = selected_customer.order_price * (4/5)
+		selected_customer.current_letter_index += 1
+		set_next_character(selected_customer.current_letter_index)
+		if selected_customer.current_letter_index == order_text.text.length():
+			combo += 1
+			if combo <= 2:
+				earnings += selected_customer.order_price
+			elif combo <= 5:
+				earnings += selected_customer.order_price * 1.2
+			else :
+				earnings += selected_customer.order_price * 1.5
+			
+			var customer_timer = selected_customer.get_meta("timer")
+			var finished_customer = selected_customer
+			customer_timer.paused = true
+			delay_timer.wait_time = success_delay
 			delay_timer.start()
-			selected_customer.char_texture.texture_normal = selected_customer.dissapointed
-			selected_customer.fail_effect.emitting = true
+			finished_customer.success_effect.emitting = true
 			await delay_timer.timeout
-			combo = 0
-			set_next_character(selected_customer.typo_checkpoint)
+			
+				
+			finished_customer.selected.disconnect(_on_customer_switch)
+			finished_customer.exited.disconnect(_on_customer_exited)
+			
+			var slot = finished_customer.get_parent()
+			var was_selected = (finished_customer == selected_customer)
+			if was_selected:
+				finished_customer.queue_free()
+				selected_customer = create_random_customer()
+				slot.add_child(selected_customer)
+				set_next_character(selected_customer.current_letter_index)
+				
+			else:
+				finished_customer.become_unselected()
+				finished_customer.queue_free()
+				finished_customer = create_random_customer()
+				slot.add_child(finished_customer)
+				set_next_character(finished_customer.current_letter_index)
+			served_customer += 1
+		else:
+			if order_text.text[selected_customer.current_letter_index].to_upper() == " ":
+				selected_customer.current_letter_index += 1
+				selected_customer.typo_checkpoint = selected_customer.current_letter_index
+				set_next_character(selected_customer.current_letter_index)
+	else:
+		if Player_Data.typo_shield:
+			print("used typo shield")
+			Player_Data.typo_shield = false
+			typo_shield_marker.visible = false
+			return
+		selected_customer.current_letter_index = 0
+		delay_timer.wait_time = fail_delay
+		delay_timer.start()
+		selected_customer.char_texture.texture_normal = selected_customer.dissapointed
+		selected_customer.fail_effect.emitting = true
+		await delay_timer.timeout
+		combo = 0
+		set_next_character(selected_customer.typo_checkpoint)
 			
 func _on_timer_timeout() -> void:
-	gameover = true
+	current_state = State.GAMEOVER
 	for slot in slot_container.get_children():
 		slot.get_child(0).queue_free()
+	Player_Data.money += earnings
 	print("selesai")
 	print("Jumlah berhasil: ", served_customer)
 	print("Jumlah Penghasilan: ", earnings)
 	print("Total uang dimiliki: ", Player_Data.money)
+	get_tree().change_scene_to_file("res://scenes/upgrade_scene.tscn")
 	
 func _on_customer_switch(panel: Panel):
 	selected_customer.become_unselected()

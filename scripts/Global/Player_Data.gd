@@ -11,3 +11,13 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
+
+func to_dict() -> Dictionary:
+	return {
+		"money": money,
+		"typo_shield": typo_shield
+	}
+	
+func from_dict(data: Dictionary):
+	money = data.get("money", 0)
+	typo_shield = data.get("typo_shield", 0)

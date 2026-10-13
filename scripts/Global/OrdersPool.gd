@@ -1,5 +1,5 @@
-extends Node
-
+class_name OrdersPool
+extends RefCounted
 const CRG_ORI = 5
 const CRG_KCG = 7
 const CRG_ISI = 8
@@ -7,7 +7,7 @@ const AYM_ORI = 12
 const AYM_KJU = 14
 const AYM_MZR = 17
 
-var orders_pool: Dictionary = {
+static var orders_pool: Dictionary = {
 	"Cireng" : {
 		"Easy" : [
 			{"text" : "Kak! Satu cireng bumbu kacang.", "price": CRG_KCG},
@@ -40,15 +40,23 @@ var orders_pool: Dictionary = {
 	}
 }
 
-var unlocked_groups: Array[String] = ["Cireng"]
+static var unlocked_groups: Array[String] = ["Cireng"]
 
-func get_unlocked_items() -> Dictionary:
+static func get_unlocked_items() -> Dictionary:
 	var result = {}
 	for menu in unlocked_groups:
 		result[menu] = {}
 		for difficulty in orders_pool[menu]:
 			result[menu][difficulty] = orders_pool[menu][difficulty].duplicate(true)
 	return result
+
+static func to_dict() -> Dictionary:
+	return {
+		"unlocked_groups": unlocked_groups
+	}
+	
+static func from_dict(data: Dictionary):
+	unlocked_groups = data.get("unlocked_groups", 0)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
