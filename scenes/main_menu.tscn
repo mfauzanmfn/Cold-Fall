@@ -62,6 +62,21 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 10
 
+[node name="Continue_button" type="Button" parent="VBoxContainer" unique_id=1370492746]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.15294118, 0.15294118, 0.15294118, 1)
+theme_override_colors/font_pressed_color = Color(0.15294118, 0.15294118, 0.15294118, 1)
+theme_override_colors/font_hover_color = Color(0.15294118, 0.15294118, 0.15294118, 1)
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_vue75")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_l6cm7")
+theme_override_styles/hover = SubResource("StyleBoxFlat_ekxnf")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_vue75")
+text = "Continue
+"
+
 [node name="Start_button" type="Button" parent="VBoxContainer" unique_id=1435697863]
 layout_mode = 2
 size_flags_vertical = 3
@@ -120,5 +135,6 @@ text = "Cold Fall"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[connection signal="pressed" from="VBoxContainer/Continue_button" to="." method="_on_continue_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/Start_button" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/Exit_button" to="." method="_on_exit_button_pressed"]

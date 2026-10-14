@@ -8,6 +8,8 @@ extends Control
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	_connect_all_buttons(self)
+	if Player_Data.is_new_game:
+		Player_Data.is_new_game = false
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -24,6 +26,7 @@ func _play_click():
 	var click_player = AudioStreamPlayer.new()
 	click_player.stream = load(SoundLibrary.button_click)
 	add_child(click_player)
+	click_player.pitch_scale = randf_range(0.9, 1.1)
 	click_player.play()
 	click_player.finished.connect(click_player.queue_free)
 
