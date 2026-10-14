@@ -1,7 +1,7 @@
 extends Panel
 
 @onready var prompt: String
-@onready var char_texture: TextureButton = $CenterContainer/Char_texture
+@onready var char_texture: TextureRect = $CenterContainer/Char_texture
 @onready var char_container: CenterContainer = $CenterContainer
 
 var current_letter_index: int = 0
@@ -31,16 +31,12 @@ func get_prompt() -> String:
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	char_texture.pressed.connect(_on_char_texture_pressed)
 	timer.start()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	texture_progress_bar.value = 100 * (timer.wait_time - timer.time_left)/timer.wait_time
 
-
-func _on_char_texture_pressed() -> void:
-	selected.emit(self)
 
 func _on_timer_timeout() -> void:
 	exited.emit(self)

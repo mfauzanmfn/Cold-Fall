@@ -56,7 +56,7 @@ static func to_dict() -> Dictionary:
 	}
 	
 static func from_dict(data: Dictionary):
-	unlocked_groups = data.get("unlocked_groups", 0)
+	unlocked_groups.assign(data.get("unlocked_groups", []))
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
