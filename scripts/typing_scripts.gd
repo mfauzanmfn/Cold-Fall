@@ -152,7 +152,7 @@ func create_random_customer() -> Panel:
 	
 	panel.normal = cust_entry.normal
 	panel.dissapointed = cust_entry.dissapointed
-	cust_texture.texture_normal = panel.normal
+	cust_texture.texture = panel.normal
 	panel.prompt = selected_order.text
 	panel.order_price = selected_order.price
 	

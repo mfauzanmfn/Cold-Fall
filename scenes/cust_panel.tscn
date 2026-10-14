@@ -119,11 +119,10 @@ text = "BURNT"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Char_texture" type="TextureButton" parent="CenterContainer" unique_id=1849572494]
+[node name="Char_texture" type="TextureRect" parent="CenterContainer" unique_id=1405182614]
 custom_minimum_size = Vector2(220, 220)
 custom_maximum_size = Vector2(270, 480)
 layout_mode = 2
-focus_mode = 0
 stretch_mode = 5
 
 [node name="EffectsContainer" type="CenterContainer" parent="CenterContainer/Char_texture" unique_id=1230803020]
@@ -185,5 +184,4 @@ texture_progress = ExtResource("4_gqoxd")
 [node name="Timer" type="Timer" parent="." unique_id=111178944]
 wait_time = 60.0
 
-[connection signal="pressed" from="CenterContainer/Char_texture" to="." method="_on_char_texture_pressed"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
