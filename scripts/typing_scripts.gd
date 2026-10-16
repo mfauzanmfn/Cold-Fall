@@ -19,9 +19,8 @@ extends Control
 @onready var frying_sfx: AudioStreamPlayer = $FryingSfx
 @onready var typo_sfx: AudioStreamPlayer = $TypoSfx
 
-
-
-enum State {PAUSED, SELECTION, SERVING, GAMEOVER} 	
+enum State {PAUSED, SELECTION, SERVING, GAMEOVER} 
+enum RemovalReason {SERVED, TIMED_OUT}	
 var current_state: State = State.SELECTION
 
 var angka: Dictionary = {
@@ -73,7 +72,6 @@ func _ready() -> void:
 	
 	for slot in slot_container.get_children():
 		slot.add_child(create_random_customer())
-		slot.get_child(0).become_unselected()
 		set_next_character(slot.get_child(0).current_letter_index)
 	
 	selected_customer = slot_1.get_child(0)
@@ -163,6 +161,7 @@ func create_random_customer() -> Panel:
 	cust_texture.texture = panel.normal
 	panel.prompt = selected_order.text
 	panel.order_price = selected_order.price
+	panel.become_unselected()
 	
 	return panel
 		
@@ -213,6 +212,7 @@ func _handle_typing_input(event: InputEvent):
 		selected_customer.current_letter_index += 1
 		set_next_character(selected_customer.current_letter_index)
 		if selected_customer.current_letter_index == order_text.text.length():
+			set_state(State.SELECTION)
 			combo += 1
 			if combo <= 2:
 				earnings += selected_customer.order_price
@@ -229,24 +229,8 @@ func _handle_typing_input(event: InputEvent):
 			finished_customer.success_effect.emitting = true
 			await delay_timer.timeout
 			
-				
-			finished_customer.selected.disconnect(_on_customer_switch)
-			finished_customer.exited.disconnect(_on_customer_exited)
+			_replace_customer(finished_customer, RemovalReason.SERVED)
 			
-			var slot = finished_customer.get_parent()
-			var was_selected = (finished_customer == selected_customer)
-			if was_selected:
-				finished_customer.queue_free()
-				selected_customer = create_random_customer()
-				slot.add_child(selected_customer)
-				set_next_character(selected_customer.current_letter_index)
-				
-			else:
-				finished_customer.become_unselected()
-				finished_customer.queue_free()
-				finished_customer = create_random_customer()
-				slot.add_child(finished_customer)
-				set_next_character(finished_customer.current_letter_index)
 			served_customer += 1
 		else:
 			if order_text.text[selected_customer.current_letter_index].to_upper() == " ":
@@ -290,20 +274,33 @@ func _on_customer_switch(panel: Panel):
 	
 	
 func _on_customer_exited(panel: Panel):
-	var panel_slot = panel.get_parent()
-	if panel == selected_customer:
-		set_state(State.SELECTION)
-		selected_customer.queue_free()
-		selected_customer = create_random_customer()
-		panel_slot.add_child(selected_customer)
-		set_next_character(selected_customer.current_letter_index)	
+	_replace_customer(panel, RemovalReason.TIMED_OUT)
+
+func _replace_customer(customer: Panel, reason: RemovalReason):
+	if current_state == State.GAMEOVER:
+		return
+	
+	var slot = customer.get_parent()
+	var was_selected = (customer == selected_customer)
+	
+	match  reason:
+		RemovalReason.SERVED:
+			pass
+		RemovalReason.TIMED_OUT:
+			if was_selected:
+				set_state(State.SELECTION)
+			
+	customer.selected.disconnect(_on_customer_switch)
+	customer.selected.disconnect(_on_customer_exited)
+	customer.queue_free()
+	
+	var new_customer = create_random_customer()
+	slot.add_child(new_customer)
+	set_next_character(new_customer.current_letter_index)
+	
+	if was_selected:
+		selected_customer = new_customer
 		selected_customer.become_selected()
-	else:
-		panel.queue_free()
-		panel = create_random_customer()
-		panel_slot.add_child(panel)
-		set_next_character(panel.current_letter_index)	
-		panel.become_unselected()
 
 func booster_active(text, current_letter_index: int) -> String:
 	var result = []

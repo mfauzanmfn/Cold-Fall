@@ -31,24 +31,32 @@ func get_prompt() -> String:
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	_apply_state(false, false)
 	timer.start()
-
+	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	progress_bar.value = 100 * (timer.wait_time - timer.time_left)/timer.wait_time
 	if timer.time_left < (timer.wait_time * 0.5):
 		char_texture.texture = dissapointed
 
+func _apply_state(selected: bool, animate: bool):
+	var target_scale = Vector2(1, 1) if selected else Vector2(0.9, 0.9)
+	var target_modulate = Color.WHITE if selected else Color(0.7, 0.7, 0.7)
 
+	if animate and is_inside_tree():
+		var tween = create_tween().set_parallel(true)
+		tween.tween_property(self, "scale", target_scale, 0.5)
+		tween.tween_property(self, "modulate", target_modulate, 0.5)
+	else:
+		scale = target_scale
+		modulate = target_modulate
+	
 func _on_timer_timeout() -> void:
 	exited.emit(self)
 
 func become_unselected():
-	var tween = get_tree().create_tween()
-	tween.tween_property(char_container, "scale", Vector2(0.9, 0.9), 0.5)
-	char_texture.modulate = Color(0.7, 0.7, 0.7)
+	_apply_state(false, true)
 	
 func become_selected():
-	var tween = get_tree().create_tween()
-	tween.tween_property(char_container, "scale", Vector2(1, 1), 0.5)
-	char_texture.modulate = Color(1, 1, 1)
+	_apply_state(true, true)
