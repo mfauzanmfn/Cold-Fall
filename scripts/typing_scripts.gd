@@ -5,7 +5,9 @@ extends Control
 @onready var slot_2: Control = $VBoxContainer/GridContainer/SlotContainer/slot2
 @onready var slot_3: Control = $VBoxContainer/GridContainer/SlotContainer/slot3
 @onready var order_text: RichTextLabel = $OrderContainer/OrderText
+
 @onready var order_container: PanelContainer = $OrderContainer
+@onready var pause_container: PanelContainer = $PauseContainer
 
 @export var blue = Color('#4682b4')
 @export var green = Color('#639765')
@@ -102,6 +104,7 @@ func _enter_state(state: State):
 			timer.paused = true
 			for slot in slot_container.get_children():
 				slot.get_child(0).timer.paused = true
+			pause_container.visible = true
 		State.SELECTION:
 			pass
 		State.SERVING:
@@ -114,6 +117,7 @@ func _exit_state(state: State):
 			timer.paused = false
 			for slot in slot_container.get_children():
 				slot.get_child(0).timer.paused = false
+			pause_container.visible = false
 		State.SELECTION:
 			pass
 		State.SERVING:
@@ -332,3 +336,7 @@ func set_next_character(next_character_index: int):
 	
 func get_bbcode_color_tag(color: Color) -> String:	
 	return "[color=#" + color.to_html(false) + "]"
+
+
+func _on_continue_button_pressed() -> void:
+	pass # Replace with function body.
