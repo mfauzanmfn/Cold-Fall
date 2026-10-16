@@ -13,8 +13,13 @@ extends Control
 @onready var typo_shield_marker: TextureRect = $TypoShield_Marker
 @onready var medium_word_marker: TextureRect = $MediumWord_marker
 
-@onready var Customer_timer_bar: TextureProgressBar = $OrderContainer/TextureProgressBar
+@onready var customer_progress_bar: ProgressBar = $OrderContainer/CustomerProgressBar
 @onready var dim_overlay: ColorRect = $DimOverlay
+
+@onready var frying_sfx: AudioStreamPlayer = $FryingSfx
+@onready var typo_sfx: AudioStreamPlayer = $TypoSfx
+
+
 
 enum State {PAUSED, SELECTION, SERVING, GAMEOVER} 	
 var current_state: State = State.SELECTION
@@ -36,7 +41,7 @@ var angka: Dictionary = {
 var slot_count
 
 const CUST_PANEL = preload("uid://ba5t8skrj86ph")
-@onready var timer_progress_bar: TextureProgressBar = $TimerProgressBar
+@onready var timer_progress_ring: TextureProgressBar = $TimerProgressRing
 var timer_wait_time: float
 
 
@@ -82,6 +87,8 @@ func _ready() -> void:
 	timer_wait_time = timer.wait_time
 	timer.start()
 	
+	frying_sfx.pitch_scale = randf_range(0.9, 1.1)
+	typo_sfx.pitch_scale = randf_range(0.9, 1.1)
 	if Player_Data.typo_shield:
 		typo_shield_marker.visible = true
 
@@ -112,15 +119,16 @@ func _exit_state(state: State):
 		State.SELECTION:
 			pass
 		State.SERVING:
+			print("exit serving")
 			order_container.modulate = Color(0)
 			dim_overlay.visible = false
 		
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	timer_label.text = "%d" % timer.time_left
-	timer_progress_bar.value = 100 * (timer_wait_time - timer.time_left)/timer_wait_time
+	timer_progress_ring.value = 100 * (timer_wait_time - timer.time_left)/timer_wait_time
 	if current_state != State.GAMEOVER:
-		Customer_timer_bar.value = selected_customer.texture_progress_bar.value
+		customer_progress_bar.value = selected_customer.progress_bar.value
 	
 func create_random_customer() -> Panel:
 	var cust_entry_number: int = randi() % CUSTOMER_POOL.cust_pool.size()
@@ -199,6 +207,7 @@ func _handle_typing_input(event: InputEvent):
 	var next_character = order_text.text[selected_customer.current_letter_index].to_upper()
 	
 	if key_typed == next_character:
+		frying_sfx.play()
 		if selected_customer.timer.time_left < 5:
 			selected_customer.order_price = selected_customer.order_price * (4/5)
 		selected_customer.current_letter_index += 1
@@ -250,12 +259,14 @@ func _handle_typing_input(event: InputEvent):
 			Player_Data.typo_shield = false
 			typo_shield_marker.visible = false
 			return
+		typo_sfx.play()
 		selected_customer.current_letter_index = 0
 		delay_timer.wait_time = fail_delay
 		delay_timer.start()
-		selected_customer.char_texture.texture_normal = selected_customer.dissapointed
+		selected_customer.char_texture.texture = selected_customer.dissapointed
 		selected_customer.fail_effect.emitting = true
 		await delay_timer.timeout
+		selected_customer.char_texture.texture = selected_customer.normal
 		combo = 0
 		set_next_character(selected_customer.typo_checkpoint)
 			
@@ -281,6 +292,7 @@ func _on_customer_switch(panel: Panel):
 func _on_customer_exited(panel: Panel):
 	var panel_slot = panel.get_parent()
 	if panel == selected_customer:
+		set_state(State.SELECTION)
 		selected_customer.queue_free()
 		selected_customer = create_random_customer()
 		panel_slot.add_child(selected_customer)

@@ -3,7 +3,6 @@
 [ext_resource type="FontFile" uid="uid://bx4w1gtw2r0p2" path="res://assets/fonts/Pixelate-Regular.ttf" id="1_0apfo"]
 [ext_resource type="Script" uid="uid://bxt7wwnnm5hji" path="res://scripts/customer.gd" id="1_e1l8b"]
 [ext_resource type="Material" uid="uid://b0dbx8dd2kl4s" path="res://assets/particles/test_particle.tres" id="3_gqoxd"]
-[ext_resource type="Texture2D" uid="uid://ct80hl08adqt5" path="res://assets/Timer_progress/Customer_timer_progressbar.tres" id="4_gqoxd"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_gqoxd"]
 viewport_path = NodePath("CenterContainer/SubViewport")
@@ -54,6 +53,20 @@ directional_velocity_max = 1.0
 directional_velocity_curve = SubResource("CurveXYZTexture_ru4s3")
 gravity = Vector3(0, 0, 0)
 scale_curve = SubResource("CurveTexture_mwf5a")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gpd8f"]
+bg_color = Color(0.74509805, 0.21960784, 0.20784314, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gqoxd"]
+bg_color = Color(0.6, 1, 0.6, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
 
 [node name="Customer" type="Panel" unique_id=974175116]
 anchors_preset = 15
@@ -166,7 +179,7 @@ theme_override_font_sizes/normal_font_size = 40
 bbcode_enabled = true
 text = "[center][/center]"
 
-[node name="TextureProgressBar" type="TextureProgressBar" parent="CenterContainer/Char_texture" unique_id=2106297348]
+[node name="ProgressBar" type="ProgressBar" parent="CenterContainer/Char_texture" unique_id=435142732]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -179,9 +192,11 @@ offset_right = 96.0
 offset_bottom = -238.0
 grow_horizontal = 2
 grow_vertical = 2
-texture_progress = ExtResource("4_gqoxd")
+theme_override_styles/background = SubResource("StyleBoxFlat_gpd8f")
+theme_override_styles/fill = SubResource("StyleBoxFlat_gqoxd")
+show_percentage = false
 
 [node name="Timer" type="Timer" parent="." unique_id=111178944]
-wait_time = 60.0
+wait_time = 10.0
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

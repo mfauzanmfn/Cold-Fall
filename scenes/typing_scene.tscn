@@ -3,7 +3,8 @@
 [ext_resource type="Script" uid="uid://cnawi8h8dm48j" path="res://scripts/typing_scripts.gd" id="1_7j68c"]
 [ext_resource type="Texture2D" uid="uid://d0j4pck07mfw0" path="res://assets/typing_assets/test_texture/dialogue-box.png" id="2_u3u8r"]
 [ext_resource type="FontFile" uid="uid://bx4w1gtw2r0p2" path="res://assets/fonts/Pixelate-Regular.ttf" id="3_dg5oo"]
-[ext_resource type="Texture2D" uid="uid://ct80hl08adqt5" path="res://assets/Timer_progress/Customer_timer_progressbar.tres" id="4_nsepv"]
+[ext_resource type="AudioStream" uid="uid://bi3reap3nvmsy" path="res://assets/SFX/Typing_sfx/INGAME-frying var 2 (mp3cut.net).wav" id="5_rhcw2"]
+[ext_resource type="AudioStream" uid="uid://d0x58gcqb02up" path="res://assets/SFX/Typing_sfx/INGAME-typo.wav" id="6_48eqw"]
 
 [sub_resource type="Gradient" id="Gradient_agbdb"]
 offsets = PackedFloat32Array(0.63286716, 0.63986015, 0.9965035, 1)
@@ -39,6 +40,20 @@ texture_margin_left = 40.0
 texture_margin_top = 40.0
 texture_margin_right = 40.0
 texture_margin_bottom = 40.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rhcw2"]
+bg_color = Color(0.74509805, 0.21960784, 0.20784314, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_48eqw"]
+bg_color = Color(0.6, 1, 0.6, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
 
 [node name="Typing" type="Control" unique_id=136107084]
 layout_mode = 3
@@ -98,15 +113,15 @@ offset_bottom = 136.0
 grow_horizontal = 0
 theme_override_font_sizes/font_size = 40
 
-[node name="TimerProgressBar" type="TextureProgressBar" parent="." unique_id=1351828042]
+[node name="TimerProgressRing" type="TextureProgressBar" parent="." unique_id=1351828042]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
 offset_left = -82.0
 offset_top = 20.0
-offset_right = -18.0
-offset_bottom = 84.0
+offset_right = -2.0
+offset_bottom = 100.0
 grow_horizontal = 0
 fill_mode = 4
 texture_progress = SubResource("GradientTexture2D_kvh76")
@@ -168,13 +183,22 @@ theme_override_fonts/normal_font = ExtResource("3_dg5oo")
 theme_override_font_sizes/normal_font_size = 40
 bbcode_enabled = true
 
-[node name="TextureProgressBar" type="TextureProgressBar" parent="OrderContainer" unique_id=83170659]
+[node name="CustomerProgressBar" type="ProgressBar" parent="OrderContainer" unique_id=1620949970]
+custom_minimum_size = Vector2(192, 32)
+custom_maximum_size = Vector2(192, 32)
 layout_mode = 2
 size_flags_horizontal = 4
-size_flags_vertical = 0
 offset_transform_enabled = true
 offset_transform_position = Vector2(0, -50)
-offset_transform_visual_only = false
-texture_progress = ExtResource("4_nsepv")
+theme_override_styles/background = SubResource("StyleBoxFlat_rhcw2")
+theme_override_styles/fill = SubResource("StyleBoxFlat_48eqw")
+show_percentage = false
+
+[node name="FryingSfx" type="AudioStreamPlayer" parent="." unique_id=426013768]
+stream = ExtResource("5_rhcw2")
+
+[node name="TypoSfx" type="AudioStreamPlayer" parent="." unique_id=2075054671]
+stream = ExtResource("6_48eqw")
+volume_db = -8.612
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

@@ -4,7 +4,7 @@ extends Control
 @onready var ayam_geprek_recipe: Button = $"HBoxContainer/Ayam Geprek Recipe"
 @onready var dim_overlay: ColorRect = $DimOverlay
 @onready var panel_container: PanelContainer = $PanelContainer
-
+@onready var click_sound = load(SoundLibrary.button_click)
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	_connect_all_buttons(self)
@@ -24,7 +24,7 @@ func _connect_all_buttons(node: Node) -> void:
 
 func _play_click():
 	var click_player = AudioStreamPlayer.new()
-	click_player.stream = load(SoundLibrary.button_click)
+	click_player.stream = click_sound
 	add_child(click_player)
 	click_player.pitch_scale = randf_range(0.9, 1.1)
 	click_player.play()
@@ -42,7 +42,6 @@ func _on_non_stick_pan_pressed() -> void:
 func _on_ayam_geprek_recipe_pressed() -> void:
 	if not OrdersPool.unlocked_groups.has("Ayam"):
 		OrdersPool.unlocked_groups.append("Ayam")
-	print("Unlocked: ", OrdersPool.unlocked_groups)
 
 func _on_texture_button_pressed() -> void:
 	get_tree().change_scene_to_file("res://scenes/typing_scene.tscn")
