@@ -5,6 +5,7 @@
 [ext_resource type="FontFile" uid="uid://bx4w1gtw2r0p2" path="res://assets/fonts/Pixelate-Regular.ttf" id="3_dg5oo"]
 [ext_resource type="AudioStream" uid="uid://bi3reap3nvmsy" path="res://assets/SFX/Typing_sfx/INGAME-frying var 2 (mp3cut.net).wav" id="5_rhcw2"]
 [ext_resource type="AudioStream" uid="uid://d0x58gcqb02up" path="res://assets/SFX/Typing_sfx/INGAME-typo.wav" id="6_48eqw"]
+[ext_resource type="Script" uid="uid://cwctrsp2hrjnv" path="res://scripts/PauseGame.gd" id="6_y5mp5"]
 
 [sub_resource type="Gradient" id="Gradient_agbdb"]
 offsets = PackedFloat32Array(0.63286716, 0.63986015, 0.9965035, 1)
@@ -201,4 +202,46 @@ stream = ExtResource("5_rhcw2")
 stream = ExtResource("6_48eqw")
 volume_db = -8.612
 
+[node name="PauseContainer" type="PanelContainer" parent="." unique_id=1949242013]
+custom_minimum_size = Vector2(400, 400)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("6_y5mp5")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PauseContainer" unique_id=909731294]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 20
+
+[node name="ContinueButton" type="Button" parent="PauseContainer/VBoxContainer" unique_id=1863252504]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Continue"
+
+[node name="MenuButton" type="Button" parent="PauseContainer/VBoxContainer" unique_id=1579053244]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Menu"
+
+[node name="QuitButton" type="Button" parent="PauseContainer/VBoxContainer" unique_id=1990512426]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Quit"
+
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="pressed" from="PauseContainer/VBoxContainer/ContinueButton" to="PauseContainer" method="_on_continue_button_pressed"]
+[connection signal="pressed" from="PauseContainer/VBoxContainer/MenuButton" to="PauseContainer" method="_on_menu_button_pressed"]
+[connection signal="pressed" from="PauseContainer/VBoxContainer/QuitButton" to="PauseContainer" method="_on_quit_button_pressed"]
