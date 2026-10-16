@@ -13,6 +13,7 @@ func _ready() -> void:
 	exit_button.pressed.connect(_on_exit_button_pressed)
 	
 func _on_start_button_pressed() -> void:
+	SaveManager.delete_save()
 	get_tree().change_scene_to_file("res://scenes/Test.tscn")
 
 func _on_exit_button_pressed() -> void:
