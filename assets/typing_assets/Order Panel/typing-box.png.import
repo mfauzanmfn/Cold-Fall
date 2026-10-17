@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dfqbo8guxqxlu"
-path="res://.godot/imported/cust_type_1.png-6838a0fa582710d4316e285675d96443.ctex"
+uid="uid://bs3yojdqdhma"
+path="res://.godot/imported/typing-box.png-fa59b137b720c0735ce7c1f36bb1a797.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/typing_assets/test_texture/test_char/cust_type_1.png"
-dest_files=["res://.godot/imported/cust_type_1.png-6838a0fa582710d4316e285675d96443.ctex"]
+source_file="res://assets/typing_assets/Order Panel/typing-box.png"
+dest_files=["res://.godot/imported/typing-box.png-fa59b137b720c0735ce7c1f36bb1a797.ctex"]
 
 [params]
 

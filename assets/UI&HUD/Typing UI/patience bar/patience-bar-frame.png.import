@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bu4amidhpiq8g"
-path="res://.godot/imported/cust_type_3.png-30e46260b8fd045f94f3e6cb9f560d56.ctex"
+uid="uid://d0li0lkgakcff"
+path="res://.godot/imported/patience-bar-frame.png-49936aa907946c01aa26ce1744ca333f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/typing_assets/test_texture/test_char/cust_type_3.png"
-dest_files=["res://.godot/imported/cust_type_3.png-30e46260b8fd045f94f3e6cb9f560d56.ctex"]
+source_file="res://assets/UI&HUD/Typing UI/patience bar/patience-bar-frame.png"
+dest_files=["res://.godot/imported/patience-bar-frame.png-49936aa907946c01aa26ce1744ca333f.ctex"]
 
 [params]
 

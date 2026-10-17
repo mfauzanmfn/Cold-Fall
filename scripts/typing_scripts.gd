@@ -12,10 +12,11 @@ extends Control
 @export var blue = Color('#4682b4')
 @export var green = Color('#639765')
 @export var red = Color('#a65455')
+@export var typo_color = Color("ffdc00ff")
 @onready var typo_shield_marker: TextureRect = $TypoShield_Marker
 @onready var medium_word_marker: TextureRect = $MediumWord_marker
 
-@onready var customer_progress_bar: ProgressBar = $OrderContainer/CustomerProgressBar
+@onready var customer_progress_bar: TextureProgressBar = $OrderContainer/CustomerProgressBar
 @onready var dim_overlay: ColorRect = $DimOverlay
 
 @onready var frying_sfx: AudioStreamPlayer = $FryingSfx
@@ -74,12 +75,11 @@ func _ready() -> void:
 	
 	for slot in slot_container.get_children():
 		slot.add_child(create_random_customer())
-		set_next_character(slot.get_child(0).current_letter_index)
 	
 	selected_customer = slot_1.get_child(0)
 	selected_customer.become_selected()
 	order_text.text = selected_customer.prompt
-	set_next_character(selected_customer.current_letter_index)
+	set_next_character(selected_customer.current_letter_index, false)
 	
 	success_delay = selected_customer.success_effect.lifetime
 	fail_delay = selected_customer.fail_effect.lifetime
@@ -121,7 +121,6 @@ func _exit_state(state: State):
 		State.SELECTION:
 			pass
 		State.SERVING:
-			print("exit serving")
 			order_container.modulate = Color(0)
 			dim_overlay.visible = false
 		
@@ -130,7 +129,7 @@ func _process(delta: float) -> void:
 	timer_label.text = "%d" % timer.time_left
 	timer_progress_ring.value = 100 * (timer_wait_time - timer.time_left)/timer_wait_time
 	if current_state != State.GAMEOVER:
-		customer_progress_bar.value = selected_customer.progress_bar.value
+		customer_progress_bar.value = selected_customer.patience_bar.value
 	
 func create_random_customer() -> Panel:
 	var cust_entry_number: int = randi() % CUSTOMER_POOL.cust_pool.size()
@@ -197,12 +196,14 @@ func _unhandled_input(event: InputEvent) -> void:
 				return
 			elif Input.is_action_just_pressed("arrow_up") and Player_Data.booster_available:
 				order_text.text = booster_active(order_text.text, selected_customer.current_letter_index)
-				set_next_character(selected_customer.current_letter_index)
+				set_next_character(selected_customer.current_letter_index, false)
 				Player_Data.booster_available = false
 				return
 			_handle_typing_input(event)
 		
 func _handle_typing_input(event: InputEvent):
+	if not delay_timer.is_stopped():
+		return
 	var typed_event = event.unicode
 	if typed_event == 0:
 		return
@@ -214,7 +215,7 @@ func _handle_typing_input(event: InputEvent):
 		if selected_customer.timer.time_left < 5:
 			selected_customer.order_price = selected_customer.order_price * (4/5)
 		selected_customer.current_letter_index += 1
-		set_next_character(selected_customer.current_letter_index)
+		set_next_character(selected_customer.current_letter_index, false)
 		if selected_customer.current_letter_index == order_text.text.length():
 			set_state(State.SELECTION)
 			combo += 1
@@ -240,15 +241,16 @@ func _handle_typing_input(event: InputEvent):
 			if order_text.text[selected_customer.current_letter_index].to_upper() == " ":
 				selected_customer.current_letter_index += 1
 				selected_customer.typo_checkpoint = selected_customer.current_letter_index
-				set_next_character(selected_customer.current_letter_index)
+				set_next_character(selected_customer.current_letter_index, false)
 	else:
 		if Player_Data.typo_shield:
 			print("used typo shield")
 			Player_Data.typo_shield = false
 			typo_shield_marker.visible = false
 			return
+		set_next_character(selected_customer.current_letter_index, true)
 		typo_sfx.play()
-		selected_customer.current_letter_index = 0
+		selected_customer.current_letter_index = selected_customer.typo_checkpoint
 		delay_timer.wait_time = fail_delay
 		delay_timer.start()
 		selected_customer.char_texture.texture = selected_customer.dissapointed
@@ -256,7 +258,8 @@ func _handle_typing_input(event: InputEvent):
 		await delay_timer.timeout
 		selected_customer.char_texture.texture = selected_customer.normal
 		combo = 0
-		set_next_character(selected_customer.typo_checkpoint)
+		set_next_character(selected_customer.typo_checkpoint, false)
+		print(next_character)
 			
 func _on_timer_timeout() -> void:
 	current_state = State.GAMEOVER
@@ -274,7 +277,7 @@ func _on_customer_switch(panel: Panel):
 	selected_customer = panel
 	selected_customer.become_selected()
 	order_text.text = selected_customer.get_prompt()
-	set_next_character(selected_customer.current_letter_index)
+	set_next_character(selected_customer.current_letter_index, false)
 	
 	
 func _on_customer_exited(panel: Panel):
@@ -300,7 +303,7 @@ func _replace_customer(customer: Panel, reason: RemovalReason):
 	
 	var new_customer = create_random_customer()
 	slot.add_child(new_customer)
-	set_next_character(new_customer.current_letter_index)
+	set_next_character(new_customer.current_letter_index, false)
 	
 	if was_selected:
 		selected_customer = new_customer
@@ -320,20 +323,33 @@ func booster_active(text, current_letter_index: int) -> String:
 				result.append(word)
 		else:
 			result.append(word)
-			
-	return " ".join(result)
+	selected_customer.prompt = " ".join(result)
+	return selected_customer.prompt
 
-func set_next_character(next_character_index: int):
+func set_next_character(next_character_index: int, on_typo: bool):
+	var raw_prompt = selected_customer.prompt
 	var blue_text = ""
+	var before
+	var wrong_word
+	var after
+	if on_typo:
+		var i = selected_customer.current_letter_index
+		while i < raw_prompt.length() and raw_prompt[i].to_upper() != " ":
+			i +=1
+		before = get_bbcode_color_tag(blue) + raw_prompt.substr(0, selected_customer.typo_checkpoint) + "[/color]"
+		wrong_word = get_bbcode_color_tag(typo_color) + raw_prompt.substr(selected_customer.typo_checkpoint, i-selected_customer.typo_checkpoint+1) + "[/color]"
+		after = get_bbcode_color_tag(red) + raw_prompt.substr(i+1) + "[/color]"
 	if next_character_index > 0:
-		blue_text = get_bbcode_color_tag(blue) + order_text.text.substr(0, next_character_index) + "[/color]"
-	var green_text = get_bbcode_color_tag(green) + order_text.text.substr(next_character_index, 1) + "[/color]"
+		blue_text = get_bbcode_color_tag(blue) + raw_prompt.substr(0, next_character_index) + "[/color]"
+	var green_text = get_bbcode_color_tag(green) + raw_prompt.substr(next_character_index, 1) + "[/color]"
 	var red_text = ""
-	if next_character_index != order_text.text.length():
-		red_text = get_bbcode_color_tag(red) + order_text.text.substr(next_character_index + 1, order_text.text.length()) + "[/color]"
-	
-	order_text.parse_bbcode("[center]" + blue_text + green_text + red_text + "[/center]"	) 
-	
+	if next_character_index != raw_prompt.length():
+		red_text = get_bbcode_color_tag(red) + raw_prompt.substr(next_character_index + 1) + "[/color]"
+	if !on_typo:
+		order_text.parse_bbcode("[center][b]" + blue_text + green_text + red_text + "[/b][/center]"	) 
+	else:
+		order_text.parse_bbcode("[center][b]" + before + "[shake rate = 5 level = 10]" + wrong_word + "[/shake]" + after + "[/b][/center]")
+		
 func get_bbcode_color_tag(color: Color) -> String:	
 	return "[color=#" + color.to_html(false) + "]"
 

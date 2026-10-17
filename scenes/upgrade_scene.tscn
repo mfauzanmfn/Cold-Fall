@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://dhimd754s1raf"]
 
 [ext_resource type="Script" uid="uid://puxuh7kcodmp" path="res://scripts/upgrade_Script.gd" id="1_3q44q"]
+[ext_resource type="FontFile" uid="uid://ccwvtrt1s1ard" path="res://assets/fonts/Universal/IBMPlexSans-VariableFont_wdth,wght.ttf" id="2_bml3v"]
 
 [sub_resource type="Theme" id="Theme_wp5od"]
 
@@ -28,6 +29,7 @@ layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 4
 theme = SubResource("Theme_wp5od")
+theme_override_fonts/font = ExtResource("2_bml3v")
 theme_override_font_sizes/font_size = 30
 text = "Non-stick Pan"
 
@@ -37,6 +39,7 @@ layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 4
 theme = SubResource("Theme_wp5od")
+theme_override_fonts/font = ExtResource("2_bml3v")
 theme_override_font_sizes/font_size = 30
 text = "Ayam Geprek 
 Recipe"
@@ -51,6 +54,7 @@ offset_top = 50.0
 offset_right = -62.0
 offset_bottom = 90.0
 grow_horizontal = 0
+theme_override_fonts/font = ExtResource("2_bml3v")
 theme_override_font_sizes/font_size = 25
 text = "NEXT DAY"
 
@@ -85,6 +89,7 @@ custom_minimum_size = Vector2(150, 100)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("2_bml3v")
 theme_override_font_sizes/font_size = 30
 text = "Save"
 
