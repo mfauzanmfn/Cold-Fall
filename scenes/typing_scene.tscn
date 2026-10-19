@@ -12,8 +12,6 @@
 [ext_resource type="FontFile" uid="uid://ccwvtrt1s1ard" path="res://assets/fonts/Universal/IBMPlexSans-VariableFont_wdth,wght.ttf" id="8_u2502"]
 [ext_resource type="StyleBox" uid="uid://c07n57j4kn86s" path="res://Styles/button_normal.tres" id="9_ppk24"]
 [ext_resource type="StyleBox" uid="uid://ckhj0rpvend32" path="res://Styles/button_pressed.tres" id="9_y4pby"]
-[ext_resource type="StyleBox" uid="uid://bbtxnma1malno" path="res://Styles/Cursor.tres" id="13_45b5h"]
-[ext_resource type="Script" uid="uid://b4l2sibsii86y" path="res://scripts/cursor_script.gd" id="14_usl5b"]
 
 [sub_resource type="Gradient" id="Gradient_agbdb"]
 offsets = PackedFloat32Array(0.63286716, 0.63986015, 0.9965035, 1)

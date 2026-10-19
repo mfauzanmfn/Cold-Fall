@@ -8,6 +8,11 @@ const cust_pool = [
 	{"normal": preload("res://assets/char/NPC/Milea/milea-normal-expression.png"),"dissapointed": preload("res://assets/char/NPC/Milea/milea-dissapointed-expression.png")}
 ]
 
+const cart_pool = [
+	{"level_1": preload("res://assets/typing_assets/cart/cart-lvl-1.png")},
+	{"level_2": preload("res://assets/typing_assets/cart/cart-lvl-2.png")}
+]
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.

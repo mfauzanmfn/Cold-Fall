@@ -47,7 +47,7 @@ const CUST_PANEL = preload("uid://ba5t8skrj86ph")
 var timer_wait_time: float
 
 
-const CUSTOMER_POOL = preload("res://scripts/Resource/CustomerPool.gd")
+const CUSTOMER_POOL = preload("res://scripts/Resource/TypingResources.gd").cust_pool
 
 var item_pool 
 var selected_customer
@@ -132,8 +132,8 @@ func _process(delta: float) -> void:
 		customer_progress_bar.value = selected_customer.patience_bar.value
 	
 func create_random_customer() -> Panel:
-	var cust_entry_number: int = randi() % CUSTOMER_POOL.cust_pool.size()
-	var cust_entry = CUSTOMER_POOL.cust_pool[cust_entry_number]
+	var cust_entry_number: int = randi() % CUSTOMER_POOL.size()
+	var cust_entry = CUSTOMER_POOL[cust_entry_number]
 	
 	var menus = item_pool.keys()
 	
