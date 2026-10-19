@@ -186,6 +186,6 @@ texture_progress = ExtResource("5_a7phj")
 texture_progress_offset = Vector2(4, 4)
 
 [node name="Timer" type="Timer" parent="." unique_id=111178944]
-wait_time = 60.0
+wait_time = 15.0
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
