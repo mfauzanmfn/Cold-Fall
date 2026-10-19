@@ -12,6 +12,9 @@
 [ext_resource type="FontFile" uid="uid://ccwvtrt1s1ard" path="res://assets/fonts/Universal/IBMPlexSans-VariableFont_wdth,wght.ttf" id="8_u2502"]
 [ext_resource type="StyleBox" uid="uid://c07n57j4kn86s" path="res://Styles/button_normal.tres" id="9_ppk24"]
 [ext_resource type="StyleBox" uid="uid://ckhj0rpvend32" path="res://Styles/button_pressed.tres" id="9_y4pby"]
+[ext_resource type="Texture2D" uid="uid://xldqtwobtd1c" path="res://assets/typing_assets/cart/cart-lvl-1.png" id="13_45b5h"]
+[ext_resource type="Texture2D" uid="uid://ba8jxtl8swt1l" path="res://assets/typing_assets/stove/stove-off.png" id="14_usl5b"]
+[ext_resource type="Texture2D" uid="uid://b2ilkows0e54l" path="res://assets/typing_assets/wok/wok-off.png" id="15_u4emh"]
 
 [sub_resource type="Gradient" id="Gradient_agbdb"]
 offsets = PackedFloat32Array(0.63286716, 0.63986015, 0.9965035, 1)
@@ -58,6 +61,10 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_7j68c")
+blue = Color(0.27450982, 0.50980395, 0.7058824, 1)
+green = Color(0.3882353, 0.5921569, 0.39607844, 1)
+red = Color(0.6509804, 0.32941177, 0.33333334, 1)
+typo_color = Color(1, 0.8627451, 0, 1)
 
 [node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1396729787]
 layout_mode = 1
@@ -78,10 +85,13 @@ columns = 3
 [node name="SlotContainer" type="HBoxContainer" parent="VBoxContainer/GridContainer" unique_id=712136357]
 layout_mode = 2
 size_flags_vertical = 3
+offset_transform_enabled = true
+offset_transform_position = Vector2(50, 0)
 theme_override_constants/separation = 350
 
 [node name="slot1" type="Control" parent="VBoxContainer/GridContainer/SlotContainer" unique_id=956129843]
 layout_mode = 2
+offset_transform_enabled = true
 
 [node name="slot2" type="Control" parent="VBoxContainer/GridContainer/SlotContainer" unique_id=1248512814]
 layout_mode = 2
@@ -251,7 +261,54 @@ theme_override_styles/pressed = ExtResource("9_y4pby")
 theme_override_styles/hover = ExtResource("9_ppk24")
 text = "Quit"
 
+[node name="Cart" type="TextureRect" parent="." unique_id=781565759]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("13_45b5h")
+
+[node name="Stove" type="TextureRect" parent="Cart" unique_id=593017343]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -382.0
+offset_top = -221.0
+offset_right = -172.0
+offset_bottom = -71.0
+grow_horizontal = 0
+grow_vertical = 0
+offset_transform_enabled = true
+texture = ExtResource("14_usl5b")
+
+[node name="Wok" type="TextureRect" parent="Cart/Stove" unique_id=1787742471]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -134.5
+offset_top = -141.0
+offset_right = 134.5
+grow_horizontal = 2
+grow_vertical = 0
+offset_transform_enabled = true
+offset_transform_position = Vector2(0, -100)
+texture = ExtResource("15_u4emh")
+stretch_mode = 2
+
+[node name="StoveTimer" type="Timer" parent="." unique_id=1265595093]
+wait_time = 0.5
+one_shot = true
+
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="pressed" from="PauseContainer/VBoxContainer/ContinueButton" to="PauseContainer" method="_on_continue_button_pressed"]
 [connection signal="pressed" from="PauseContainer/VBoxContainer/MenuButton" to="PauseContainer" method="_on_menu_button_pressed"]
 [connection signal="pressed" from="PauseContainer/VBoxContainer/QuitButton" to="PauseContainer" method="_on_quit_button_pressed"]
+[connection signal="timeout" from="StoveTimer" to="." method="_on_stove_timer_timeout"]

@@ -9,9 +9,19 @@ const cust_pool = [
 ]
 
 const cart_pool = [
-	{"level_1": preload("res://assets/typing_assets/cart/cart-lvl-1.png")},
-	{"level_2": preload("res://assets/typing_assets/cart/cart-lvl-2.png")}
+	preload("res://assets/typing_assets/cart/cart-lvl-1.png"),
+	preload("res://assets/typing_assets/cart/cart-lvl-2.png")
 ]
+
+const stove = {
+	"off" : preload("res://assets/typing_assets/stove/stove-off.png"),
+	"on" : preload("res://assets/typing_assets/stove/stove-on.png")
+}
+
+const  wok = {
+	"off" : preload("res://assets/typing_assets/wok/wok-off.png"),
+	"on" : preload("res://assets/typing_assets/wok/wok-on.png") 
+}
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

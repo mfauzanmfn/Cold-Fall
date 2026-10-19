@@ -31,7 +31,8 @@ func get_prompt() -> String:
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	if Player_Data.
+	if Player_Data.cart_lvl > 1:
+		timer.wait_time += 2
 	patience_bar.value = 0
 	_apply_state(false, false)
 	timer.start()

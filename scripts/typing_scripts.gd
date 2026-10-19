@@ -9,10 +9,10 @@ extends Control
 @onready var order_container: PanelContainer = $OrderContainer
 @onready var pause_container: PanelContainer = $PauseContainer
 
-@export var blue = Color('#4682b4')
-@export var green = Color('#639765')
-@export var red = Color('#a65455')
-@export var typo_color = Color("ffdc00ff")
+@export var blue: Color
+@export var green : Color
+@export var red: Color
+@export var typo_color: Color
 @onready var typo_shield_marker: TextureRect = $TypoShield_Marker
 @onready var medium_word_marker: TextureRect = $MediumWord_marker
 
@@ -46,8 +46,8 @@ const CUST_PANEL = preload("uid://ba5t8skrj86ph")
 @onready var timer_progress_ring: TextureProgressBar = $TimerProgressRing
 var timer_wait_time: float
 
-
-const CUSTOMER_POOL = preload("res://scripts/Resource/TypingResources.gd").cust_pool
+const ResourceScript = preload("res://scripts/Resource/TypingResources.gd")
+const CUSTOMER_POOL = ResourceScript.cust_pool
 
 var item_pool 
 var selected_customer
@@ -66,12 +66,20 @@ var success_delay
 var fail_delay
 var time_penalty: float = 5.0
 
+@onready var cart: TextureRect = $Cart
+@onready var stove: TextureRect = $Cart/Stove
+@onready var wok: TextureRect = $Cart/Stove/Wok
+@onready var stove_timer: Timer = $StoveTimer
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	order_container.modulate = Color(0)
 	item_pool = OrdersPool.get_unlocked_items()
 	slot_count = slot_container.get_child_count() 
+	
+	cart.texture = ResourceScript.cart_pool[Player_Data.cart_lvl]
+	stove_timer.timeout.connect(_turn_stove_off)
+	stove_timer.wait_time = frying_sfx.stream.get_length()
 	
 	for slot in slot_container.get_children():
 		slot.add_child(create_random_customer())
@@ -212,10 +220,12 @@ func _handle_typing_input(event: InputEvent):
 	
 	if key_typed == next_character:
 		frying_sfx.play()
+		turn_stove_on()
 		if selected_customer.timer.time_left < 5:
 			selected_customer.order_price = selected_customer.order_price * (4/5)
 		selected_customer.current_letter_index += 1
 		set_next_character(selected_customer.current_letter_index, false)
+		turn_stove_on()
 		if selected_customer.current_letter_index == order_text.text.length():
 			set_state(State.SELECTION)
 			combo += 1
@@ -233,7 +243,6 @@ func _handle_typing_input(event: InputEvent):
 			delay_timer.start()
 			finished_customer.success_effect.emitting = true
 			await delay_timer.timeout
-			
 			_replace_customer(finished_customer, RemovalReason.SERVED)
 			
 			served_customer += 1
@@ -356,3 +365,13 @@ func get_bbcode_color_tag(color: Color) -> String:
 
 func _on_continue_button_pressed() -> void:
 	pass # Replace with function body.
+
+func turn_stove_on():
+	stove.texture = ResourceScript.stove["on"]
+	wok.texture = ResourceScript.wok["on"]
+	stove_timer.start()
+
+
+func _turn_stove_off():
+	stove.texture = ResourceScript.stove["off"]
+	wok.texture = ResourceScript.wok["off"]
