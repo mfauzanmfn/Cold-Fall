@@ -1,0 +1,20 @@
+[
+  {
+	"id": 1,
+	"karakter": "Gita",
+	"ekspresi": "senang",
+	"dialog": "Terima kasih semuanya sudah datang ke tempatku! Ditunggu lagi besok, ya!"
+  },
+  {
+	"id": 2,
+	"karakter": "Narrator",
+	"ekspresi": "",
+	"dialog": "..."
+  },
+  {
+	"id": 3,
+	"karakter": "Gita",
+	"ekspresi": "",
+	"dialog": "Huh...?"
+  }
+]
