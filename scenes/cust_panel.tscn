@@ -122,7 +122,7 @@ vertical_alignment = 1
 
 [node name="Char_texture" type="TextureRect" parent="CenterContainer" unique_id=1405182614]
 custom_minimum_size = Vector2(220, 220)
-custom_maximum_size = Vector2(270, 480)
+custom_maximum_size = Vector2(290, 500)
 layout_mode = 2
 stretch_mode = 5
 
@@ -173,9 +173,9 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -108.0
-offset_top = -90.0
+offset_top = -50.0
 offset_right = 36.0
-offset_bottom = -68.0
+offset_bottom = -28.0
 grow_horizontal = 2
 scale = Vector2(1.5, 1.5)
 offset_transform_enabled = true

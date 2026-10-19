@@ -77,7 +77,7 @@ func _ready() -> void:
 	item_pool = OrdersPool.get_unlocked_items()
 	slot_count = slot_container.get_child_count() 
 	
-	cart.texture = ResourceScript.cart_pool[Player_Data.cart_lvl]
+	cart.texture = ResourceScript.cart_pool[Player_Data.cart_lvl-1]
 	stove_timer.timeout.connect(_turn_stove_off)
 	stove_timer.wait_time = frying_sfx.stream.get_length()
 	
