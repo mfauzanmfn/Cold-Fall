@@ -29,7 +29,7 @@ func apply_upgrade(upgrade: UpgradeData):
 			cart_lvl += 1
 		UpgradeData.Effect.TYPO_SHIELD:
 			typo_shield = true
-		UpgradeData.Effect.AYAM_GEPREK_RECIPE:			
+		UpgradeData.Effect.AYAM_GEPREK_RECIPE:
 			OrdersPool.unlocked_groups.append("Ayam")
 	Player_Data.upgrade_levels[upgrade.id] = Player_Data.get_upgrade_level(upgrade.id) + 1
 	
