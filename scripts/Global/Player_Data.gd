@@ -1,18 +1,14 @@
 extends Node
 
 var typo_shield: bool = true
-var money: int = 500
+var money: int = 0
 var booster_available: bool = true
 var is_new_game: bool = true
 var cart_lvl: int = 1
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
+var upgrade_levels: Dictionary = {}
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+func get_upgrade_level(id: String) -> int:
+	return upgrade_levels.get(id, 0)
 
 func to_dict() -> Dictionary:
 	var dict: Dictionary
@@ -26,3 +22,15 @@ func from_dict(data: Dictionary):
 		if (variable["usage"] & PROPERTY_USAGE_SCRIPT_VARIABLE):
 			if data.has(variable["name"]):
 				set(variable["name"], data[variable["name"]])
+				
+func apply_upgrade(upgrade: UpgradeData):
+	match upgrade.effect:
+		UpgradeData.Effect.CART_LVL:
+			cart_lvl += 1
+		UpgradeData.Effect.TYPO_SHIELD:
+			typo_shield = true
+		UpgradeData.Effect.AYAM_GEPREK_RECIPE:			
+			OrdersPool.unlocked_groups.append("Ayam")
+	Player_Data.upgrade_levels[upgrade.id] = Player_Data.get_upgrade_level(upgrade.id) + 1
+	
+		
