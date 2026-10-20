@@ -38,7 +38,7 @@ func texture(texture: String) -> VNChar:
 	if texture != "":
 		self.attr_texture = VNtexture.pools[self.attr_name][texture]
 	return self
-
+	
 func add_emotion(emotion_name : String, texture_path : String) -> VNChar:
 	attr_expression[emotion_name] = VNtexture.pools[self.attr_name][texture_path]
 	return self

@@ -1,0 +1,154 @@
+[gd_scene format=3 uid="uid://bm6hq61nujjb0"]
+
+[ext_resource type="Script" uid="uid://dbl7tlwclxfs6" path="res://scripts/VNScript.gd" id="1_fqvlb"]
+[ext_resource type="Texture2D" uid="uid://1xtl4d5be22r" path="res://assets/Gita Marani (MC)/mc-normal-expression.png" id="2_2lvrp"]
+[ext_resource type="Texture2D" uid="uid://botm1f57feqiq" path="res://assets/Normal Version/nametag-2.png" id="3_2lvrp"]
+[ext_resource type="Texture2D" uid="uid://cgktfscsx08x6" path="res://assets/BG/ceo-office.png" id="3_wvnut"]
+[ext_resource type="Texture2D" uid="uid://ken6m01nt2ex" path="res://assets/BG/0f926ae6cb82163851daf9908bffb208cb2ed6cb.png" id="4_c1mgc"]
+[ext_resource type="Texture2D" uid="uid://bqruygk5dpir7" path="res://assets/Normal Version/dialogue-box-2.png" id="5_hu5wo"]
+
+[node name="Node2D" type="Node2D" unique_id=720338231]
+script = ExtResource("1_fqvlb")
+
+[node name="TextureRect2" type="TextureRect" parent="." unique_id=1679355144]
+visible = false
+offset_left = 30.0
+offset_top = 23.0
+offset_right = 531.0
+offset_bottom = 524.0
+expand_mode = 1
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1493033873]
+offset_left = 638.0
+offset_top = 2.0
+offset_right = 1076.0
+offset_bottom = 558.0
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=168253891]
+visible = false
+offset_left = -44.0
+offset_top = 482.0
+offset_right = 1179.0
+offset_bottom = 681.0
+color = Color(0.20152658, 0.20152658, 0.20152652, 1)
+
+[node name="data_gita" type="TextureRect" parent="." unique_id=902085437]
+visible = false
+offset_left = 591.0
+offset_top = 19.0
+offset_right = 1033.0
+offset_bottom = 804.77795
+texture = ExtResource("2_2lvrp")
+expand_mode = 1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="data_gita" unique_id=243550857]
+layout_mode = 0
+offset_left = -451.0
+offset_top = 112.0
+offset_right = 64.50586
+offset_bottom = 221.0
+theme_override_font_sizes/normal_font_size = 21
+text = "Gita Marani 25 Tahun. 
+TOP 30 FORBES INDONESIA Termuda. 
+Anak dari Mr. Apollo, CEO of PT. Kimpul Jaya 2027"
+
+[node name="Historypanel" type="Panel" parent="." unique_id=1552747182]
+offset_right = 1154.0
+offset_bottom = 651.0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Historypanel" unique_id=387002114]
+layout_mode = 1
+anchors_preset = -1
+offset_right = 1153.0
+offset_bottom = 660.0
+
+[node name="Historylabel" type="RichTextLabel" parent="Historypanel/ScrollContainer" unique_id=742842073]
+custom_minimum_size = Vector2(1155, 646.93)
+layout_mode = 2
+size_flags_horizontal = 4
+bbcode_enabled = true
+fit_content = true
+
+[node name="SkipButton" type="Button" parent="." unique_id=2107897405]
+offset_left = 1017.0
+offset_top = -1.0
+offset_right = 1153.0
+offset_bottom = 42.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "SKIP"
+
+[node name="AutoButton" type="Button" parent="." unique_id=683368442]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 921.0
+offset_right = 1007.0
+offset_bottom = 41.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Auto"
+
+[node name="HistoryButton" type="Button" parent="." unique_id=1581294940]
+offset_left = 837.0
+offset_right = 910.0
+offset_bottom = 40.0
+text = "History"
+
+[node name="BG_inflasi" type="TextureRect" parent="." unique_id=2062252606]
+visible = false
+offset_right = 1150.2222
+offset_bottom = 647.0
+texture = ExtResource("3_wvnut")
+expand_mode = 1
+
+[node name="BG_polisi" type="TextureRect" parent="." unique_id=2135109223]
+visible = false
+offset_right = 1152.0
+offset_bottom = 651.0
+texture = ExtResource("4_c1mgc")
+
+[node name="VBoxContainer" type="Control" parent="." unique_id=206706626]
+layout_mode = 3
+anchors_preset = 0
+offset_top = 410.0
+offset_right = 1149.0
+offset_bottom = 607.0
+
+[node name="dialog_box" type="TextureRect" parent="VBoxContainer" unique_id=1758844933]
+layout_mode = 0
+offset_left = 85.0
+offset_top = 27.0
+offset_right = 1063.0
+offset_bottom = 197.0
+size_flags_horizontal = 4
+texture = ExtResource("5_hu5wo")
+
+[node name="text_dialog" type="RichTextLabel" parent="VBoxContainer" unique_id=764078455]
+layout_mode = 0
+offset_left = 122.0
+offset_top = 61.0
+offset_right = 993.0
+offset_bottom = 165.0
+
+[node name="nametag" type="TextureRect" parent="VBoxContainer" unique_id=1484249107]
+layout_mode = 0
+offset_left = -308.0
+offset_top = -55.0
+offset_right = 662.0
+offset_bottom = 115.0
+texture = ExtResource("3_2lvrp")
+
+[node name="nama_char" type="Label" parent="VBoxContainer" unique_id=1691297572]
+custom_maximum_size = Vector2(150, -1)
+layout_mode = 0
+offset_left = 120.0
+offset_top = 12.0
+offset_right = 240.0
+offset_bottom = 44.0
+vertical_alignment = 1
+
+[connection signal="pressed" from="HistoryButton" to="." method="_on_history_button_pressed"]

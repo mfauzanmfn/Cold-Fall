@@ -14,7 +14,11 @@ func _ready() -> void:
 	
 func _on_start_button_pressed() -> void:
 	SaveManager.delete_save()
+<<<<<<< HEAD
 	get_tree().change_scene_to_file("res://scenes/VN.tscn")
+=======
+	get_tree().change_scene_to_file("res://scenes/Test.tscn")
+>>>>>>> origin/main
 
 func _on_exit_button_pressed() -> void:
 	get_tree().quit()

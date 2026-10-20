@@ -1,0 +1,136 @@
+[gd_scene format=3 uid="uid://dhimd754s1raf"]
+
+[ext_resource type="Script" uid="uid://puxuh7kcodmp" path="res://scripts/upgrade_Script.gd" id="1_3q44q"]
+[ext_resource type="FontFile" uid="uid://ccwvtrt1s1ard" path="res://assets/fonts/Universal/IBMPlexSans-VariableFont_wdth,wght.ttf" id="2_bml3v"]
+[ext_resource type="StyleBox" uid="uid://c07n57j4kn86s" path="res://Styles/button_normal.tres" id="3_b5odw"]
+[ext_resource type="StyleBox" uid="uid://ckhj0rpvend32" path="res://Styles/button_pressed.tres" id="4_k6ira"]
+[ext_resource type="Texture2D" uid="uid://r0f6vghy0bvo" path="res://assets/UI&HUD/menu panel/menu-container.png" id="5_k6ira"]
+
+[sub_resource type="Theme" id="Theme_wp5od"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2bn62"]
+texture = ExtResource("5_k6ira")
+texture_margin_left = 90.0
+texture_margin_top = 80.0
+texture_margin_right = 90.0
+texture_margin_bottom = 50.0
+
+[node name="Control" type="Control" unique_id=1164018203]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_3q44q")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=847591384]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 100
+
+[node name="Non-Stick Pan" type="Button" parent="HBoxContainer" unique_id=1976331275]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("2_bml3v")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = ExtResource("3_b5odw")
+theme_override_styles/pressed = ExtResource("4_k6ira")
+text = "Non-stick Pan"
+
+[node name="Ayam Geprek Recipe" type="Button" parent="HBoxContainer" unique_id=670554963]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+theme = SubResource("Theme_wp5od")
+theme_override_fonts/font = ExtResource("2_bml3v")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = ExtResource("3_b5odw")
+theme_override_styles/pressed = ExtResource("4_k6ira")
+text = "Ayam Geprek 
+Recipe"
+
+[node name="TextureButton" type="Button" parent="." unique_id=1248647940]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -102.0
+offset_top = 50.0
+offset_right = -62.0
+offset_bottom = 90.0
+grow_horizontal = 0
+theme_override_fonts/font = ExtResource("2_bml3v")
+theme_override_font_sizes/font_size = 25
+theme_override_styles/normal = ExtResource("3_b5odw")
+theme_override_styles/pressed = ExtResource("4_k6ira")
+text = "NEXT DAY"
+
+[node name="DimOverlay" type="ColorRect" parent="." unique_id=283884584]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.23921569)
+
+[node name="OptionsPanel" type="PanelContainer" parent="." unique_id=668036054]
+visible = false
+custom_minimum_size = Vector2(400, 400)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_2bn62")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="OptionsPanel" unique_id=355750896]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="SaveButton" type="Button" parent="OptionsPanel/VBoxContainer" unique_id=1246407248]
+custom_minimum_size = Vector2(187, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("2_bml3v")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = ExtResource("3_b5odw")
+theme_override_styles/pressed = ExtResource("4_k6ira")
+text = "Save"
+
+[node name="MenuButton" type="Button" parent="OptionsPanel/VBoxContainer" unique_id=1538710237]
+custom_minimum_size = Vector2(187, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("2_bml3v")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = ExtResource("3_b5odw")
+theme_override_styles/pressed = ExtResource("4_k6ira")
+text = "Main Menu"
+
+[connection signal="pressed" from="HBoxContainer/Non-Stick Pan" to="." method="_on_non_stick_pan_pressed"]
+[connection signal="pressed" from="HBoxContainer/Ayam Geprek Recipe" to="." method="_on_ayam_geprek_recipe_pressed"]
+[connection signal="pressed" from="TextureButton" to="." method="_on_texture_button_pressed"]
+[connection signal="pressed" from="OptionsPanel/VBoxContainer/SaveButton" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="OptionsPanel/VBoxContainer/SaveButton" to="." method="_on_save_button_pressed"]
+[connection signal="pressed" from="OptionsPanel/VBoxContainer/MenuButton" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="OptionsPanel/VBoxContainer/MenuButton" to="." method="_on_save_button_pressed"]
+[connection signal="pressed" from="OptionsPanel/VBoxContainer/MenuButton" to="." method="_on_menu_button_pressed"]
