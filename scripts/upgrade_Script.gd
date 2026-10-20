@@ -36,14 +36,6 @@ func _input(event: InputEvent) -> void:
 		dim_overlay.visible = !dim_overlay.visible
 		options_panel.visible = !options_panel.visible
 
-func _on_non_stick_pan_pressed() -> void:
-	Player_Data.typo_shield == true
-
-
-func _on_ayam_geprek_recipe_pressed() -> void:
-	if not OrdersPool.unlocked_groups.has("Ayam"):
-		OrdersPool.unlocked_groups.append("Ayam")
-
 func _on_texture_button_pressed() -> void:
 	get_tree().change_scene_to_file("res://scenes/typing_scene.tscn")
 	
