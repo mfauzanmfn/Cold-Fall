@@ -113,6 +113,8 @@ func _enter_state(state: State):
 			for slot in slot_container.get_children():
 				slot.get_child(0).timer.paused = true
 			pause_container.visible = true
+			dim_overlay.visible = true
+			dim_overlay.top_level = true
 		State.SELECTION:
 			pass
 		State.SERVING:
@@ -126,6 +128,8 @@ func _exit_state(state: State):
 			for slot in slot_container.get_children():
 				slot.get_child(0).timer.paused = false
 			pause_container.visible = false
+			dim_overlay.visible = false
+			dim_overlay.top_level = false
 		State.SELECTION:
 			pass
 		State.SERVING:

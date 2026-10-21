@@ -165,103 +165,12 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.23921569)
 
-[node name="OrderContainer" type="PanelContainer" parent="." unique_id=1045116475]
-custom_minimum_size = Vector2(400, 240)
-custom_maximum_size = Vector2(500, 260)
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -250.0
-offset_top = -120.0
-offset_right = 250.0
-offset_bottom = 120.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxTexture_wp5od")
-
-[node name="OrderText" type="RichTextLabel" parent="OrderContainer" unique_id=1704126223]
-layout_mode = 2
-theme_override_fonts/normal_font = ExtResource("3_y5mp5")
-theme_override_fonts/bold_font = ExtResource("4_u2502")
-theme_override_font_sizes/normal_font_size = 30
-theme_override_font_sizes/bold_font_size = 30
-bbcode_enabled = true
-
-[node name="CustomerProgressBar" type="TextureProgressBar" parent="OrderContainer" unique_id=1228546816]
-custom_minimum_size = Vector2(144, 22)
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 0
-offset_transform_enabled = true
-offset_transform_position = Vector2(0, -50)
-offset_transform_scale = Vector2(1.5, 1.5)
-step = 0.1
-value = 7.0
-texture_under = ExtResource("5_tujbo")
-texture_progress = ExtResource("6_45b5h")
-texture_progress_offset = Vector2(4, 4)
-
 [node name="FryingSfx" type="AudioStreamPlayer" parent="." unique_id=426013768]
 stream = ExtResource("5_rhcw2")
 
 [node name="TypoSfx" type="AudioStreamPlayer" parent="." unique_id=2075054671]
 stream = ExtResource("6_48eqw")
 volume_db = -8.612
-
-[node name="PauseContainer" type="PanelContainer" parent="." unique_id=1949242013]
-custom_minimum_size = Vector2(400, 400)
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/panel = ExtResource("9_q6j51")
-script = ExtResource("6_y5mp5")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="PauseContainer" unique_id=909731294]
-layout_mode = 2
-size_flags_vertical = 4
-theme_override_constants/separation = 20
-
-[node name="ContinueButton" type="Button" parent="PauseContainer/VBoxContainer" unique_id=191588132]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-theme_override_fonts/font = ExtResource("8_u2502")
-theme_override_styles/normal = ExtResource("9_ppk24")
-theme_override_styles/pressed = ExtResource("9_y4pby")
-theme_override_styles/hover = ExtResource("9_ppk24")
-text = "Continue"
-
-[node name="MenuButton" type="Button" parent="PauseContainer/VBoxContainer" unique_id=965160040]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-theme_override_fonts/font = ExtResource("8_u2502")
-theme_override_styles/normal = ExtResource("9_ppk24")
-theme_override_styles/pressed = ExtResource("9_y4pby")
-theme_override_styles/hover = ExtResource("9_ppk24")
-text = "Main Menu"
-
-[node name="QuitButton" type="Button" parent="PauseContainer/VBoxContainer" unique_id=768007332]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-theme_override_fonts/font = ExtResource("8_u2502")
-theme_override_styles/normal = ExtResource("9_ppk24")
-theme_override_styles/pressed = ExtResource("9_y4pby")
-theme_override_styles/hover = ExtResource("9_ppk24")
-text = "Quit"
 
 [node name="Cart" type="TextureRect" parent="." unique_id=781565759]
 layout_mode = 1
@@ -306,12 +215,106 @@ offset_transform_position = Vector2(0, -100)
 texture = ExtResource("15_u4emh")
 stretch_mode = 2
 
+[node name="OrderContainer" type="PanelContainer" parent="." unique_id=1045116475]
+custom_minimum_size = Vector2(400, 240)
+custom_maximum_size = Vector2(650, 350)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -250.0
+offset_top = -220.0
+offset_right = 250.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_wp5od")
+
+[node name="OrderText" type="RichTextLabel" parent="OrderContainer" unique_id=1704126223]
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("3_y5mp5")
+theme_override_fonts/bold_font = ExtResource("4_u2502")
+theme_override_font_sizes/normal_font_size = 30
+theme_override_font_sizes/bold_font_size = 30
+bbcode_enabled = true
+fit_content = true
+scroll_active = false
+
+[node name="CustomerProgressBar" type="TextureProgressBar" parent="OrderContainer" unique_id=1228546816]
+custom_minimum_size = Vector2(144, 22)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+offset_transform_enabled = true
+offset_transform_position = Vector2(0, -50)
+offset_transform_scale = Vector2(1.5, 1.5)
+step = 0.1
+value = 7.0
+texture_under = ExtResource("5_tujbo")
+texture_progress = ExtResource("6_45b5h")
+texture_progress_offset = Vector2(4, 4)
+
 [node name="StoveTimer" type="Timer" parent="." unique_id=1265595093]
 wait_time = 0.5
 one_shot = true
 
+[node name="PauseContainer" type="PanelContainer" parent="." unique_id=1949242013]
+visible = false
+custom_minimum_size = Vector2(400, 400)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -200.0
+offset_right = 200.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("9_q6j51")
+script = ExtResource("6_y5mp5")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PauseContainer" unique_id=909731294]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 20
+
+[node name="ContinueButton" type="Button" parent="PauseContainer/VBoxContainer" unique_id=191588132]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("8_u2502")
+theme_override_styles/normal = ExtResource("9_ppk24")
+theme_override_styles/pressed = ExtResource("9_y4pby")
+theme_override_styles/hover = ExtResource("9_ppk24")
+text = "Continue"
+
+[node name="MenuButton" type="Button" parent="PauseContainer/VBoxContainer" unique_id=965160040]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("8_u2502")
+theme_override_styles/normal = ExtResource("9_ppk24")
+theme_override_styles/pressed = ExtResource("9_y4pby")
+theme_override_styles/hover = ExtResource("9_ppk24")
+text = "Main Menu"
+
+[node name="QuitButton" type="Button" parent="PauseContainer/VBoxContainer" unique_id=768007332]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("8_u2502")
+theme_override_styles/normal = ExtResource("9_ppk24")
+theme_override_styles/pressed = ExtResource("9_y4pby")
+theme_override_styles/hover = ExtResource("9_ppk24")
+text = "Quit"
+
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="StoveTimer" to="." method="_on_stove_timer_timeout"]
 [connection signal="pressed" from="PauseContainer/VBoxContainer/ContinueButton" to="PauseContainer" method="_on_continue_button_pressed"]
 [connection signal="pressed" from="PauseContainer/VBoxContainer/MenuButton" to="PauseContainer" method="_on_menu_button_pressed"]
 [connection signal="pressed" from="PauseContainer/VBoxContainer/QuitButton" to="PauseContainer" method="_on_quit_button_pressed"]
-[connection signal="timeout" from="StoveTimer" to="." method="_on_stove_timer_timeout"]
