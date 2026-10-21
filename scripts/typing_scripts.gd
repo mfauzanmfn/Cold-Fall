@@ -253,7 +253,6 @@ func _handle_typing_input(event: InputEvent):
 				set_next_character(selected_customer.current_letter_index, false)
 	else:
 		if Player_Data.typo_shield:
-			print("used typo shield")
 			Player_Data.typo_shield = false
 			typo_shield_marker.visible = false
 			return
@@ -268,7 +267,6 @@ func _handle_typing_input(event: InputEvent):
 		selected_customer.char_texture.texture = selected_customer.normal
 		combo = 0
 		set_next_character(selected_customer.typo_checkpoint, false)
-		print(next_character)
 			
 func _on_timer_timeout() -> void:
 	current_state = State.GAMEOVER
