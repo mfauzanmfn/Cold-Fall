@@ -23,6 +23,13 @@ const  wok = {
 	"on" : preload("res://assets/typing_assets/wok/wok-on.png") 
 }
 
+const PhaseLocation = {
+	"PHS_00": preload("res://assets/environments/DarkAlley/dark-alley.png"),
+	"PHS_01": preload("res://assets/environments/DarkAlley/dark-alley.png"),
+	"PHS_02": preload("res://assets/environments/SmallAlley/small-alley.png"),
+	"PHS_03": preload("res://assets/environments/Roundabout/roundabout.png")
+}
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.

@@ -7,6 +7,10 @@ extends Control
 @onready var click_sound = load(SoundLibrary.button_click)
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	if Player_Data.income > 4000:
+		Player_Data.current_phase = "PHS_03"
+	elif Player_Data.income > 9999:
+		Player_Data.current_phase = "PHS_04"
 	options_panel.visible = false
 	_connect_all_buttons(self)
 	if Player_Data.is_new_game:
