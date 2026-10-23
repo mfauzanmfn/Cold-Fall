@@ -34,12 +34,12 @@ colors = PackedColorArray(0, 1, 1, 1, 1, 1, 1, 1)
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_wp5od"]
 gradient = SubResource("Gradient_jux2l")
 
-[sub_resource type="Gradient" id="Gradient_5sqi6"]
+[sub_resource type="Gradient" id="Gradient_q6j51"]
 offsets = PackedFloat32Array(1)
-colors = PackedColorArray(0.7058824, 0.08627451, 0, 1)
+colors = PackedColorArray(0.8198382, 0, 0.33361515, 1)
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_5sqi6"]
-gradient = SubResource("Gradient_5sqi6")
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_q6j51"]
+gradient = SubResource("Gradient_q6j51")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wp5od"]
 content_margin_left = 30.0
@@ -66,6 +66,16 @@ blue = Color(0.27450982, 0.50980395, 0.7058824, 1)
 green = Color(0.3882353, 0.5921569, 0.39607844, 1)
 red = Color(0.6509804, 0.32941177, 0.33333334, 1)
 typo_color = Color(1, 0.8627451, 0, 1)
+
+[node name="Backgrounds" type="TextureRect" parent="." unique_id=778404369]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 5
 
 [node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1396729787]
 layout_mode = 1
@@ -137,24 +147,6 @@ tint_progress = Color(0.99646384, 0.99646395, 0.99646395, 1)
 [node name="DelayTimer" type="Timer" parent="." unique_id=769117744]
 one_shot = true
 
-[node name="TypoShield_Marker" type="TextureRect" parent="." unique_id=1161732566]
-visible = false
-layout_mode = 0
-offset_left = 1079.0
-offset_top = 140.0
-offset_right = 1143.0
-offset_bottom = 204.0
-texture = SubResource("GradientTexture2D_wp5od")
-
-[node name="MediumWord_marker" type="TextureRect" parent="." unique_id=1825223155]
-visible = false
-layout_mode = 0
-offset_left = 1079.0
-offset_top = 240.0
-offset_right = 1143.0
-offset_bottom = 304.0
-texture = SubResource("GradientTexture2D_5sqi6")
-
 [node name="DimOverlay" type="ColorRect" parent="." unique_id=850753199]
 visible = false
 layout_mode = 1
@@ -163,7 +155,30 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 color = Color(0, 0, 0, 0.23921569)
+
+[node name="PowerUpContainer" type="VBoxContainer" parent="." unique_id=2081268803]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -84.0
+offset_top = -176.0
+offset_right = -20.0
+offset_bottom = -44.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="TypoShield_Marker" type="TextureRect" parent="PowerUpContainer" unique_id=1161732566]
+layout_mode = 2
+texture = SubResource("GradientTexture2D_wp5od")
+
+[node name="BoosterMarker" type="TextureRect" parent="PowerUpContainer" unique_id=1561935137]
+layout_mode = 2
+texture = SubResource("GradientTexture2D_q6j51")
 
 [node name="FryingSfx" type="AudioStreamPlayer" parent="." unique_id=426013768]
 stream = ExtResource("5_rhcw2")
@@ -177,6 +192,8 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = 60.0
+offset_bottom = 60.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("13_45b5h")

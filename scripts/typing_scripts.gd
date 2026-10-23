@@ -5,6 +5,7 @@ extends Control
 @onready var slot_2: Control = $VBoxContainer/GridContainer/SlotContainer/slot2
 @onready var slot_3: Control = $VBoxContainer/GridContainer/SlotContainer/slot3
 @onready var order_text: RichTextLabel = $OrderContainer/OrderText
+@onready var backgrounds: TextureRect = $Backgrounds
 
 @onready var order_container: PanelContainer = $OrderContainer
 @onready var pause_container: PanelContainer = $PauseContainer
@@ -13,8 +14,8 @@ extends Control
 @export var green : Color
 @export var red: Color
 @export var typo_color: Color
-@onready var typo_shield_marker: TextureRect = $TypoShield_Marker
-@onready var medium_word_marker: TextureRect = $MediumWord_marker
+@onready var typo_shield_marker: TextureRect = $PowerUpContainer/TypoShield_Marker
+@onready var booster_marker: TextureRect = $PowerUpContainer/BoosterMarker
 
 @onready var customer_progress_bar: TextureProgressBar = $OrderContainer/CustomerProgressBar
 @onready var dim_overlay: ColorRect = $DimOverlay
@@ -73,6 +74,7 @@ var time_penalty: float = 5.0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	backgrounds.texture = ResourceScript.PhaseLocation[Player_Data.current_phase]
 	order_container.modulate = Color(0)
 	item_pool = OrdersPool.get_unlocked_items()
 	slot_count = slot_container.get_child_count() 
@@ -277,10 +279,7 @@ func _on_timer_timeout() -> void:
 	for slot in slot_container.get_children():
 		slot.get_child(0).queue_free()
 	Player_Data.money += earnings
-	print("selesai")
-	print("Jumlah berhasil: ", served_customer)
-	print("Jumlah Penghasilan: ", earnings)
-	print("Total uang dimiliki: ", Player_Data.money)
+	Player_Data.income += earnings
 	get_tree().change_scene_to_file("res://scenes/upgrade_scene.tscn")
 	
 func _on_customer_switch(panel: Panel):
@@ -321,6 +320,7 @@ func _replace_customer(customer: Panel, reason: RemovalReason):
 		selected_customer.become_selected()
 
 func booster_active(text, current_letter_index: int) -> String:
+	booster_marker.visible = false
 	var result = []
 	for word in text.split(" "):
 		var stripped = word.strip_edges().rstrip(".,!?;:")

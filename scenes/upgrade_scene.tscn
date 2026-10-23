@@ -2,11 +2,13 @@
 
 [ext_resource type="Script" uid="uid://puxuh7kcodmp" path="res://scripts/upgrade_Script.gd" id="1_3q44q"]
 [ext_resource type="FontFile" uid="uid://ccwvtrt1s1ard" path="res://assets/fonts/Universal/IBMPlexSans-VariableFont_wdth,wght.ttf" id="2_bml3v"]
+[ext_resource type="Texture2D" uid="uid://dnhbm5dyjenui" path="res://assets/environments/Bedroom/bedroom.png" id="2_k735o"]
 [ext_resource type="StyleBox" uid="uid://c07n57j4kn86s" path="res://Styles/button_normal.tres" id="3_b5odw"]
 [ext_resource type="StyleBox" uid="uid://ckhj0rpvend32" path="res://Styles/button_pressed.tres" id="4_k6ira"]
 [ext_resource type="Script" uid="uid://dwym8kmie4ryi" path="res://scripts/Upgrade_Button.gd" id="5_2bn62"]
 [ext_resource type="Script" uid="uid://cwfnamirohuyl" path="res://scripts/UpgradeData.gd" id="6_pm4ds"]
 [ext_resource type="StyleBox" uid="uid://b5baf4166ueny" path="res://Styles/OptionsPanel.tres" id="7_pm4ds"]
+[ext_resource type="Texture2D" uid="uid://1xtl4d5be22r" path="res://assets/Gita Marani (MC)/mc-normal-expression.png" id="8_d8y6w"]
 
 [sub_resource type="Resource" id="Resource_2bn62"]
 script = ExtResource("6_pm4ds")
@@ -43,16 +45,30 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_3q44q")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=847591384]
+[node name="BackGround" type="TextureRect" parent="." unique_id=710439770]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+texture = ExtResource("2_k735o")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1295136960]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 80.0
+offset_top = -240.0
+offset_right = 311.0
+offset_bottom = 240.0
+grow_vertical = 2
 theme_override_constants/separation = 100
 
-[node name="Non-Stick Pan" type="Button" parent="HBoxContainer" unique_id=1976331275]
+[node name="Non-Stick Pan" type="Button" parent="VBoxContainer" unique_id=1976331275]
 custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
 size_flags_horizontal = 6
@@ -65,7 +81,7 @@ text = "Non-Stick Pan"
 script = ExtResource("5_2bn62")
 upgrade = SubResource("Resource_2bn62")
 
-[node name="Ayam Geprek Recipe" type="Button" parent="HBoxContainer" unique_id=670554963]
+[node name="Ayam Geprek Recipe" type="Button" parent="VBoxContainer" unique_id=670554963]
 custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
 size_flags_horizontal = 6
@@ -80,7 +96,7 @@ Recipe"
 script = ExtResource("5_2bn62")
 upgrade = SubResource("Resource_wp5od")
 
-[node name="Upgrade Cart" type="Button" parent="HBoxContainer" unique_id=1986910252]
+[node name="Upgrade Cart" type="Button" parent="VBoxContainer" unique_id=1986910252]
 custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
 size_flags_horizontal = 6
@@ -109,6 +125,23 @@ theme_override_font_sizes/font_size = 25
 theme_override_styles/normal = ExtResource("3_b5odw")
 theme_override_styles/pressed = ExtResource("4_k6ira")
 text = "NEXT DAY"
+
+[node name="MC" type="TextureRect" parent="." unique_id=341951579]
+custom_maximum_size = Vector2(600, 660)
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -600.0
+offset_top = -170.0
+offset_right = -100.0
+offset_bottom = 390.0
+grow_horizontal = 0
+grow_vertical = 2
+texture = ExtResource("8_d8y6w")
+stretch_mode = 5
 
 [node name="DimOverlay" type="ColorRect" parent="." unique_id=283884584]
 visible = false
@@ -163,9 +196,9 @@ theme_override_styles/normal = ExtResource("3_b5odw")
 theme_override_styles/pressed = ExtResource("4_k6ira")
 text = "Main Menu"
 
-[connection signal="pressed" from="HBoxContainer/Non-Stick Pan" to="." method="_on_non_stick_pan_pressed"]
-[connection signal="pressed" from="HBoxContainer/Ayam Geprek Recipe" to="." method="_on_ayam_geprek_recipe_pressed"]
-[connection signal="pressed" from="HBoxContainer/Upgrade Cart" to="." method="_on_ayam_geprek_recipe_pressed"]
+[connection signal="pressed" from="VBoxContainer/Non-Stick Pan" to="." method="_on_non_stick_pan_pressed"]
+[connection signal="pressed" from="VBoxContainer/Ayam Geprek Recipe" to="." method="_on_ayam_geprek_recipe_pressed"]
+[connection signal="pressed" from="VBoxContainer/Upgrade Cart" to="." method="_on_ayam_geprek_recipe_pressed"]
 [connection signal="pressed" from="TextureButton" to="." method="_on_texture_button_pressed"]
 [connection signal="pressed" from="OptionsPanel/VBoxContainer/SaveButton" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="OptionsPanel/VBoxContainer/SaveButton" to="." method="_on_save_button_pressed"]
