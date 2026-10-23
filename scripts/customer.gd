@@ -21,6 +21,7 @@ var dissapointed: CompressedTexture2D
 
 var order_price: int
 var typo_checkpoint: int = 0
+var long_wait: bool = false
 
 signal selected
 signal exited
@@ -40,8 +41,10 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	patience_bar.value = 100 * (timer.wait_time - timer.time_left)/timer.wait_time
-	if timer.time_left < (timer.wait_time * 0.5):
+	if timer.time_left < (timer.wait_time * 0.5) and not long_wait:
+		long_wait = true
 		char_texture.texture = dissapointed
+		_flash_patience_bar()
 
 func _apply_state(selected: bool, animate: bool):
 	var target_scale = Vector2(1, 1) if selected else Vector2(0.9, 0.9)
@@ -54,6 +57,11 @@ func _apply_state(selected: bool, animate: bool):
 	else:
 		scale = target_scale
 		modulate = target_modulate
+	
+func _flash_patience_bar():
+	var tween = create_tween().set_loops()
+	tween.tween_property(patience_bar, "modulate", Color("d10055"), 0.4)
+	tween.tween_property(patience_bar, "modulate", Color.WHITE, 0.4)
 	
 func _on_timer_timeout() -> void:
 	exited.emit(self)

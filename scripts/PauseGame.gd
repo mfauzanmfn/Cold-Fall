@@ -13,6 +13,10 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	pass
 
+func _unhandled_input(event: InputEvent) -> void:
+	if Input.is_action_just_pressed("ui_cancel"):
+		MainParent.get_tree().paused = false
+		MainParent.set_state(MainParent.State.PAUSED)
 
 func _on_continue_button_pressed() -> void:
 	MainParent.set_state(MainParent.State.SELECTION)

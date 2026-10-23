@@ -7,6 +7,8 @@ extends Control
 @onready var order_text: RichTextLabel = $OrderContainer/OrderText
 @onready var backgrounds: TextureRect = $Backgrounds
 
+@onready var tutorial: Node = $Tutorial
+
 @onready var order_container: PanelContainer = $OrderContainer
 @onready var pause_container: PanelContainer = $PauseContainer
 
@@ -23,7 +25,7 @@ extends Control
 @onready var frying_sfx: AudioStreamPlayer = $FryingSfx
 @onready var typo_sfx: AudioStreamPlayer = $TypoSfx
 
-enum State {PAUSED, SELECTION, SERVING, GAMEOVER} 
+enum State {PAUSED, SELECTION, SERVING, GAMEOVER, TUTORIAL_PAUSED} 
 enum RemovalReason {SERVED, TIMED_OUT}	
 var current_state: State = State.SELECTION
 
@@ -63,13 +65,10 @@ var earnings: int = 0
 @onready var timer_label: Label = $Timer_Label
 @onready var delay_timer: Timer = $DelayTimer
 
-var success_delay
-var fail_delay
-var time_penalty: float = 5.0
-
 @onready var cart: TextureRect = $Cart
 @onready var stove: TextureRect = $Cart/Stove
 @onready var wok: TextureRect = $Cart/Stove/Wok
+@onready var lamp: TextureRect = $Cart/Lamp
 @onready var stove_timer: Timer = $StoveTimer
 
 # Called when the node enters the scene tree for the first time.
@@ -80,28 +79,33 @@ func _ready() -> void:
 	slot_count = slot_container.get_child_count() 
 	
 	cart.texture = ResourceScript.cart_pool[Player_Data.cart_lvl-1]
+	lamp.texture = ResourceScript.lamp_pool[Player_Data.cart_lvl-1]
+	
 	stove_timer.timeout.connect(_turn_stove_off)
 	stove_timer.wait_time = frying_sfx.stream.get_length()
-	
-	for slot in slot_container.get_children():
-		slot.add_child(create_random_customer())
-	
-	selected_customer = slot_1.get_child(0)
-	selected_customer.become_selected()
-	order_text.text = selected_customer.prompt
-	set_next_character(selected_customer.current_letter_index, false)
-	
-	success_delay = selected_customer.success_effect.lifetime
-	fail_delay = selected_customer.fail_effect.lifetime
-	
-	timer_wait_time = timer.wait_time
-	timer.start()
-	
 	frying_sfx.pitch_scale = randf_range(0.9, 1.1)
 	typo_sfx.pitch_scale = randf_range(0.9, 1.1)
 	if Player_Data.typo_shield:
 		typo_shield_marker.visible = true
-
+		
+	if Player_Data.is_new_game and get_node_or_null("Tutorial") != null:
+		print("tes")
+		slot_1.add_child(create_random_customer())
+		selected_customer = slot_1.get_child(0)
+	else:
+		for slot in slot_container.get_children():
+			slot.add_child(create_random_customer())
+		selected_customer = slot_1.get_child(0)
+	
+	selected_customer.become_selected()
+	order_text.text = selected_customer.prompt
+	set_next_character(selected_customer.current_letter_index, false)
+	
+	timer_wait_time = timer.wait_time
+	timer.start()
+	
+	if Player_Data.is_new_game:
+		tutorial._start_tutorial()
 func set_state(new_state: State):
 	if current_state == new_state:
 		return
@@ -111,9 +115,7 @@ func set_state(new_state: State):
 func _enter_state(state: State):
 	match state:
 		State.PAUSED:
-			timer.paused = true
-			for slot in slot_container.get_children():
-				slot.get_child(0).timer.paused = true
+			get_tree().paused = true
 			pause_container.visible = true
 			dim_overlay.visible = true
 			dim_overlay.top_level = true
@@ -122,13 +124,16 @@ func _enter_state(state: State):
 		State.SERVING:
 			order_container.modulate = Color(1, 1, 1, 1)
 			dim_overlay.visible = true
-		
+		State.TUTORIAL_PAUSED:
+			timer.paused = true
+			for slot in slot_container.get_children():
+				if slot.get_child(0) != null:
+					slot.get_child(0).timer.paused = true 
+						
 func _exit_state(state: State):
 	match state:
 		State.PAUSED:
-			timer.paused = false
-			for slot in slot_container.get_children():
-				slot.get_child(0).timer.paused = false
+			get_tree().paused = false
 			pause_container.visible = false
 			dim_overlay.visible = false
 			dim_overlay.top_level = false
@@ -137,6 +142,11 @@ func _exit_state(state: State):
 		State.SERVING:
 			order_container.modulate = Color(0)
 			dim_overlay.visible = false
+		State.TUTORIAL_PAUSED:
+			timer.paused = false
+			for slot in slot_container.get_children():
+				if slot.get_child(0) != null:
+					slot.get_child(0).timer.paused = false
 		
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -245,7 +255,7 @@ func _handle_typing_input(event: InputEvent):
 			var customer_timer = selected_customer.get_meta("timer")
 			var finished_customer = selected_customer
 			customer_timer.paused = true
-			delay_timer.wait_time = success_delay
+			delay_timer.wait_time = 2
 			delay_timer.start()
 			finished_customer.success_effect.emitting = true
 			await delay_timer.timeout
@@ -265,7 +275,7 @@ func _handle_typing_input(event: InputEvent):
 		set_next_character(selected_customer.current_letter_index, true)
 		typo_sfx.play()
 		selected_customer.current_letter_index = selected_customer.typo_checkpoint
-		delay_timer.wait_time = fail_delay
+		delay_timer.wait_time = 2
 		delay_timer.start()
 		selected_customer.char_texture.texture = selected_customer.dissapointed
 		selected_customer.fail_effect.emitting = true
@@ -308,7 +318,7 @@ func _replace_customer(customer: Panel, reason: RemovalReason):
 				set_state(State.SELECTION)
 			
 	customer.selected.disconnect(_on_customer_switch)
-	customer.selected.disconnect(_on_customer_exited)
+	customer.exited.disconnect(_on_customer_exited)
 	customer.queue_free()
 	
 	var new_customer = create_random_customer()

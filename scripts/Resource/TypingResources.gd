@@ -10,7 +10,14 @@ const cust_pool = [
 
 const cart_pool = [
 	preload("res://assets/typing_assets/cart/cart-lvl-1.png"),
-	preload("res://assets/typing_assets/cart/cart-lvl-2.png")
+	preload("res://assets/typing_assets/cart/cart-lvl-2.png"),
+	preload("res://assets/typing_assets/cart/cart-lvl-3.png")
+]
+
+const lamp_pool = [
+	preload("res://assets/typing_assets/lamp/lamp-lvl-1.png"),
+	preload("res://assets/typing_assets/lamp/lamp-lvl-2-dan-3.png"),
+	preload("res://assets/typing_assets/lamp/lamp-lvl-2-dan-3.png")
 ]
 
 const stove = {

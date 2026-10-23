@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://ck1qhdjvpiye8"]
 
 [ext_resource type="Script" uid="uid://cnawi8h8dm48j" path="res://scripts/typing_scripts.gd" id="1_7j68c"]
-[ext_resource type="Texture2D" uid="uid://bs3yojdqdhma" path="res://assets/typing_assets/Order Panel/typing-box.png" id="2_48eqw"]
 [ext_resource type="FontFile" uid="uid://byn481d7ndn20" path="res://assets/fonts/typing fonts/RobotoMono-VariableFont_wght.ttf" id="3_y5mp5"]
 [ext_resource type="FontFile" uid="uid://b2ubsf6oc0xkv" path="res://assets/fonts/typing fonts/RobotoMono-Bold.ttf" id="4_u2502"]
 [ext_resource type="AudioStream" uid="uid://bi3reap3nvmsy" path="res://assets/SFX/Typing_sfx/INGAME-frying var 2 (mp3cut.net).wav" id="5_rhcw2"]
@@ -9,6 +8,8 @@
 [ext_resource type="Texture2D" uid="uid://c0cl2rpjdh4ay" path="res://assets/UI&HUD/Typing UI/patience bar/patience-bar-fill.png" id="6_45b5h"]
 [ext_resource type="AudioStream" uid="uid://d0x58gcqb02up" path="res://assets/SFX/Typing_sfx/INGAME-typo.wav" id="6_48eqw"]
 [ext_resource type="Script" uid="uid://cwctrsp2hrjnv" path="res://scripts/PauseGame.gd" id="6_y5mp5"]
+[ext_resource type="Texture2D" uid="uid://dfuchenghmnhl" path="res://assets/typing_assets/lamp/lamp-lvl-1.png" id="7_fr4a5"]
+[ext_resource type="StyleBox" uid="uid://br7bjgt57pij6" path="res://Styles/panel.tres" id="7_q6j51"]
 [ext_resource type="FontFile" uid="uid://ccwvtrt1s1ard" path="res://assets/fonts/Universal/IBMPlexSans-VariableFont_wdth,wght.ttf" id="8_u2502"]
 [ext_resource type="StyleBox" uid="uid://c07n57j4kn86s" path="res://Styles/button_normal.tres" id="9_ppk24"]
 [ext_resource type="StyleBox" uid="uid://b5baf4166ueny" path="res://Styles/OptionsPanel.tres" id="9_q6j51"]
@@ -40,17 +41,6 @@ colors = PackedColorArray(0.8198382, 0, 0.33361515, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_q6j51"]
 gradient = SubResource("Gradient_q6j51")
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wp5od"]
-content_margin_left = 30.0
-content_margin_top = 30.0
-content_margin_right = 30.0
-content_margin_bottom = 30.0
-texture = ExtResource("2_48eqw")
-texture_margin_left = 40.0
-texture_margin_top = 50.0
-texture_margin_right = 50.0
-texture_margin_bottom = 50.0
 
 [node name="Typing" type="Control" unique_id=136107084]
 layout_mode = 3
@@ -232,6 +222,17 @@ offset_transform_position = Vector2(0, -100)
 texture = ExtResource("15_u4emh")
 stretch_mode = 2
 
+[node name="Lamp" type="TextureRect" parent="Cart" unique_id=936216679]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -384.0
+offset_right = 1152.0
+offset_bottom = 264.0
+grow_vertical = 2
+texture = ExtResource("7_fr4a5")
+
 [node name="OrderContainer" type="PanelContainer" parent="." unique_id=1045116475]
 custom_minimum_size = Vector2(400, 240)
 custom_maximum_size = Vector2(650, 350)
@@ -247,7 +248,7 @@ offset_right = 250.0
 offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxTexture_wp5od")
+theme_override_styles/panel = ExtResource("7_q6j51")
 
 [node name="OrderText" type="RichTextLabel" parent="OrderContainer" unique_id=1704126223]
 layout_mode = 2
@@ -278,6 +279,7 @@ wait_time = 0.5
 one_shot = true
 
 [node name="PauseContainer" type="PanelContainer" parent="." unique_id=1949242013]
+process_mode = 3
 visible = false
 custom_minimum_size = Vector2(400, 400)
 layout_mode = 1
