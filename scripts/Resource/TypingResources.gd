@@ -37,12 +37,3 @@ const PhaseLocation = {
 	"PHS_03": preload("res://assets/environments/Roundabout/roundabout.png"),
 	"PHS_04": preload("res://assets/environments/Night Market/night-market.png")
 }
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass

@@ -136,7 +136,3 @@ func _play_click():
 func _ready() -> void:
 	_connect_all_buttons(self)
 	MainParent = get_parent()
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass

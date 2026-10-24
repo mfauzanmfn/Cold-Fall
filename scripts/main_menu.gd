@@ -22,6 +22,7 @@ func _ready() -> void:
 func _on_start_button_pressed() -> void:
 	click_sound.play()
 	SaveManager.delete_save()
+	Player_Data.current_phase = "PHS_00"
 	get_tree().change_scene_to_file("res://scenes/VN.tscn")
 
 func _on_exit_button_pressed() -> void:

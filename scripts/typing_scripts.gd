@@ -413,10 +413,6 @@ func set_next_character(next_character_index: int, on_typo: bool):
 func get_bbcode_color_tag(color: Color) -> String:	
 	return "[color=#" + color.to_html(false) + "]"
 
-
-func _on_continue_button_pressed() -> void:
-	pass # Replace with function body.
-
 func turn_stove_on():
 	stove.texture = ResourceScript.stove["on"]
 	wok.texture = ResourceScript.wok["on"]
