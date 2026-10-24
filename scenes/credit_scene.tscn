@@ -1,0 +1,93 @@
+[gd_scene format=3 uid="uid://qvdbfktbpilk"]
+
+[ext_resource type="Script" uid="uid://dr77p0pccn87k" path="res://scripts/credit_scene.gd" id="1_8q0x2"]
+[ext_resource type="Texture2D" uid="uid://f7kk2ff6pwtp" path="res://assets/UI&HUD/button/button.png" id="2_f4eow"]
+[ext_resource type="FontFile" uid="uid://byxex3bcboe0w" path="res://assets/fonts/Universal/IBMPlexSans_Condensed-Bold.ttf" id="2_nqgi5"]
+[ext_resource type="Texture2D" uid="uid://depgocj3f7bvh" path="res://assets/UI&HUD/button/button-pressed.png" id="3_8q0x2"]
+[ext_resource type="AudioStream" uid="uid://bfkjqgbglx72l" path="res://assets/SFX/epilogue/ENDING GAME.wav" id="5_8q0x2"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_c34bh"]
+texture = ExtResource("2_f4eow")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ip0vk"]
+texture = ExtResource("3_8q0x2")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_lymec"]
+texture = ExtResource("2_f4eow")
+
+[node name="CreditScene" type="Control" unique_id=330780165]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_8q0x2")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1092764785]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="RichTextLabel" type="RichTextLabel" parent="." unique_id=347120555]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -313.83063
+offset_top = -181.0
+offset_right = 313.83063
+offset_bottom = 181.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/bold_font = ExtResource("2_nqgi5")
+theme_override_font_sizes/normal_font_size = 30
+theme_override_font_sizes/bold_font_size = 24
+text = "Credit
+Nama 1
+Nama 2
+nama3
+nama4
+
+Special thanks to
+nama5"
+horizontal_alignment = 1
+
+[node name="Button" type="Button" parent="." unique_id=978089051]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 337.0
+offset_top = 248.0
+offset_right = 545.0
+offset_bottom = 298.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/normal = SubResource("StyleBoxTexture_c34bh")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_ip0vk")
+theme_override_styles/hover = SubResource("StyleBoxTexture_lymec")
+text = "Goes back to main menu"
+
+[node name="ColorRect2" type="ColorRect" parent="." unique_id=1409717747]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="ending_song" type="AudioStreamPlayer" parent="." unique_id=1229618676]
+stream = ExtResource("5_8q0x2")
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

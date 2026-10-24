@@ -1,38 +1,82 @@
 [gd_scene format=3 uid="uid://bm6hq61nujjb0"]
 
 [ext_resource type="Script" uid="uid://dbl7tlwclxfs6" path="res://scripts/VNScript.gd" id="1_fqvlb"]
-[ext_resource type="Texture2D" uid="uid://1xtl4d5be22r" path="res://assets/Gita Marani (MC)/mc-normal-expression.png" id="2_2lvrp"]
-[ext_resource type="Texture2D" uid="uid://botm1f57feqiq" path="res://assets/Normal Version/nametag-2.png" id="3_2lvrp"]
+[ext_resource type="Texture2D" uid="uid://botm1f57feqiq" path="res://assets/UI&HUD/dialogue_box/Normal Version/nametag-2.png" id="3_2lvrp"]
+[ext_resource type="FontFile" uid="uid://ccwvtrt1s1ard" path="res://assets/fonts/Universal/IBMPlexSans-VariableFont_wdth,wght.ttf" id="3_c1mgc"]
+[ext_resource type="Texture2D" uid="uid://xldqtwobtd1c" path="res://assets/typing_assets/cart/cart-lvl-1.png" id="3_nvq86"]
 [ext_resource type="Texture2D" uid="uid://cgktfscsx08x6" path="res://assets/BG/ceo-office.png" id="3_wvnut"]
-[ext_resource type="Texture2D" uid="uid://ken6m01nt2ex" path="res://assets/BG/0f926ae6cb82163851daf9908bffb208cb2ed6cb.png" id="4_c1mgc"]
-[ext_resource type="Texture2D" uid="uid://bqruygk5dpir7" path="res://assets/Normal Version/dialogue-box-2.png" id="5_hu5wo"]
+[ext_resource type="Texture2D" uid="uid://sex6wunfc74o" path="res://assets/Gita Marani (MC)/mc-ceo-ver.png" id="4_lymec"]
+[ext_resource type="FontFile" uid="uid://byxex3bcboe0w" path="res://assets/fonts/Universal/IBMPlexSans_Condensed-Bold.ttf" id="4_y0fsv"]
+[ext_resource type="Texture2D" uid="uid://bqruygk5dpir7" path="res://assets/UI&HUD/dialogue_box/Normal Version/dialogue-box-2.png" id="5_hu5wo"]
+[ext_resource type="Texture2D" uid="uid://f7kk2ff6pwtp" path="res://assets/UI&HUD/button/button.png" id="5_nvq86"]
+[ext_resource type="Texture2D" uid="uid://depgocj3f7bvh" path="res://assets/UI&HUD/button/button-pressed.png" id="6_xlqa2"]
+[ext_resource type="AudioStream" uid="uid://bvbbuo2xcw3rl" path="res://assets/SFX/click_sfx/CLICK-button click.wav" id="11_tum8g"]
+[ext_resource type="AudioStream" uid="uid://dafpx5ryn1ksq" path="res://assets/SFX/click_sfx/CLICK-story dialogue skip.wav" id="12_qsvih"]
+[ext_resource type="AudioStream" uid="uid://164lrlgwhqan" path="res://assets/SFX/prologue/PRO-People Talking.wav" id="13_lymec"]
+[ext_resource type="AudioStream" uid="uid://dc08y5snmvhxw" path="res://assets/SFX/prologue/INTRO-get idea.wav" id="14_n0inr"]
+[ext_resource type="AudioStream" uid="uid://b21m4olh7vkfq" path="res://assets/SFX/epilogue/END-Heavy Rain.wav" id="15_n0inr"]
+[ext_resource type="AudioStream" uid="uid://brbj37rynw8yo" path="res://assets/SFX/main_menu/MAIN MENU.wav" id="16_72voy"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_4a615"]
+texture = ExtResource("5_nvq86")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hfile"]
+texture = ExtResource("6_xlqa2")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_tum8g"]
+texture = ExtResource("5_nvq86")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_3lsu4"]
+texture = ExtResource("5_nvq86")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_syp3c"]
+texture = ExtResource("6_xlqa2")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_eg61h"]
+texture = ExtResource("5_nvq86")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_fwfcd"]
+texture = ExtResource("5_nvq86")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ml0o2"]
+texture = ExtResource("6_xlqa2")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_7fp0s"]
+texture = ExtResource("5_nvq86")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_c34bh"]
+texture = ExtResource("5_nvq86")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ip0vk"]
+texture = ExtResource("6_xlqa2")
 
 [node name="Node2D" type="Node2D" unique_id=720338231]
 script = ExtResource("1_fqvlb")
 
+[node name="BG" type="TextureRect" parent="." unique_id=706730353]
+offset_left = -1.0
+offset_top = -1.0
+offset_right = 1153.0
+offset_bottom = 652.0
+texture = ExtResource("3_wvnut")
+expand_mode = 1
+
 [node name="TextureRect2" type="TextureRect" parent="." unique_id=1679355144]
 visible = false
-offset_left = 30.0
-offset_top = 23.0
-offset_right = 531.0
-offset_bottom = 524.0
+offset_left = 90.0
+offset_top = -41.0
+offset_right = 591.0
+offset_bottom = 460.0
+texture = ExtResource("3_nvq86")
 expand_mode = 1
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=1493033873]
-offset_left = 638.0
-offset_top = 2.0
-offset_right = 1076.0
-offset_bottom = 558.0
+offset_left = 634.0
+offset_top = 65.0
+offset_right = 1072.0
+offset_bottom = 621.0
 expand_mode = 1
 stretch_mode = 5
-
-[node name="ColorRect" type="ColorRect" parent="." unique_id=168253891]
-visible = false
-offset_left = -44.0
-offset_top = 482.0
-offset_right = 1179.0
-offset_bottom = 681.0
-color = Color(0.20152658, 0.20152658, 0.20152652, 1)
 
 [node name="data_gita" type="TextureRect" parent="." unique_id=902085437]
 visible = false
@@ -40,7 +84,7 @@ offset_left = 591.0
 offset_top = 19.0
 offset_right = 1033.0
 offset_bottom = 804.77795
-texture = ExtResource("2_2lvrp")
+texture = ExtResource("4_lymec")
 expand_mode = 1
 
 [node name="RichTextLabel" type="RichTextLabel" parent="data_gita" unique_id=243550857]
@@ -49,34 +93,23 @@ offset_left = -451.0
 offset_top = 112.0
 offset_right = 64.50586
 offset_bottom = 221.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.8784314)
+theme_override_fonts/bold_font = ExtResource("4_y0fsv")
 theme_override_font_sizes/normal_font_size = 21
 text = "Gita Marani 25 Tahun. 
 TOP 30 FORBES INDONESIA Termuda. 
 Anak dari Mr. Apollo, CEO of PT. Kimpul Jaya 2027"
 
-[node name="Historypanel" type="Panel" parent="." unique_id=1552747182]
-offset_right = 1154.0
-offset_bottom = 651.0
-
-[node name="ScrollContainer" type="ScrollContainer" parent="Historypanel" unique_id=387002114]
-layout_mode = 1
-anchors_preset = -1
-offset_right = 1153.0
-offset_bottom = 660.0
-
-[node name="Historylabel" type="RichTextLabel" parent="Historypanel/ScrollContainer" unique_id=742842073]
-custom_minimum_size = Vector2(1155, 646.93)
-layout_mode = 2
-size_flags_horizontal = 4
-bbcode_enabled = true
-fit_content = true
-
 [node name="SkipButton" type="Button" parent="." unique_id=2107897405]
-offset_left = 1017.0
-offset_top = -1.0
-offset_right = 1153.0
-offset_bottom = 42.0
+offset_left = 1036.0
+offset_top = 5.0
+offset_right = 1146.0
+offset_bottom = 48.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("4_y0fsv")
+theme_override_styles/normal = SubResource("StyleBoxTexture_4a615")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_hfile")
+theme_override_styles/hover = SubResource("StyleBoxTexture_tum8g")
 text = "SKIP"
 
 [node name="AutoButton" type="Button" parent="." unique_id=683368442]
@@ -85,31 +118,28 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 921.0
-offset_right = 1007.0
-offset_bottom = 41.0
+offset_left = 942.0
+offset_top = 6.0
+offset_right = 1028.0
+offset_bottom = 47.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "Auto"
+theme_override_fonts/font = ExtResource("4_y0fsv")
+theme_override_styles/normal = SubResource("StyleBoxTexture_3lsu4")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_syp3c")
+theme_override_styles/hover = SubResource("StyleBoxTexture_eg61h")
+text = "AUTO"
 
 [node name="HistoryButton" type="Button" parent="." unique_id=1581294940]
-offset_left = 837.0
-offset_right = 910.0
-offset_bottom = 40.0
-text = "History"
-
-[node name="BG_inflasi" type="TextureRect" parent="." unique_id=2062252606]
-visible = false
-offset_right = 1150.2222
-offset_bottom = 647.0
-texture = ExtResource("3_wvnut")
-expand_mode = 1
-
-[node name="BG_polisi" type="TextureRect" parent="." unique_id=2135109223]
-visible = false
-offset_right = 1152.0
-offset_bottom = 651.0
-texture = ExtResource("4_c1mgc")
+offset_left = 845.0
+offset_top = 6.0
+offset_right = 935.0
+offset_bottom = 46.0
+theme_override_fonts/font = ExtResource("4_y0fsv")
+theme_override_styles/normal = SubResource("StyleBoxTexture_fwfcd")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_ml0o2")
+theme_override_styles/hover = SubResource("StyleBoxTexture_7fp0s")
+text = "HISTORY"
 
 [node name="VBoxContainer" type="Control" parent="." unique_id=206706626]
 layout_mode = 3
@@ -133,6 +163,8 @@ offset_left = 122.0
 offset_top = 61.0
 offset_right = 993.0
 offset_bottom = 165.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/bold_font = ExtResource("4_y0fsv")
 
 [node name="nametag" type="TextureRect" parent="VBoxContainer" unique_id=1484249107]
 layout_mode = 0
@@ -149,6 +181,69 @@ offset_left = 120.0
 offset_top = 12.0
 offset_right = 240.0
 offset_bottom = 44.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.5882353)
 vertical_alignment = 1
 
+[node name="Historypanel" type="Panel" parent="." unique_id=1552747182]
+visible = false
+offset_right = 1154.0
+offset_bottom = 651.0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Historypanel" unique_id=387002114]
+layout_mode = 1
+anchors_preset = -1
+offset_right = 1153.0
+offset_bottom = 660.0
+
+[node name="Historylabel" type="RichTextLabel" parent="Historypanel/ScrollContainer" unique_id=742842073]
+custom_minimum_size = Vector2(1155, 646.93)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/normal_font = ExtResource("3_c1mgc")
+bbcode_enabled = true
+fit_content = true
+
+[node name="HistoryExit" type="Button" parent="Historypanel" unique_id=629651647]
+layout_mode = 0
+offset_left = 1063.0
+offset_top = 12.0
+offset_right = 1140.0
+offset_bottom = 58.0
+theme_override_fonts/font = ExtResource("4_y0fsv")
+theme_override_styles/normal = SubResource("StyleBoxTexture_c34bh")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_ip0vk")
+text = "EXIT"
+
+[node name="click_sound" type="AudioStreamPlayer" parent="." unique_id=1619385949]
+stream = ExtResource("11_tum8g")
+
+[node name="click_skips" type="AudioStreamPlayer" parent="." unique_id=241073958]
+stream = ExtResource("12_qsvih")
+
+[node name="people_talk" type="AudioStreamPlayer" parent="." unique_id=89182735]
+stream = ExtResource("13_lymec")
+
+[node name="get_idea" type="AudioStreamPlayer" parent="." unique_id=743606214]
+stream = ExtResource("14_n0inr")
+
+[node name="rain" type="AudioStreamPlayer" parent="." unique_id=307683925]
+stream = ExtResource("15_n0inr")
+volume_db = -10.0
+
+[node name="menu_bgm" type="AudioStreamPlayer" parent="." unique_id=1116809799]
+stream = ExtResource("16_72voy")
+volume_db = -10.0
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1057607315]
+visible = false
+modulate = Color(0, 0, 0, 1)
+offset_right = 1153.0
+offset_bottom = 654.0
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[connection signal="pressed" from="SkipButton" to="." method="_on_skip_button_pressed"]
+[connection signal="pressed" from="AutoButton" to="." method="_on_auto_button_pressed"]
 [connection signal="pressed" from="HistoryButton" to="." method="_on_history_button_pressed"]
+[connection signal="pressed" from="Historypanel/HistoryExit" to="." method="_on_history_exit_pressed"]
