@@ -84,7 +84,8 @@ func _ready() -> void:
 	lamp.texture = ResourceScript.lamp_pool[Player_Data.cart_lvl-1]
 	
 	stove_timer.timeout.connect(_turn_stove_off)
-	stove_timer.wait_time = frying_sfx.stream.get_length()
+	if frying_sfx.stream != null:
+		stove_timer.wait_time = frying_sfx.stream.get_length()
 	frying_sfx.pitch_scale = randf_range(0.9, 1.1)
 	typo_sfx.pitch_scale = randf_range(0.9, 1.1)
 	typo_shield_marker.visible = Player_Data.typo_shield	
@@ -153,6 +154,7 @@ func _exit_state(state: State):
 		State.SELECTION:
 			pass
 		State.SERVING:
+			frying_sfx.stop()
 			order_container.modulate = Color(0)
 			dim_overlay.visible = false
 		State.TUTORIAL_PAUSED:
@@ -221,7 +223,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		State.SELECTION:
 			if Input.is_action_just_pressed("ui_cancel"):
 				set_state(State.PAUSED)
-			elif Input.is_action_just_pressed("ui_accept"):
+			elif Input.is_action_just_pressed("ui_accept") and delay_timer.is_stopped():
 				set_state(State.SERVING)
 			else:
 				_on_customer_switch(event)
@@ -248,6 +250,8 @@ func _handle_typing_input(event: InputEvent):
 	var next_character = order_text.text[selected_customer.current_letter_index].to_upper()
 	
 	if key_typed == next_character:
+		if frying_sfx.stream == null:
+			frying_sfx.stream = load(SoundLibrary.frying[randi_range(0, 1)])
 		frying_sfx.play()
 		turn_stove_on()
 		if selected_customer.timer.time_left < 5:

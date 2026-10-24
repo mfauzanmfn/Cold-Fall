@@ -12,6 +12,7 @@ func save_game():
 		return
 	file.store_string(JSON.stringify(data, "\t"))
 	file.close()
+	Player_Data.is_new_game = false
 
 func load_game():
 	if not FileAccess.file_exists(SAVE_PATH):

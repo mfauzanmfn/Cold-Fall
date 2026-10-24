@@ -1,11 +1,10 @@
-[gd_scene format=3 uid="uid://cvse0idluknqc"]
+[gd_scene format=3 uid="uid://bl82oxnc6t6xj"]
 
-[ext_resource type="Script" uid="uid://nq2j6ymj66u5" path="res://scripts/menu_1.gd" id="1_q0h77"]
-[ext_resource type="Texture2D" uid="uid://cgktfscsx08x6" path="res://assets/BG/ceo-office.png" id="2_o7iy6"]
-[ext_resource type="FontFile" uid="uid://byxex3bcboe0w" path="res://assets/fonts/Universal/IBMPlexSans_Condensed-Bold.ttf" id="2_y60et"]
-[ext_resource type="Texture2D" uid="uid://q58h3juhstm3" path="res://assets/Logo/cold-fall-logo.png" id="3_y60et"]
-[ext_resource type="AudioStream" uid="uid://bvbbuo2xcw3rl" path="res://assets/SFX/CLICK-button click.wav" id="4_uadbv"]
-[ext_resource type="AudioStream" uid="uid://bnh2v1w6onimc" path="res://assets/BGM/MAIN MENU GAME REV.wav" id="6_o7iy6"]
+[ext_resource type="Script" uid="uid://nq2j6ymj66u5" path="res://scripts/menu_1.gd" id="1_5pab1"]
+[ext_resource type="Texture2D" uid="uid://cgktfscsx08x6" path="res://assets/BG/ceo-office.png" id="2_o30b1"]
+[ext_resource type="FontFile" uid="uid://byxex3bcboe0w" path="res://assets/fonts/Universal/IBMPlexSans_Condensed-Bold.ttf" id="3_ka6nf"]
+[ext_resource type="Texture2D" uid="uid://q58h3juhstm3" path="res://assets/Logo/cold-fall-logo.png" id="4_ws7p0"]
+[ext_resource type="AudioStream" uid="uid://bvbbuo2xcw3rl" path="res://assets/SFX/CLICK-button click.wav" id="5_ecdxc"]
 
 [node name="menu_1" type="Control" unique_id=1960574166]
 layout_mode = 3
@@ -14,7 +13,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_q0h77")
+script = ExtResource("1_5pab1")
 
 [node name="BG" type="TextureRect" parent="." unique_id=417994951]
 modulate = Color(0.82606, 0.82606006, 0.82606, 1)
@@ -22,7 +21,7 @@ layout_mode = 0
 offset_top = 1.0
 offset_right = 1153.0
 offset_bottom = 648.0
-texture = ExtResource("2_o7iy6")
+texture = ExtResource("2_o30b1")
 expand_mode = 1
 
 [node name="Label" type="Label" parent="." unique_id=451174035]
@@ -38,7 +37,7 @@ offset_right = 112.0
 offset_bottom = 239.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_fonts/font = ExtResource("2_y60et")
+theme_override_fonts/font = ExtResource("3_ka6nf")
 theme_override_font_sizes/font_size = 46
 text = "Press any button to continue"
 vertical_alignment = 1
@@ -61,13 +60,13 @@ theme_override_constants/separation = -25
 
 [node name="Label2" type="Label" parent="VBoxContainer" unique_id=1340519934]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_y60et")
+theme_override_fonts/font = ExtResource("3_ka6nf")
 theme_override_font_sizes/font_size = 90
 text = "Cold"
 
 [node name="Label3" type="Label" parent="VBoxContainer" unique_id=495635730]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_y60et")
+theme_override_fonts/font = ExtResource("3_ka6nf")
 theme_override_font_sizes/font_size = 90
 text = "Fall"
 horizontal_alignment = 2
@@ -85,12 +84,9 @@ offset_right = 250.0
 offset_bottom = 135.5
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("3_y60et")
+texture = ExtResource("4_ws7p0")
 expand_mode = 1
 stretch_mode = 5
 
 [node name="click_sound" type="AudioStreamPlayer" parent="." unique_id=346833394]
-stream = ExtResource("4_uadbv")
-
-[node name="menu_bgm" type="AudioStreamPlayer" parent="." unique_id=943535100]
-stream = ExtResource("6_o7iy6")
+stream = ExtResource("5_ecdxc")

@@ -8,7 +8,7 @@ var is_tutorial: bool = true
 var cart_lvl: int = 1
 var upgrade_levels: Dictionary = {}
 var current_phase: String = "PHS_00"
-
+var is_new_game: bool = true
 func get_upgrade_level(id: String) -> int:
 	return upgrade_levels.get(id, 0)
 

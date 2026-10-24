@@ -3,7 +3,6 @@
 [ext_resource type="Script" uid="uid://cnawi8h8dm48j" path="res://scripts/typing_scripts.gd" id="1_7j68c"]
 [ext_resource type="FontFile" uid="uid://byn481d7ndn20" path="res://assets/fonts/typing fonts/RobotoMono-VariableFont_wght.ttf" id="3_y5mp5"]
 [ext_resource type="FontFile" uid="uid://b2ubsf6oc0xkv" path="res://assets/fonts/typing fonts/RobotoMono-Bold.ttf" id="4_u2502"]
-[ext_resource type="AudioStream" uid="uid://bi3reap3nvmsy" path="res://assets/SFX/Typing_sfx/INGAME-frying var 2 (mp3cut.net).wav" id="5_rhcw2"]
 [ext_resource type="Texture2D" uid="uid://d0li0lkgakcff" path="res://assets/UI&HUD/Typing UI/patience bar/patience-bar-frame.png" id="5_tujbo"]
 [ext_resource type="Texture2D" uid="uid://c0cl2rpjdh4ay" path="res://assets/UI&HUD/Typing UI/patience bar/patience-bar-fill.png" id="6_45b5h"]
 [ext_resource type="AudioStream" uid="uid://d0x58gcqb02up" path="res://assets/SFX/Typing_sfx/INGAME-typo.wav" id="6_48eqw"]
@@ -173,7 +172,6 @@ layout_mode = 2
 texture = SubResource("GradientTexture2D_q6j51")
 
 [node name="FryingSfx" type="AudioStreamPlayer" parent="." unique_id=426013768]
-stream = ExtResource("5_rhcw2")
 
 [node name="TypoSfx" type="AudioStreamPlayer" parent="." unique_id=2075054671]
 stream = ExtResource("6_48eqw")

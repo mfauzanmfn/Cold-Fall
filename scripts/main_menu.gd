@@ -14,15 +14,10 @@ func _ready() -> void:
 	menu_bgm.play()
 	
 	SaveManager.load_game()
-	if !Player_Data.is_tutorial:
+	if !Player_Data.is_new_game:
 		continue_button.visible = true
-	
 	setting_panel.visible = false
-	start_button.pressed.connect(_on_start_button_pressed)
-	exit_button.pressed.connect(_on_exit_button_pressed)
-	setting_button.pressed.connect(_on_setting_button_pressed)
-	close_button.pressed.connect(_on_close_button_pressed)
-	volume_slider.value_changed.connect(_on_volume_slider_value_changed)
+	start_button.toggled.connect(_on_start_button_pressed)
 
 func _on_start_button_pressed() -> void:
 	click_sound.play()

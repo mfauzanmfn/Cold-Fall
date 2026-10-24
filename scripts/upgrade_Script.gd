@@ -12,8 +12,10 @@ func _ready() -> void:
 	money_label.text = "Balance: " + str(Player_Data.money)
 	if Player_Data.income > 4000:
 		Player_Data.current_phase = "PHS_03"
-	elif Player_Data.income > 9999:
+	elif Player_Data.income > 7000:
 		Player_Data.current_phase = "PHS_04"
+	elif Player_Data.income > 9999:
+		Player_Data.current_phase = "PHS_05"
 	options_panel.visible = false
 	_connect_all_buttons(self)
 	if Player_Data.is_tutorial:
@@ -50,10 +52,11 @@ func _input(event: InputEvent) -> void:
 	if OS.is_debug_build():
 		if Input.is_action_just_pressed("key_8"):
 			Player_Data.money += 500
+			Player_Data.income += 500
 			_update_balance()
 
 func _on_texture_button_pressed() -> void:
-	if Player_Data.current_phase == "PHS_04":
+	if Player_Data.current_phase == "PHS_05":
 		get_tree().change_scene_to_file("res://scenes/epilogue.tscn")
 	else:
 		get_tree().change_scene_to_file(SceneManager.SCENES["typing_scene"])
@@ -64,4 +67,4 @@ func _on_save_button_pressed() -> void:
 	SaveManager.save_game()
 
 func _on_menu_button_pressed() -> void:
-	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
+	get_tree().change_scene_to_file(SceneManager.SCENES["main_menu"])
