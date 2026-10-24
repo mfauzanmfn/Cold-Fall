@@ -36,5 +36,5 @@ func apply_upgrade(upgrade: UpgradeData):
 				current_phase = "PHS_02"
 			OrdersPool.unlocked_groups.append("Ayam")
 	Player_Data.upgrade_levels[upgrade.id] = Player_Data.get_upgrade_level(upgrade.id) + 1
-	
+
 		

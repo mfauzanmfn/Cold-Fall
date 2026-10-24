@@ -5,8 +5,11 @@ extends Control
 @onready var dim_overlay: ColorRect = $DimOverlay
 @onready var options_panel: PanelContainer = $OptionsPanel
 @onready var click_sound = load(SoundLibrary.button_click)
+@onready var money_label: Label = $MoneyLabel
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	money_label.text = "Balance: " + str(Player_Data.money)
 	if Player_Data.income > 4000:
 		Player_Data.current_phase = "PHS_03"
 	elif Player_Data.income > 9999:
@@ -16,16 +19,21 @@ func _ready() -> void:
 	if Player_Data.is_tutorial:
 		Player_Data.is_tutorial = false
 
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
 
 func _connect_all_buttons(node: Node) -> void:
 	for child in node.get_children():
-		if child is BaseButton:   
+		if child is UpgradeButton:   
 			child.pressed.connect(_play_click)
+			child.purchased.connect(_update_balance)
 		_connect_all_buttons(child) 
+	
+
+func _update_balance():
+	money_label.text = "Balance: " + str(Player_Data.money)
+	
 
 func _play_click():
 	var click_player = AudioStreamPlayer.new()
@@ -39,6 +47,10 @@ func _input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("ui_cancel"):
 		dim_overlay.visible = !dim_overlay.visible
 		options_panel.visible = !options_panel.visible
+	if OS.is_debug_build():
+		if Input.is_action_just_pressed("key_8"):
+			Player_Data.money += 500
+			_update_balance()
 
 func _on_texture_button_pressed() -> void:
 	if Player_Data.current_phase == "PHS_04":

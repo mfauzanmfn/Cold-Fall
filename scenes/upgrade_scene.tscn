@@ -196,6 +196,16 @@ theme_override_styles/normal = ExtResource("3_b5odw")
 theme_override_styles/pressed = ExtResource("4_k6ira")
 text = "Main Menu"
 
+[node name="MoneyLabel" type="Label" parent="." unique_id=2005322195]
+layout_mode = 1
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 134.0
+offset_bottom = 50.0
+theme_override_fonts/font = ExtResource("2_bml3v")
+theme_override_font_sizes/font_size = 30
+text = "Balance: "
+
 [connection signal="pressed" from="VBoxContainer/Non-Stick Pan" to="." method="_on_non_stick_pan_pressed"]
 [connection signal="pressed" from="VBoxContainer/Ayam Geprek Recipe" to="." method="_on_ayam_geprek_recipe_pressed"]
 [connection signal="pressed" from="VBoxContainer/Upgrade Cart" to="." method="_on_ayam_geprek_recipe_pressed"]

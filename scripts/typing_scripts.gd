@@ -48,7 +48,6 @@ var slot_count
 
 const CUST_PANEL = preload("uid://ba5t8skrj86ph")
 @onready var timer_progress_ring: TextureProgressBar = $TimerProgressRing
-var timer_wait_time: float
 
 const ResourceScript = preload("res://scripts/Resource/TypingResources.gd")
 const CUSTOMER_POOL = ResourceScript.cust_pool
@@ -158,6 +157,7 @@ func _exit_state(state: State):
 			dim_overlay.visible = false
 		State.TUTORIAL_PAUSED:
 			dim_overlay.visible = false
+			tutorial.instruction_panel.visible = false
 			for slot in slot_container.get_children():
 				if slot.get_child(0) != null:
 					slot.get_child(0).timer.paused = false
@@ -165,7 +165,7 @@ func _exit_state(state: State):
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	timer_label.text = "%d" % timer.time_left
-	timer_progress_ring.value = 100 * (timer_wait_time - timer.time_left)/timer_wait_time
+	timer_progress_ring.value = 100 * (timer.wait_time - timer.time_left)/timer.wait_time
 	if current_state != State.GAMEOVER:
 		customer_progress_bar.value = selected_customer.patience_bar.value
 	
@@ -207,6 +207,11 @@ func create_random_customer() -> Panel:
 	return panel
 		
 func _unhandled_input(event: InputEvent) -> void:
+	if OS.is_debug_build():
+		if Input.is_action_just_pressed("key_6"):
+			set_state(State.GAMEOVER)
+		elif Input.is_action_just_pressed("key_7"):
+			earnings += 500
 	match current_state:
 		State.GAMEOVER:
 			return
