@@ -33,7 +33,7 @@ metadata/_custom_type_script = "uid://cwfnamirohuyl"
 script = ExtResource("6_pm4ds")
 id = "UPG_4"
 price = 800
-max_lvl = 2
+max_lvl = 3
 metadata/_custom_type_script = "uid://cwfnamirohuyl"
 
 [node name="Control" type="Control" unique_id=1164018203]
@@ -203,5 +203,5 @@ text = "Main Menu"
 [connection signal="pressed" from="OptionsPanel/VBoxContainer/SaveButton" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="OptionsPanel/VBoxContainer/SaveButton" to="." method="_on_save_button_pressed"]
 [connection signal="pressed" from="OptionsPanel/VBoxContainer/MenuButton" to="." method="_on_button_pressed"]
-[connection signal="pressed" from="OptionsPanel/VBoxContainer/MenuButton" to="." method="_on_save_button_pressed"]
 [connection signal="pressed" from="OptionsPanel/VBoxContainer/MenuButton" to="." method="_on_menu_button_pressed"]
+[connection signal="pressed" from="OptionsPanel/VBoxContainer/MenuButton" to="." method="_on_save_button_pressed"]
