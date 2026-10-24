@@ -15,13 +15,17 @@ var dissapointed: CompressedTexture2D
 
 @onready var timer: Timer = $Timer
 @onready var patience_bar: TextureProgressBar = $CenterContainer/Char_texture/PatienceBar
+var wait_time
+var default_wait_time = 15
+var tutorial_wait_time = 30
 
 @onready var success_effect: GPUParticles2D = $CenterContainer/Char_texture/EffectsContainer/SuccessEffect
 @onready var fail_effect: GPUParticles2D = $CenterContainer/Char_texture/EffectsContainer/FailEffect
 
 var order_price: int
 var typo_checkpoint: int = 0
-var long_wait: bool = false
+var flashing: bool = false
+var patience_flash_tween : Tween
 
 signal selected
 signal exited
@@ -32,6 +36,11 @@ func get_prompt() -> String:
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	if Player_Data.is_tutorial:
+		timer.wait_time = tutorial_wait_time
+	else:
+		timer.wait_time = default_wait_time
+	wait_time = timer.wait_time
 	if Player_Data.cart_lvl > 1:
 		timer.wait_time += 2
 	patience_bar.value = 0
@@ -40,9 +49,9 @@ func _ready() -> void:
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	patience_bar.value = 100 * (timer.wait_time - timer.time_left)/timer.wait_time
-	if timer.time_left < (timer.wait_time * 0.5) and not long_wait:
-		long_wait = true
+	patience_bar.value = 100 * (wait_time - timer.time_left)/wait_time
+	if timer.time_left < (timer.wait_time * 0.5) and not flashing:
+		flashing = true
 		char_texture.texture = dissapointed
 		_flash_patience_bar()
 
@@ -59,9 +68,16 @@ func _apply_state(selected: bool, animate: bool):
 		modulate = target_modulate
 	
 func _flash_patience_bar():
-	var tween = create_tween().set_loops()
-	tween.tween_property(patience_bar, "modulate", Color("d10055"), 0.4)
-	tween.tween_property(patience_bar, "modulate", Color.WHITE, 0.4)
+	patience_flash_tween = create_tween().set_loops()
+	patience_flash_tween.tween_property(patience_bar, "modulate", Color("d10055"), 0.4)
+	patience_flash_tween.tween_property(patience_bar, "modulate", Color.WHITE, 0.4)
+	
+func _stop_patience_bar_flash():
+	if patience_flash_tween:
+		patience_flash_tween.kill()
+		patience_flash_tween = null
+	patience_bar.modulate = Color.WHITE
+		
 	
 func _on_timer_timeout() -> void:
 	exited.emit(self)

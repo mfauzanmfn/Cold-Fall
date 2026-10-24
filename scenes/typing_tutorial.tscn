@@ -3,47 +3,61 @@
 [ext_resource type="PackedScene" uid="uid://ck1qhdjvpiye8" path="res://scenes/typing_scene.tscn" id="1_0v6xa"]
 [ext_resource type="Script" uid="uid://1d8tdspyxuut" path="res://scripts/tutorial_scripts.gd" id="2_8sj8w"]
 [ext_resource type="StyleBox" uid="uid://br7bjgt57pij6" path="res://Styles/panel.tres" id="3_6majc"]
+[ext_resource type="FontFile" uid="uid://ccwvtrt1s1ard" path="res://assets/fonts/Universal/IBMPlexSans-VariableFont_wdth,wght.ttf" id="4_c5iey"]
 [ext_resource type="StyleBox" uid="uid://c07n57j4kn86s" path="res://Styles/button_normal.tres" id="4_mioeh"]
 [ext_resource type="StyleBox" uid="uid://ckhj0rpvend32" path="res://Styles/button_pressed.tres" id="5_c5iey"]
 
 [node name="Typing" unique_id=136107084 instance=ExtResource("1_0v6xa")]
 
-[node name="Tutorial" type="Control" parent="." index="11" unique_id=2059623798]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="Timer" parent="." index="2" unique_id=539344591]
+autostart = false
+
+[node name="TutorialLayer2" type="CanvasLayer" parent="." index="11" unique_id=1432291545]
+process_mode = 3
+layer = 0
 script = ExtResource("2_8sj8w")
 
-[node name="instructionPanel" type="PanelContainer" parent="Tutorial" index="0" unique_id=1210982809]
-visible = false
-custom_minimum_size = Vector2(200, 200)
+[node name="instructionPanel" type="PanelContainer" parent="TutorialLayer2" index="0" unique_id=1210982809]
+custom_minimum_size = Vector2(200, 150)
 custom_maximum_size = Vector2(400, 300)
-layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 356.0
-offset_top = 154.0
-offset_right = 756.0
-offset_bottom = 454.0
+offset_left = -170.0
+offset_top = -87.5
+offset_right = 170.0
+offset_bottom = 87.5
 grow_horizontal = 2
 grow_vertical = 2
+offset_transform_enabled = true
 theme_override_styles/panel = ExtResource("3_6majc")
 
-[node name="Instruction" type="RichTextLabel" parent="Tutorial/instructionPanel" index="0" unique_id=1160798574]
+[node name="VBoxContainer" type="VBoxContainer" parent="TutorialLayer2/instructionPanel" index="0" unique_id=1908856443]
 layout_mode = 2
-size_flags_vertical = 0
-text = "Mari bantu Gita melayani pelanggan pertamanya. Di game ini, kamu memasak dengan cara mengetik teks pesanan di atas kepala pelanggan secepat dan setepat mungkin!"
-fit_content = true
-scroll_active = false
-autowrap_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+theme_override_constants/separation = 30
 
-[node name="Button" type="Button" parent="Tutorial/instructionPanel" index="1" unique_id=214657627]
+[node name="Instruction" type="RichTextLabel" parent="TutorialLayer2/instructionPanel/VBoxContainer" index="0" unique_id=1657132950]
+custom_maximum_size = Vector2(300, 200)
+propagate_maximum_size = true
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 2
+theme_override_fonts/normal_font = ExtResource("4_c5iey")
+theme_override_font_sizes/normal_font_size = 10
+text = "Patience Bar: Jangan membuat pelanggan terlalu lama menunggu! Bar di atas pelanggan menunjukkan waktu yang mereka miliki sebelum mereka kesal dan pergi tanpa memesan"
+fit_content = true
+
+[node name="Button" type="Button" parent="TutorialLayer2/instructionPanel/VBoxContainer" index="1" unique_id=214657627]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 8
 theme_override_styles/normal = ExtResource("4_mioeh")
 theme_override_styles/pressed = ExtResource("5_c5iey")
+theme_override_styles/hover = ExtResource("4_mioeh")
 text = "Continue"
+
+[connection signal="pressed" from="TutorialLayer2/instructionPanel/VBoxContainer/Button" to="TutorialLayer2" method="_on_button_pressed"]
