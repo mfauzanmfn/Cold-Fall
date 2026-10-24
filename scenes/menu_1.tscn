@@ -5,7 +5,7 @@
 [ext_resource type="FontFile" uid="uid://byxex3bcboe0w" path="res://assets/fonts/Universal/IBMPlexSans_Condensed-Bold.ttf" id="2_y60et"]
 [ext_resource type="Texture2D" uid="uid://q58h3juhstm3" path="res://assets/Logo/cold-fall-logo.png" id="3_y60et"]
 [ext_resource type="AudioStream" uid="uid://bvbbuo2xcw3rl" path="res://assets/SFX/CLICK-button click.wav" id="4_uadbv"]
-[ext_resource type="AudioStream" uid="uid://dhy4qtbho2jwh" path="res://assets/SFX/main_menu/MAIN MENU GAME REV.wav" id="5_uadbv"]
+[ext_resource type="AudioStream" uid="uid://bnh2v1w6onimc" path="res://assets/BGM/MAIN MENU GAME REV.wav" id="6_o7iy6"]
 
 [node name="menu_1" type="Control" unique_id=1960574166]
 layout_mode = 3
@@ -91,4 +91,4 @@ texture = ExtResource("3_y60et")
 stream = ExtResource("4_uadbv")
 
 [node name="menu_bgm" type="AudioStreamPlayer" parent="." unique_id=943535100]
-stream = ExtResource("5_uadbv")
+stream = ExtResource("6_o7iy6")
