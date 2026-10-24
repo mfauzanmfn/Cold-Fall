@@ -14,6 +14,7 @@ config/name="Cold Fall"
 config/use_custom_user_dir=true
 config/custom_user_dir_name="ColdFall"
 config/features=PackedStringArray("4.7", "Forward Plus")
+config/icon="uid://q58h3juhstm3"
 
 [autoload]
 
