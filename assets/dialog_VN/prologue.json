@@ -3,7 +3,8 @@
 	"id": 1,
 	"karakter": "Orang",
 	"ekspresi": "",
-	"dialog": "Lihat! Bukankah itu anak dari CEO PT. Kimpul Jaya 2027?"
+	"dialog": "Lihat! Bukankah itu anak dari CEO PT. Kimpul Jaya 2027?",
+	"bg": "res://assets/BG/ceo-office.png"
   },
   {
 	"id": 2,
@@ -21,46 +22,64 @@
 	"id": 4,
 	"karakter": "Gita",
 	"ekspresi": "",
-	"dialog": "Udah enggak, tuh."
+	"dialog": "Udah enggak, tuh.",
+	"bg": "res://assets/BG/ayumi-kubo-qXo1aynWHvg-unsplash.jpg"
   },
   {
 	"id": 5,
 	"karakter":"Narrator",
 	"ekspresi": "",
-	"dialog": " "
+	"dialog": " ",
+	"bg": "res://assets/BG/inflasi.png"
   },
   {
 	"id": 6,
-	"karakter": "Narrator",
+	"karakter":"Narrator",
 	"ekspresi": "",
-	"dialog": "Dalam semalam, semuanya lenyap. Inflasi menghancurkan pasar, bursa, dan isi bank. Ayah... diasingkan (ke penjara) untuk menghindari kejaran utang. Orang-orang yang dulu memujiku, kini pura-pura tidak kenal."
-  },
+	"dialog": "  ",
+	"bg": "res://assets/BG/inflasi2.jpg"
+  }, 
   {
 	"id": 7,
-	"karakter": "Gita",
-	"ekspresi": "crying",
-	"dialog": "Lapar... Uang di dompetku bahkan nggak cukup buat beli roti."
+	"karakter":"Narrator",
+	"ekspresi": "",
+	"dialog": "   ",
+	"bg": "res://assets/BG/ptKimpul-news-head.png"
   },
   {
 	"id": 8,
+	"karakter": "Narrator",
+	"ekspresi": "",
+	"dialog": "Dalam semalam, semuanya lenyap. Inflasi menghancurkan pasar, bursa, dan isi bank. Ayah... diasingkan (ke penjara) untuk menghindari kejaran utang. Orang-orang yang dulu memujiku, kini pura-pura tidak kenal.",
+	"bg": "res://assets/BG/police_blur.jpg"
+  },
+  {
+	"id": 9,
+	"karakter": "Gita",
+	"ekspresi": "crying",
+	"dialog": "Lapar... Uang di dompetku bahkan nggak cukup buat beli roti.",
+	"bg": "res://assets/BG/dark-alley.png"
+  },
+  {
+	"id": 10,
 	"karakter": "Gita",
 	"ekspresi": "curious",
 	"dialog": "Tunggu.. Ini... gerobak gorengan? Masih ada gasnya..."
   },
   {
-	"id": 9,
+	"id": 11,
 	"karakter": "Gita",
 	"ekspresi": "",
 	"dialog": "Uang? Sisa cepek... Pikir... Gita, apa yang bisa kamu lakukan?"
   },
   {
-	"id": 10,
+	"id": 12,
 	"karakter": "Gita",
 	"ekspresi": "normal",
 	"dialog": "Untuk modal sekarang, sepertinya akan paling menguntungkan jika kita memulai menjual gorengan yang seperti di pinggir jalan! Mudah dan cepat!!"
   },
   {
-	"id": 11,
+	"id": 13,
 	"karakter": "Gita",
 	"ekspresi": "",
 	"dialog": "Sekarang mari kita coba masak!"

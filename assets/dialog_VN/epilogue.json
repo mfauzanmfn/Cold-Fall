@@ -3,18 +3,35 @@
 	"id": 1,
 	"karakter": "Gita",
 	"ekspresi": "senang",
-	"dialog": "Terima kasih semuanya sudah datang ke tempatku! Ditunggu lagi besok, ya!"
+	"dialog": "Terima kasih semuanya sudah datang ke tempatku! Ditunggu lagi besok, ya!",
+	"bg": "res://assets/BG/dark-alley.png"
   },
   {
 	"id": 2,
 	"karakter": "Narrator",
 	"ekspresi": "",
-	"dialog": "..."
+	"dialog": "...",
+	"bg": "res://assets/BG/black_screen.jpg"
   },
   {
 	"id": 3,
 	"karakter": "Gita",
 	"ekspresi": "",
-	"dialog": "Huh...?"
+	"dialog": "Huh...?",
+	"bg": "res://assets/BG/ayumi-kubo-qXo1aynWHvg-unsplash.jpg"
+  },
+  {
+	"id": 4,
+	"karakter": "Gita",
+	"ekspresi": "",
+	"dialog": "Apa... yang terjadi...? Badanku... dingin...",
+	"bg": "res://assets/BG/dark-alley.png"
+  },
+  {
+	"id": 5,
+	"karakter": "Narrator",
+	"ekspresi": "",
+	"dialog": "FIN",
+	"bg": "res://assets/BG/black_screen.jpg"
   }
 ]
