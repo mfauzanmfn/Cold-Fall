@@ -41,7 +41,10 @@ func _input(event: InputEvent) -> void:
 		options_panel.visible = !options_panel.visible
 
 func _on_texture_button_pressed() -> void:
-	get_tree().change_scene_to_file(SceneManager.SCENES["typing_scene"])
+	if Player_Data.current_phase == "PHS_04":
+		get_tree().change_scene_to_file("res://scenes/epilogue.tscn")
+	else:
+		get_tree().change_scene_to_file(SceneManager.SCENES["typing_scene"])
 	
 
 
