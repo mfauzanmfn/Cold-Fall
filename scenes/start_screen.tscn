@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://nq2j6ymj66u5" path="res://scripts/menu_1.gd" id="1_5pab1"]
 [ext_resource type="Texture2D" uid="uid://cgktfscsx08x6" path="res://assets/BG/ceo-office.png" id="2_o30b1"]
 [ext_resource type="FontFile" uid="uid://byxex3bcboe0w" path="res://assets/fonts/Universal/IBMPlexSans_Condensed-Bold.ttf" id="3_ka6nf"]
-[ext_resource type="Texture2D" uid="uid://q58h3juhstm3" path="res://assets/Logo/cold-fall-logo.png" id="4_ws7p0"]
+[ext_resource type="Texture2D" uid="uid://t02rkt8nmxo5" path="res://assets/Logo/cold-fall-logo-square2.png" id="4_hm208"]
 [ext_resource type="AudioStream" uid="uid://bvbbuo2xcw3rl" path="res://assets/SFX/CLICK-button click.wav" id="5_ecdxc"]
 
 [node name="menu_1" type="Control" unique_id=1960574166]
@@ -84,7 +84,7 @@ offset_right = 250.0
 offset_bottom = 135.5
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("4_ws7p0")
+texture = ExtResource("4_hm208")
 expand_mode = 1
 stretch_mode = 5
 

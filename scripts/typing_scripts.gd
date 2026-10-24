@@ -76,6 +76,7 @@ var tween: Tween
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	backgrounds.texture = ResourceScript.PhaseLocation[Player_Data.current_phase]
+	print(Player_Data.current_phase)
 	order_container.modulate = Color(0)
 	item_pool = OrdersPool.get_unlocked_items()
 	slot_count = slot_container.get_child_count() 

@@ -12,9 +12,9 @@ func _ready() -> void:
 func _on_pressed():
 	if upgrade == null:
 		return
-	if Player_Data.get_upgrade_level(upgrade.id) >= upgrade.max_lvl:
-		return
 	if Player_Data.money < upgrade.price:
+		return
+	if Player_Data.get_upgrade_level(upgrade.id) >= upgrade.max_lvl:
 		return
 	if upgrade.is_consumable and Player_Data.get_upgrade_level(upgrade.id) > 0:
 		return

@@ -32,9 +32,23 @@ func apply_upgrade(upgrade: UpgradeData):
 		UpgradeData.Effect.TYPO_SHIELD:
 			typo_shield = true
 		UpgradeData.Effect.AYAM_GEPREK_RECIPE:
-			if income > 1500:
-				current_phase = "PHS_02"
 			OrdersPool.unlocked_groups.append("Ayam")
+	check_phase_condition()
 	Player_Data.upgrade_levels[upgrade.id] = Player_Data.get_upgrade_level(upgrade.id) + 1
 
-		
+func check_phase_condition():
+	match Player_Data.current_phase:
+		"PHS_00":
+			Player_Data.current_phase = "PHS_01"
+		"PHS_01":
+			if income > 1500 and OrdersPool.unlocked_groups.has("Ayam"):
+				current_phase = "PHS_02"
+		"PHS_02":
+			if Player_Data.income > 4000:
+				Player_Data.current_phase = "PHS_03"
+		"PHS_03":
+			if Player_Data.income > 7000:
+				Player_Data.current_phase = "PHS_04"
+		"PHS_04":
+			if Player_Data.income > 9999:
+				Player_Data.current_phase = "PHS_05"

@@ -9,21 +9,12 @@ extends Control
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	Player_Data.check_phase_condition()
 	money_label.text = "Balance: " + str(Player_Data.money)
-	if Player_Data.income > 4000:
-		Player_Data.current_phase = "PHS_03"
-	elif Player_Data.income > 7000:
-		Player_Data.current_phase = "PHS_04"
-	elif Player_Data.income > 9999:
-		Player_Data.current_phase = "PHS_05"
 	options_panel.visible = false
 	_connect_all_buttons(self)
 	if Player_Data.is_tutorial:
 		Player_Data.is_tutorial = false
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
 
 func _connect_all_buttons(node: Node) -> void:
 	for child in node.get_children():

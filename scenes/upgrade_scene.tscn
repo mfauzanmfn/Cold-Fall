@@ -78,7 +78,8 @@ theme_override_font_sizes/font_size = 30
 theme_override_styles/normal = ExtResource("3_b5odw")
 theme_override_styles/pressed = ExtResource("4_k6ira")
 theme_override_styles/hover = ExtResource("4_k6ira")
-text = "Non-Stick Pan"
+text = "Non-Stick Pan
+300"
 script = ExtResource("5_2bn62")
 upgrade = SubResource("Resource_2bn62")
 
@@ -94,7 +95,8 @@ theme_override_styles/normal = ExtResource("3_b5odw")
 theme_override_styles/pressed = ExtResource("4_k6ira")
 theme_override_styles/hover = ExtResource("4_k6ira")
 text = "Ayam Geprek 
-Recipe"
+Recipe
+500"
 script = ExtResource("5_2bn62")
 upgrade = SubResource("Resource_wp5od")
 
@@ -109,7 +111,8 @@ theme_override_font_sizes/font_size = 30
 theme_override_styles/normal = ExtResource("3_b5odw")
 theme_override_styles/pressed = ExtResource("4_k6ira")
 theme_override_styles/hover = ExtResource("4_k6ira")
-text = "Upgrade Cart"
+text = "Upgrade Cart
+800"
 script = ExtResource("5_2bn62")
 upgrade = SubResource("Resource_k735o")
 
