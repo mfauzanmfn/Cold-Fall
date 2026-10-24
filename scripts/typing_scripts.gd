@@ -6,13 +6,16 @@ extends Control
 @onready var slot_3: Control = $VBoxContainer/GridContainer/SlotContainer/slot3
 @onready var order_text: RichTextLabel = $OrderContainer/OrderText
 @onready var backgrounds: TextureRect = $Backgrounds
+@onready var result_container: PanelContainer = $ResultContainer
+
+@onready var tutorial: CanvasLayer = $TutorialLayer
 
 @onready var order_container: PanelContainer = $OrderContainer
 @onready var pause_container: PanelContainer = $PauseContainer
 
-@export var blue: Color
-@export var green : Color
-@export var red: Color
+@export var typed: Color
+@export var current_character : Color
+@export var remaining: Color
 @export var typo_color: Color
 @onready var typo_shield_marker: TextureRect = $PowerUpContainer/TypoShield_Marker
 @onready var booster_marker: TextureRect = $PowerUpContainer/BoosterMarker
@@ -23,7 +26,7 @@ extends Control
 @onready var frying_sfx: AudioStreamPlayer = $FryingSfx
 @onready var typo_sfx: AudioStreamPlayer = $TypoSfx
 
-enum State {PAUSED, SELECTION, SERVING, GAMEOVER} 
+enum State {PAUSED, SELECTION, SERVING, GAMEOVER, TUTORIAL_PAUSED} 
 enum RemovalReason {SERVED, TIMED_OUT}	
 var current_state: State = State.SELECTION
 
@@ -63,14 +66,13 @@ var earnings: int = 0
 @onready var timer_label: Label = $Timer_Label
 @onready var delay_timer: Timer = $DelayTimer
 
-var success_delay
-var fail_delay
-var time_penalty: float = 5.0
-
 @onready var cart: TextureRect = $Cart
 @onready var stove: TextureRect = $Cart/Stove
 @onready var wok: TextureRect = $Cart/Stove/Wok
+@onready var lamp: TextureRect = $Cart/Lamp
 @onready var stove_timer: Timer = $StoveTimer
+var tween: Tween
+@onready var bgm: AudioStreamPlayer = $BGM
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -80,28 +82,37 @@ func _ready() -> void:
 	slot_count = slot_container.get_child_count() 
 	
 	cart.texture = ResourceScript.cart_pool[Player_Data.cart_lvl-1]
+	lamp.texture = ResourceScript.lamp_pool[Player_Data.cart_lvl-1]
+	
 	stove_timer.timeout.connect(_turn_stove_off)
 	stove_timer.wait_time = frying_sfx.stream.get_length()
-	
-	for slot in slot_container.get_children():
-		slot.add_child(create_random_customer())
-	
+	frying_sfx.pitch_scale = randf_range(0.9, 1.1)
+	typo_sfx.pitch_scale = randf_range(0.9, 1.1)
+	typo_shield_marker.visible = Player_Data.typo_shield	
+
+	if Player_Data.is_tutorial and get_node_or_null("TutorialLayer") != null:
+		slot_1.add_child(create_random_customer())
+		timer_label.visible = false
+	else:
+		fill_all_slot()
+		timer_label.visible = true
+		timer.start()
 	selected_customer = slot_1.get_child(0)
 	selected_customer.become_selected()
 	order_text.text = selected_customer.prompt
 	set_next_character(selected_customer.current_letter_index, false)
-	
-	success_delay = selected_customer.success_effect.lifetime
-	fail_delay = selected_customer.fail_effect.lifetime
-	
-	timer_wait_time = timer.wait_time
-	timer.start()
-	
-	frying_sfx.pitch_scale = randf_range(0.9, 1.1)
-	typo_sfx.pitch_scale = randf_range(0.9, 1.1)
-	if Player_Data.typo_shield:
-		typo_shield_marker.visible = true
-
+	bgm.volume_db = -30
+	tween = create_tween()
+	tween.tween_property(bgm, "volume_db", 0.0, 4)
+	bgm.play()
+	if Player_Data.is_tutorial:
+		tutorial._start_tutorial()
+		
+func fill_all_slot():
+	for slot in slot_container.get_children():
+		if slot.get_child_count() == 0: 
+			slot.add_child(create_random_customer())
+		
 func set_state(new_state: State):
 	if current_state == new_state:
 		return
@@ -111,9 +122,7 @@ func set_state(new_state: State):
 func _enter_state(state: State):
 	match state:
 		State.PAUSED:
-			timer.paused = true
-			for slot in slot_container.get_children():
-				slot.get_child(0).timer.paused = true
+			get_tree().paused = true
 			pause_container.visible = true
 			dim_overlay.visible = true
 			dim_overlay.top_level = true
@@ -122,13 +131,23 @@ func _enter_state(state: State):
 		State.SERVING:
 			order_container.modulate = Color(1, 1, 1, 1)
 			dim_overlay.visible = true
-		
+		State.TUTORIAL_PAUSED:
+			dim_overlay.visible = true
+			for slot in slot_container.get_children():
+				if slot.get_child(0) != null:
+					slot.get_child(0).timer.paused = true 
+		State.GAMEOVER:
+			for slot in slot_container.get_children():
+				if slot.get_child_count() > 0:
+					slot.get_child(0).queue_free()
+			Player_Data.money += earnings
+			Player_Data.income += earnings
+			result_container._on_ui_visible()
+						
 func _exit_state(state: State):
 	match state:
 		State.PAUSED:
-			timer.paused = false
-			for slot in slot_container.get_children():
-				slot.get_child(0).timer.paused = false
+			get_tree().paused = false
 			pause_container.visible = false
 			dim_overlay.visible = false
 			dim_overlay.top_level = false
@@ -137,6 +156,11 @@ func _exit_state(state: State):
 		State.SERVING:
 			order_container.modulate = Color(0)
 			dim_overlay.visible = false
+		State.TUTORIAL_PAUSED:
+			dim_overlay.visible = false
+			for slot in slot_container.get_children():
+				if slot.get_child(0) != null:
+					slot.get_child(0).timer.paused = false
 		
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -171,7 +195,7 @@ func create_random_customer() -> Panel:
 		
 	
 	var center = panel.get_child(0)
-	var cust_texture = center.get_child(2)
+	var cust_texture = center.get_child(0)
 	
 	panel.normal = cust_entry.normal
 	panel.dissapointed = cust_entry.dissapointed
@@ -190,20 +214,12 @@ func _unhandled_input(event: InputEvent) -> void:
 			if event.is_action_pressed("ui_cancel"):
 				set_state(State.SELECTION)
 		State.SELECTION:
-			if Input.is_action_just_pressed("switch_right"):
-				var switch_to = selected_customer.get_parent().get_index() + 1
-				if switch_to >= slot_count:
-					switch_to = 0
-				_on_customer_switch(slot_container.get_child(switch_to).get_child(0))
-			elif Input.is_action_just_pressed("switch_left"):
-				var switch_to = selected_customer.get_parent().get_index() - 1
-				if switch_to < 0:
-					switch_to = slot_count-1
-				_on_customer_switch(slot_container.get_child(switch_to).get_child(0))
-			elif Input.is_action_just_pressed("ui_cancel"):
+			if Input.is_action_just_pressed("ui_cancel"):
 				set_state(State.PAUSED)
 			elif Input.is_action_just_pressed("ui_accept"):
 				set_state(State.SERVING)
+			else:
+				_on_customer_switch(event)
 		State.SERVING:
 			if event.is_action_pressed("ui_cancel"):
 				set_state(State.SELECTION)
@@ -214,6 +230,8 @@ func _unhandled_input(event: InputEvent) -> void:
 				Player_Data.booster_available = false
 				return
 			_handle_typing_input(event)
+		State.TUTORIAL_PAUSED:
+			pass
 		
 func _handle_typing_input(event: InputEvent):
 	if not delay_timer.is_stopped():
@@ -245,13 +263,22 @@ func _handle_typing_input(event: InputEvent):
 			var customer_timer = selected_customer.get_meta("timer")
 			var finished_customer = selected_customer
 			customer_timer.paused = true
-			delay_timer.wait_time = success_delay
+			finished_customer._stop_patience_bar_flash()
+			delay_timer.wait_time = 2
 			delay_timer.start()
-			finished_customer.success_effect.emitting = true
 			await delay_timer.timeout
 			_replace_customer(finished_customer, RemovalReason.SERVED)
 			
 			served_customer += 1
+			if slot_2.get_child_count() == 0 and Player_Data.is_tutorial and served_customer == 1:
+				slot_2.add_child(create_random_customer())
+				slot_2.get_child(0).get_meta("timer").start(slot_2.get_child(0).get_meta("timer").wait_time * 0.75)
+				set_state(State.SELECTION)
+				tutorial._show_next_step()
+			elif tutorial._current_steps >= 2:
+				fill_all_slot()
+			if served_customer >= 5:
+				_on_timer_timeout()
 		else:
 			if order_text.text[selected_customer.current_letter_index].to_upper() == " ":
 				selected_customer.current_letter_index += 1
@@ -265,29 +292,39 @@ func _handle_typing_input(event: InputEvent):
 		set_next_character(selected_customer.current_letter_index, true)
 		typo_sfx.play()
 		selected_customer.current_letter_index = selected_customer.typo_checkpoint
-		delay_timer.wait_time = fail_delay
+		delay_timer.wait_time = 2
 		delay_timer.start()
 		selected_customer.char_texture.texture = selected_customer.dissapointed
-		selected_customer.fail_effect.emitting = true
 		await delay_timer.timeout
 		selected_customer.char_texture.texture = selected_customer.normal
 		combo = 0
 		set_next_character(selected_customer.typo_checkpoint, false)
-			
-func _on_timer_timeout() -> void:
-	current_state = State.GAMEOVER
-	for slot in slot_container.get_children():
-		slot.get_child(0).queue_free()
-	Player_Data.money += earnings
-	Player_Data.income += earnings
-	get_tree().change_scene_to_file("res://scenes/upgrade_scene.tscn")
+		
+
+		
 	
-func _on_customer_switch(panel: Panel):
-	selected_customer.become_unselected()
-	selected_customer = panel
-	selected_customer.become_selected()
-	order_text.text = selected_customer.get_prompt()
-	set_next_character(selected_customer.current_letter_index, false)
+	
+func _on_timer_timeout() -> void:
+	set_state(State.GAMEOVER)
+
+	
+func _on_customer_switch(event: InputEvent):
+	var switch_to
+	if event.is_action_pressed("switch_left") or event.is_action_pressed("switch_right"):
+		if event.is_action_pressed("switch_right"):
+			switch_to = selected_customer.get_parent().get_index() + 1
+			if switch_to >= slot_count:
+				switch_to = 0
+		elif event.is_action_pressed("switch_left"):
+			switch_to = selected_customer.get_parent().get_index() - 1
+			if switch_to < 0:
+				switch_to = slot_count-1
+		var target_customer = slot_container.get_child(switch_to).get_child(0)
+		selected_customer.become_unselected()
+		selected_customer = target_customer
+		selected_customer.become_selected()
+		order_text.text = selected_customer.get_prompt()
+		set_next_character(selected_customer.current_letter_index, false)
 	
 	
 func _on_customer_exited(panel: Panel):
@@ -308,16 +345,18 @@ func _replace_customer(customer: Panel, reason: RemovalReason):
 				set_state(State.SELECTION)
 			
 	customer.selected.disconnect(_on_customer_switch)
-	customer.selected.disconnect(_on_customer_exited)
+	customer.exited.disconnect(_on_customer_exited)
+	slot.remove_child(customer)
 	customer.queue_free()
 	
 	var new_customer = create_random_customer()
 	slot.add_child(new_customer)
-	set_next_character(new_customer.current_letter_index, false)
 	
 	if was_selected:
 		selected_customer = new_customer
 		selected_customer.become_selected()
+		order_text.text = new_customer.prompt
+		set_next_character(new_customer.current_letter_index, false)
 
 func booster_active(text, current_letter_index: int) -> String:
 	booster_marker.visible = false
@@ -339,7 +378,7 @@ func booster_active(text, current_letter_index: int) -> String:
 
 func set_next_character(next_character_index: int, on_typo: bool):
 	var raw_prompt = selected_customer.prompt
-	var blue_text = ""
+	var typed_text = ""
 	var before
 	var wrong_word
 	var after
@@ -347,17 +386,17 @@ func set_next_character(next_character_index: int, on_typo: bool):
 		var i = selected_customer.current_letter_index
 		while i < raw_prompt.length() and raw_prompt[i].to_upper() != " ":
 			i +=1
-		before = get_bbcode_color_tag(blue) + raw_prompt.substr(0, selected_customer.typo_checkpoint) + "[/color]"
+		before = get_bbcode_color_tag(typed) + raw_prompt.substr(0, selected_customer.typo_checkpoint) + "[/color]"
 		wrong_word = get_bbcode_color_tag(typo_color) + raw_prompt.substr(selected_customer.typo_checkpoint, i-selected_customer.typo_checkpoint+1) + "[/color]"
-		after = get_bbcode_color_tag(red) + raw_prompt.substr(i+1) + "[/color]"
+		after = get_bbcode_color_tag(remaining) + raw_prompt.substr(i+1) + "[/color]"
 	if next_character_index > 0:
-		blue_text = get_bbcode_color_tag(blue) + raw_prompt.substr(0, next_character_index) + "[/color]"
-	var green_text = get_bbcode_color_tag(green) + raw_prompt.substr(next_character_index, 1) + "[/color]"
-	var red_text = ""
+		typed_text = get_bbcode_color_tag(typed) + raw_prompt.substr(0, next_character_index) + "[/color]"
+	var current_character_text = get_bbcode_color_tag(current_character) + raw_prompt.substr(next_character_index, 1) + "[/color]"
+	var remaining_text = ""
 	if next_character_index != raw_prompt.length():
-		red_text = get_bbcode_color_tag(red) + raw_prompt.substr(next_character_index + 1) + "[/color]"
+		remaining_text = get_bbcode_color_tag(remaining) + raw_prompt.substr(next_character_index + 1) + "[/color]"
 	if !on_typo:
-		order_text.parse_bbcode("[center][b]" + blue_text + green_text + red_text + "[/b][/center]"	) 
+		order_text.parse_bbcode("[center][b]" + typed_text + current_character_text + remaining_text + "[/b][/center]"	) 
 	else:
 		order_text.parse_bbcode("[center][b]" + before + "[shake rate = 5 level = 10]" + wrong_word + "[/shake]" + after + "[/b][/center]")
 		

@@ -13,8 +13,8 @@ func _ready() -> void:
 		Player_Data.current_phase = "PHS_04"
 	options_panel.visible = false
 	_connect_all_buttons(self)
-	if Player_Data.is_new_game:
-		Player_Data.is_new_game = false
+	if Player_Data.is_tutorial:
+		Player_Data.is_tutorial = false
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -41,7 +41,7 @@ func _input(event: InputEvent) -> void:
 		options_panel.visible = !options_panel.visible
 
 func _on_texture_button_pressed() -> void:
-	get_tree().change_scene_to_file("res://scenes/typing_scene.tscn")
+	get_tree().change_scene_to_file(SceneManager.SCENES["typing_scene"])
 	
 
 

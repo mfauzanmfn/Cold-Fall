@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cdr0rbixyuiwl"
+path="res://.godot/imported/IN GAME.wav-bf28834c07fecf0b63c79a8d93dda7cb.sample"
+
+[deps]
+
+source_file="res://assets/BGM/IN GAME.wav"
+dest_files=["res://.godot/imported/IN GAME.wav-bf28834c07fecf0b63c79a8d93dda7cb.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2
