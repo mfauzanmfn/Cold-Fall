@@ -1,12 +1,13 @@
 [gd_scene format=3 uid="uid://ntbpc21e0pey"]
 
 [ext_resource type="Script" uid="uid://c5sp7ishufqcf" path="res://scripts/main_menu.gd" id="1_l6cm7"]
+[ext_resource type="Texture2D" uid="uid://cgktfscsx08x6" path="res://assets/BG/ceo-office.png" id="2_tbmy8"]
 [ext_resource type="FontFile" uid="uid://byxex3bcboe0w" path="res://assets/fonts/Universal/IBMPlexSans_Condensed-Bold.ttf" id="2_wu84c"]
 [ext_resource type="Texture2D" uid="uid://f7kk2ff6pwtp" path="res://assets/UI&HUD/button/button.png" id="3_8ln24"]
 [ext_resource type="Texture2D" uid="uid://depgocj3f7bvh" path="res://assets/UI&HUD/button/button-pressed.png" id="4_rtw2f"]
 [ext_resource type="Texture2D" uid="uid://r0f6vghy0bvo" path="res://assets/UI&HUD/menu panel/menu-container.png" id="5_oa1go"]
-[ext_resource type="AudioStream" uid="uid://bvbbuo2xcw3rl" path="res://assets/SFX/click_sfx/CLICK-button click.wav" id="5_rtw2f"]
-[ext_resource type="AudioStream" uid="uid://brbj37rynw8yo" path="res://assets/SFX/main_menu/MAIN MENU.wav" id="6_oa1go"]
+[ext_resource type="AudioStream" uid="uid://bvbbuo2xcw3rl" path="res://assets/SFX/CLICK-button click.wav" id="5_rtw2f"]
+[ext_resource type="AudioStream" uid="uid://dhy4qtbho2jwh" path="res://assets/SFX/main_menu/MAIN MENU GAME REV.wav" id="7_oa1go"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8q0x2"]
 texture = ExtResource("3_8ln24")
@@ -69,6 +70,15 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_l6cm7")
 
+[node name="BG" type="TextureRect" parent="." unique_id=125386639]
+modulate = Color(0.827451, 0.827451, 0.827451, 1)
+layout_mode = 0
+offset_top = 3.0
+offset_right = 1153.0
+offset_bottom = 650.0
+texture = ExtResource("2_tbmy8")
+expand_mode = 1
+
 [node name="Label" type="Label" parent="." unique_id=1857320009]
 layout_mode = 1
 anchors_preset = 8
@@ -124,8 +134,6 @@ text = "Continue
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_colors/font_color = Color(0.9137255, 0.9137255, 0.9137255, 1)
-theme_override_colors/font_pressed_color = Color(0.15294118, 0.15294118, 0.15294118, 1)
-theme_override_colors/font_hover_color = Color(0.15294118, 0.15294118, 0.15294118, 1)
 theme_override_fonts/font = ExtResource("2_wu84c")
 theme_override_font_sizes/font_size = 30
 theme_override_styles/normal = SubResource("StyleBoxTexture_sfc58")
@@ -139,8 +147,6 @@ text = "Start Game
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_colors/font_color = Color(0.9137255, 0.9137255, 0.9137255, 1)
-theme_override_colors/font_pressed_color = Color(0.15294118, 0.15294118, 0.15294118, 1)
-theme_override_colors/font_hover_color = Color(0.15294118, 0.15294118, 0.15294118, 1)
 theme_override_fonts/font = ExtResource("2_wu84c")
 theme_override_font_sizes/font_size = 30
 theme_override_styles/normal = SubResource("StyleBoxTexture_edj46")
@@ -153,8 +159,6 @@ text = "Settings"
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_colors/font_color = Color(0.9137255, 0.9137255, 0.9137255, 1)
-theme_override_colors/font_pressed_color = Color(0.15294118, 0.15294118, 0.15294118, 1)
-theme_override_colors/font_hover_color = Color(0.15294118, 0.15294118, 0.15294118, 1)
 theme_override_fonts/font = ExtResource("2_wu84c")
 theme_override_font_sizes/font_size = 30
 theme_override_styles/normal = SubResource("StyleBoxTexture_wgpin")
@@ -164,6 +168,7 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_vue75")
 text = "Exit"
 
 [node name="Setting_panel" type="Panel" parent="." unique_id=917768025]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -235,7 +240,7 @@ text = "Close"
 stream = ExtResource("5_rtw2f")
 
 [node name="Menu_bgm" type="AudioStreamPlayer" parent="." unique_id=1236659369]
-stream = ExtResource("6_oa1go")
+stream = ExtResource("7_oa1go")
 
 [connection signal="pressed" from="VBoxContainer/Continue_button" to="." method="_on_continue_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/Start_button" to="." method="_on_start_button_pressed"]

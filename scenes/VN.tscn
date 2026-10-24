@@ -1,21 +1,20 @@
 [gd_scene format=3 uid="uid://bm6hq61nujjb0"]
 
 [ext_resource type="Script" uid="uid://dbl7tlwclxfs6" path="res://scripts/VNScript.gd" id="1_fqvlb"]
-[ext_resource type="Texture2D" uid="uid://botm1f57feqiq" path="res://assets/UI&HUD/dialogue_box/Normal Version/nametag-2.png" id="3_2lvrp"]
+[ext_resource type="Texture2D" uid="uid://botm1f57feqiq" path="res://assets/dialogue_box/Normal Version/nametag-2.png" id="3_2lvrp"]
 [ext_resource type="FontFile" uid="uid://ccwvtrt1s1ard" path="res://assets/fonts/Universal/IBMPlexSans-VariableFont_wdth,wght.ttf" id="3_c1mgc"]
 [ext_resource type="Texture2D" uid="uid://xldqtwobtd1c" path="res://assets/typing_assets/cart/cart-lvl-1.png" id="3_nvq86"]
 [ext_resource type="Texture2D" uid="uid://cgktfscsx08x6" path="res://assets/BG/ceo-office.png" id="3_wvnut"]
 [ext_resource type="Texture2D" uid="uid://sex6wunfc74o" path="res://assets/Gita Marani (MC)/mc-ceo-ver.png" id="4_lymec"]
 [ext_resource type="FontFile" uid="uid://byxex3bcboe0w" path="res://assets/fonts/Universal/IBMPlexSans_Condensed-Bold.ttf" id="4_y0fsv"]
-[ext_resource type="Texture2D" uid="uid://bqruygk5dpir7" path="res://assets/UI&HUD/dialogue_box/Normal Version/dialogue-box-2.png" id="5_hu5wo"]
+[ext_resource type="Texture2D" uid="uid://bqruygk5dpir7" path="res://assets/dialogue_box/Normal Version/dialogue-box-2.png" id="5_hu5wo"]
 [ext_resource type="Texture2D" uid="uid://f7kk2ff6pwtp" path="res://assets/UI&HUD/button/button.png" id="5_nvq86"]
 [ext_resource type="Texture2D" uid="uid://depgocj3f7bvh" path="res://assets/UI&HUD/button/button-pressed.png" id="6_xlqa2"]
-[ext_resource type="AudioStream" uid="uid://bvbbuo2xcw3rl" path="res://assets/SFX/click_sfx/CLICK-button click.wav" id="11_tum8g"]
-[ext_resource type="AudioStream" uid="uid://dafpx5ryn1ksq" path="res://assets/SFX/click_sfx/CLICK-story dialogue skip.wav" id="12_qsvih"]
+[ext_resource type="AudioStream" uid="uid://bvbbuo2xcw3rl" path="res://assets/SFX/CLICK-button click.wav" id="11_tum8g"]
 [ext_resource type="AudioStream" uid="uid://164lrlgwhqan" path="res://assets/SFX/prologue/PRO-People Talking.wav" id="13_lymec"]
 [ext_resource type="AudioStream" uid="uid://dc08y5snmvhxw" path="res://assets/SFX/prologue/INTRO-get idea.wav" id="14_n0inr"]
+[ext_resource type="AudioStream" uid="uid://dhy4qtbho2jwh" path="res://assets/SFX/main_menu/MAIN MENU GAME REV.wav" id="15_72voy"]
 [ext_resource type="AudioStream" uid="uid://b21m4olh7vkfq" path="res://assets/SFX/epilogue/END-Heavy Rain.wav" id="15_n0inr"]
-[ext_resource type="AudioStream" uid="uid://brbj37rynw8yo" path="res://assets/SFX/main_menu/MAIN MENU.wav" id="16_72voy"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_4a615"]
 texture = ExtResource("5_nvq86")
@@ -219,7 +218,6 @@ text = "EXIT"
 stream = ExtResource("11_tum8g")
 
 [node name="click_skips" type="AudioStreamPlayer" parent="." unique_id=241073958]
-stream = ExtResource("12_qsvih")
 
 [node name="people_talk" type="AudioStreamPlayer" parent="." unique_id=89182735]
 stream = ExtResource("13_lymec")
@@ -232,7 +230,7 @@ stream = ExtResource("15_n0inr")
 volume_db = -10.0
 
 [node name="menu_bgm" type="AudioStreamPlayer" parent="." unique_id=1116809799]
-stream = ExtResource("16_72voy")
+stream = ExtResource("15_72voy")
 volume_db = -10.0
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=1057607315]
