@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://f7kk2ff6pwtp" path="res://assets/UI&HUD/button/button.png" id="2_f4eow"]
 [ext_resource type="FontFile" uid="uid://byxex3bcboe0w" path="res://assets/fonts/Universal/IBMPlexSans_Condensed-Bold.ttf" id="2_nqgi5"]
 [ext_resource type="Texture2D" uid="uid://depgocj3f7bvh" path="res://assets/UI&HUD/button/button-pressed.png" id="3_8q0x2"]
-[ext_resource type="AudioStream" uid="uid://bfkjqgbglx72l" path="res://assets/SFX/epilogue/ENDING GAME.wav" id="5_8q0x2"]
+[ext_resource type="AudioStream" uid="uid://cal850qllfwqf" path="res://assets/SFX/epilogue/ENDING GAME REV.wav" id="4_f4eow"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_c34bh"]
 texture = ExtResource("2_f4eow")
@@ -33,32 +33,6 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
-[node name="RichTextLabel" type="RichTextLabel" parent="." unique_id=347120555]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -313.83063
-offset_top = -181.0
-offset_right = 313.83063
-offset_bottom = 181.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_fonts/bold_font = ExtResource("2_nqgi5")
-theme_override_font_sizes/normal_font_size = 30
-theme_override_font_sizes/bold_font_size = 24
-text = "Credit
-Nama 1
-Nama 2
-nama3
-nama4
-
-Special thanks to
-nama5"
-horizontal_alignment = 1
-
 [node name="Button" type="Button" parent="." unique_id=978089051]
 layout_mode = 1
 anchors_preset = 8
@@ -77,6 +51,92 @@ theme_override_styles/pressed = SubResource("StyleBoxTexture_ip0vk")
 theme_override_styles/hover = SubResource("StyleBoxTexture_lymec")
 text = "Goes back to main menu"
 
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=932863858]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -522.0
+offset_top = -215.0
+offset_right = 522.0
+offset_bottom = 98.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="VBoxContainer" unique_id=234101693]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_nqgi5")
+theme_override_font_sizes/font_size = 30
+text = "CREDITS"
+horizontal_alignment = 1
+
+[node name="GridContainer" type="GridContainer" parent="VBoxContainer" unique_id=1250135845]
+layout_mode = 2
+theme_override_constants/h_separation = 9
+theme_override_constants/v_separation = 20
+columns = 2
+
+[node name="team" type="Label" parent="VBoxContainer/GridContainer" unique_id=1643809477]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_nqgi5")
+theme_override_font_sizes/font_size = 18
+text = "Team SABIA:"
+horizontal_alignment = 2
+
+[node name="team_credit" type="Label" parent="VBoxContainer/GridContainer" unique_id=717841446]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_nqgi5")
+theme_override_font_sizes/font_size = 18
+text = "Ameta Noveolyn - Game Designer
+Jamilurrahman - Game Artist
+Muhammad Fauzan - Game Programming
+Dimas Achmad Ardyansyah - Game Programming"
+
+[node name="Soundeffect" type="Label" parent="VBoxContainer/GridContainer" unique_id=920582375]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_nqgi5")
+theme_override_font_sizes/font_size = 18
+text = "Sound effects:"
+horizontal_alignment = 2
+
+[node name="soundeffect_credit" type="Label" parent="VBoxContainer/GridContainer" unique_id=59856379]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_nqgi5")
+theme_override_font_sizes/font_size = 18
+text = "JDSherbert – jdsherbert.itch.io
+skygazing - skygazing.itch.io/free-sound-effect-pack is licensed under CC BY 4.0 (creativecommons.org/licenses/by/4.0/).
+Diablo Luna ど苛ッ- pudretediablo.itch.io/butterfly
+Hitrison - hitrison.itch.io/menu-sfx-pack"
+
+[node name="music" type="Label" parent="VBoxContainer/GridContainer" unique_id=601629299]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_nqgi5")
+theme_override_font_sizes/font_size = 18
+text = "Music: "
+horizontal_alignment = 2
+
+[node name="music_credit" type="Label" parent="VBoxContainer/GridContainer" unique_id=841572958]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_nqgi5")
+theme_override_font_sizes/font_size = 18
+text = "Original Soundtrack by gyx - soundcloud.com/gyx-754519591"
+
+[node name="special_thanks" type="Label" parent="VBoxContainer/GridContainer" unique_id=1621433563]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_nqgi5")
+theme_override_font_sizes/font_size = 18
+text = "Special Thanks:"
+horizontal_alignment = 2
+
+[node name="special_thanks_credit" type="Label" parent="VBoxContainer/GridContainer" unique_id=1136890567]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_nqgi5")
+theme_override_font_sizes/font_size = 18
+text = "Muhammad Alvin Ababil
+ASE Laboratory"
+
 [node name="ColorRect2" type="ColorRect" parent="." unique_id=1409717747]
 layout_mode = 1
 anchors_preset = 15
@@ -88,6 +148,6 @@ mouse_filter = 2
 color = Color(0, 0, 0, 1)
 
 [node name="ending_song" type="AudioStreamPlayer" parent="." unique_id=1229618676]
-stream = ExtResource("5_8q0x2")
+stream = ExtResource("4_f4eow")
 
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
