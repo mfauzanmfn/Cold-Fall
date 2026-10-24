@@ -7,10 +7,14 @@ extends Control
 @onready var click_sound = load(SoundLibrary.button_click)
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	if Player_Data.income > 4000:
+		Player_Data.current_phase = "PHS_03"
+	elif Player_Data.income > 9999:
+		Player_Data.current_phase = "PHS_04"
 	options_panel.visible = false
 	_connect_all_buttons(self)
-	if Player_Data.is_new_game:
-		Player_Data.is_new_game = false
+	if Player_Data.is_tutorial:
+		Player_Data.is_tutorial = false
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -36,16 +40,11 @@ func _input(event: InputEvent) -> void:
 		dim_overlay.visible = !dim_overlay.visible
 		options_panel.visible = !options_panel.visible
 
-func _on_non_stick_pan_pressed() -> void:
-	Player_Data.typo_shield == true
-
-
-func _on_ayam_geprek_recipe_pressed() -> void:
-	if not OrdersPool.unlocked_groups.has("Ayam"):
-		OrdersPool.unlocked_groups.append("Ayam")
-
 func _on_texture_button_pressed() -> void:
-	get_tree().change_scene_to_file("res://scenes/typing_scene.tscn")
+	if Player_Data.current_phase == "PHS_04":
+		get_tree().change_scene_to_file("res://scenes/epilogue.tscn")
+	else:
+		get_tree().change_scene_to_file(SceneManager.SCENES["typing_scene"])
 	
 
 
