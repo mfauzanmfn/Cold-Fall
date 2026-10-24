@@ -3,6 +3,7 @@ extends Node2D
 var s := Scripted.new()
 var c : VNChar
 var expression_memory : Dictionary = {}
+var background_memory : Dictionary = {}
 var char_a_muncul : bool = false
 var instant_text : bool = false
 var is_skipping : bool = false
@@ -24,16 +25,23 @@ var total_dialog : int = 0
 @onready var skip_button: Button = $SkipButton
 @onready var auto_button: Button = $AutoButton
 @onready var history_button: Button = $HistoryButton
+@onready var history_exit: Button = $Historypanel/HistoryExit
 @onready var data_gita: TextureRect = $data_gita
-@onready var BG_inflasi: TextureRect = $BG_inflasi
-@onready var BG_polisi: TextureRect = $BG_polisi
+@onready var BG: TextureRect = $BG
+@onready var click_sound: AudioStreamPlayer = $click_sound
+@onready var click_skips: AudioStreamPlayer = $click_skips
+@onready var people_talk: AudioStreamPlayer = $people_talk
+@onready var get_idea: AudioStreamPlayer = $get_idea
+@onready var rain: AudioStreamPlayer = $rain
+@onready var menu_bgm: AudioStreamPlayer = $menu_bgm
+@onready var layar_fade: ColorRect = $ColorRect
 
 var history: String = ""
 var text_history_noted: String = ""
 
 func _ready() -> void:
 	s.from = self
-	c = s.character().name("Gita").color(Color.RED).texture("normal")
+	c = s.character().name("Gita").color(Color.WHITE).texture("normal")
 	
 	posisi_awal_ui = all_ui_dialog.position
 	author_texture.texture = null
@@ -43,7 +51,7 @@ func _ready() -> void:
 	history_panel.visible = false
 	s.hide()
 	s.wait(1.0)
-	naskah_json(VNscene.file_cerita_aktif)
+	naskah_json("res://assets/dialog_VN/prologue.json")
 	s.start()
 
 func naskah_json(file_path: String) -> void:
@@ -52,10 +60,17 @@ func naskah_json(file_path: String) -> void:
 	
 	total_dialog = data_naskah.size()
 	
+	var id_temp = 0
+	
 	for baris in data_naskah:
+		id_temp += 1
+		
 		var nama_char = baris["karakter"]
 		var ekspresi_baru = baris["ekspresi"]
 		var teks_dialog = baris["dialog"]
+		
+		if baris.has("bg") and baris["bg"] != "":
+			background_memory[id_temp] = baris["bg"]
 		
 		if ekspresi_baru != "-" and ekspresi_baru != "":
 			expression_memory[nama_char] = ekspresi_baru
@@ -64,7 +79,7 @@ func naskah_json(file_path: String) -> void:
 		if nama_char == "Gita":
 			c.emotion(ekspresi_aktif).says(teks_dialog)
 		else:
-			s.character().name(nama_char).says(teks_dialog	)
+			s.character().name(nama_char).says(teks_dialog)
 
 func _process(delta: float) -> void:
 	text.text = s.text_output
@@ -101,6 +116,10 @@ func _process(delta: float) -> void:
 		
 		id_dialog += 1
 		timer_skip = 0.0
+		
+		if background_memory.has(id_dialog):
+			ubah_background(background_memory[id_dialog])
+		
 		atur_koreografi_visual(id_dialog)
 		
 		var format_log = "[b]" + names_in_history + "[/b]\n" + text_history_new + "\n\n"
@@ -143,65 +162,78 @@ func _input(event: InputEvent) -> void:
 				instant_text = true
 
 func _on_skip_button_pressed() -> void:
+	click_skips.play()
 	get_tree().change_scene_to_file("res://scenes/typing_scene.tscn")
 
 func _on_auto_button_pressed() -> void:
+	click_sound.play()
 	auto_forward = !auto_forward
 	timer_skip = 0.0
 
 func _on_history_button_pressed() -> void:
+	click_sound.play()
 	history_panel.visible = !history_panel.visible
 
+func _on_history_exit_pressed() -> void:
+	click_sound.play()
+	history_panel.visible = !history_panel.visible
+
+func ubah_background(file_path: String) -> void:
+	if FileAccess.file_exists(file_path):
+		BG.texture = load(file_path)
+		BG.visible = true
+
+func efek_fade(durasi: float = 0.5) -> void:
+	layar_fade.modulate.a = 1.0 
+	layar_fade.visible = true
+	var tween = create_tween()
+	tween.tween_property(layar_fade, "modulate:a", 0.0, durasi)
+
 func atur_koreografi_visual(id: int) -> void:
-	if VNscene.file_cerita_aktif.contains("epilogue"):
-		koreografi_epilogue(id)
-	else:
-		koreografi_prologue(id)
+	koreografi_prologue(id)
 
 func koreografi_prologue(id: int) -> void:
 	match id:
 		1:
-			pass
+			people_talk.play()
 		2:
 			data_gita.visible = true
 		3:
 			if is_instance_valid(data_gita):
 				data_gita.queue_free()
 		4:
+			rain.play()
 			author_texture.visible = false
+			people_talk.stop()
+			efek_fade(0.8)
 		5:
-			BG_inflasi.visible = true
+			rain.stop()
+			menu_bgm.play()
 			text.visible = false
 			nama_char.visible = false
 			all_ui_dialog.visible = false
+			efek_fade(0.5)
 		6:
-			BG_inflasi.visible = false
-			BG_polisi.visible = true
+			efek_fade(0.5)
+		7:
+			efek_fade(0.5)
+		8:
+			efek_fade(0.5)
 			all_ui_dialog.visible = true
 			dialog_box.visible = false
 			nametag.visible = false
 			text.visible = true
 			all_ui_dialog.position = Vector2(posisi_awal_ui.x, 250)
-		7:
-			BG_polisi.visible = false
+		9:
+			menu_bgm.stop()
+			efek_fade(0.5)
 			author_texture.visible = true
 			dialog_box.visible = true
 			nametag.visible = true
 			nama_char.visible = true
 			all_ui_dialog.position = posisi_awal_ui
-
-func koreografi_epilogue(id: int) -> void:
-	match id:
-		1:
-			author_texture.visible = true
-		2:
-			author_texture.visible = false
-			dialog_box.visible = false
-			nametag.visible = false
-			all_ui_dialog.position = Vector2(450, 250)
-		3:
-			author_texture.visible = true
-			dialog_box.visible = true
-			nametag.visible = true
-			author_texture.visible = false
-			all_ui_dialog.position = posisi_awal_ui
+		10:
+			author_texture2.visible = true
+			get_idea.play()
+		11:
+			get_idea.play()
