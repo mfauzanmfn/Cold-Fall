@@ -179,9 +179,12 @@ func _on_history_exit_pressed() -> void:
 	history_panel.visible = !history_panel.visible
 
 func ubah_background(file_path: String) -> void:
-	if FileAccess.file_exists(file_path):
-		BG.texture = load(file_path)
+	var bg_asset = load(file_path)
+	if bg_asset != null:
+		BG.texture = bg_asset
 		BG.visible = true
+	else:
+		print("Error: Background gagal dimuat pada path -> ", file_path)
 
 func efek_fade(durasi: float = 0.5) -> void:
 	layar_fade.modulate.a = 1.0 
