@@ -34,7 +34,8 @@ const PhaseLocation = {
 	"PHS_00": preload("res://assets/environments/DarkAlley/dark-alley.png"),
 	"PHS_01": preload("res://assets/environments/DarkAlley/dark-alley.png"),
 	"PHS_02": preload("res://assets/environments/SmallAlley/small-alley.png"),
-	"PHS_03": preload("res://assets/environments/Roundabout/roundabout.png")
+	"PHS_03": preload("res://assets/environments/Roundabout/roundabout.png"),
+	"PHS_04": preload("res://assets/environments/Night Market/night-market.png")
 }
 
 # Called when the node enters the scene tree for the first time.

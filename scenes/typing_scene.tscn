@@ -279,7 +279,7 @@ size_flags_horizontal = 4
 size_flags_vertical = 8
 theme_override_styles/normal = ExtResource("9_ppk24")
 theme_override_styles/pressed = ExtResource("9_y4pby")
-theme_override_styles/hover = ExtResource("9_ppk24")
+theme_override_styles/hover = ExtResource("9_y4pby")
 text = "Continue"
 
 [node name="OrderContainer" type="PanelContainer" parent="." unique_id=1045116475]
@@ -358,7 +358,7 @@ size_flags_vertical = 4
 theme_override_fonts/font = ExtResource("8_u2502")
 theme_override_styles/normal = ExtResource("9_ppk24")
 theme_override_styles/pressed = ExtResource("9_y4pby")
-theme_override_styles/hover = ExtResource("9_ppk24")
+theme_override_styles/hover = ExtResource("9_y4pby")
 text = "Continue"
 
 [node name="MenuButton" type="Button" parent="PauseContainer/VBoxContainer" unique_id=965160040]
@@ -368,7 +368,7 @@ size_flags_vertical = 4
 theme_override_fonts/font = ExtResource("8_u2502")
 theme_override_styles/normal = ExtResource("9_ppk24")
 theme_override_styles/pressed = ExtResource("9_y4pby")
-theme_override_styles/hover = ExtResource("9_ppk24")
+theme_override_styles/hover = ExtResource("9_y4pby")
 text = "Main Menu"
 
 [node name="QuitButton" type="Button" parent="PauseContainer/VBoxContainer" unique_id=768007332]
@@ -378,7 +378,7 @@ size_flags_vertical = 4
 theme_override_fonts/font = ExtResource("8_u2502")
 theme_override_styles/normal = ExtResource("9_ppk24")
 theme_override_styles/pressed = ExtResource("9_y4pby")
-theme_override_styles/hover = ExtResource("9_ppk24")
+theme_override_styles/hover = ExtResource("9_y4pby")
 text = "Quit"
 
 [node name="ResultContainer" type="PanelContainer" parent="." unique_id=1713040755]
@@ -421,7 +421,7 @@ text = "Pendapatan:"
 layout_mode = 2
 theme_override_styles/normal = ExtResource("9_ppk24")
 theme_override_styles/pressed = ExtResource("9_y4pby")
-theme_override_styles/hover = ExtResource("9_ppk24")
+theme_override_styles/hover = ExtResource("9_y4pby")
 text = "Go Home"
 
 [node name="BGM" type="AudioStreamPlayer" parent="." unique_id=489041083]

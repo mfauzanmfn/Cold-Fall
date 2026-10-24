@@ -3,61 +3,16 @@
 [ext_resource type="Script" uid="uid://c5sp7ishufqcf" path="res://scripts/main_menu.gd" id="1_l6cm7"]
 [ext_resource type="Texture2D" uid="uid://cgktfscsx08x6" path="res://assets/BG/ceo-office.png" id="2_tbmy8"]
 [ext_resource type="FontFile" uid="uid://byxex3bcboe0w" path="res://assets/fonts/Universal/IBMPlexSans_Condensed-Bold.ttf" id="2_wu84c"]
-[ext_resource type="Texture2D" uid="uid://f7kk2ff6pwtp" path="res://assets/UI&HUD/button/button.png" id="3_8ln24"]
-[ext_resource type="Texture2D" uid="uid://depgocj3f7bvh" path="res://assets/UI&HUD/button/button-pressed.png" id="4_rtw2f"]
+[ext_resource type="StyleBox" uid="uid://c07n57j4kn86s" path="res://Styles/button_normal.tres" id="4_5dd4i"]
+[ext_resource type="StyleBox" uid="uid://ckhj0rpvend32" path="res://Styles/button_pressed.tres" id="5_lgwnu"]
 [ext_resource type="Texture2D" uid="uid://r0f6vghy0bvo" path="res://assets/UI&HUD/menu panel/menu-container.png" id="5_oa1go"]
 [ext_resource type="AudioStream" uid="uid://bvbbuo2xcw3rl" path="res://assets/SFX/CLICK-button click.wav" id="5_rtw2f"]
 [ext_resource type="AudioStream" uid="uid://bnh2v1w6onimc" path="res://assets/BGM/MAIN MENU GAME REV.wav" id="8_tbmy8"]
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8q0x2"]
-texture = ExtResource("3_8ln24")
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_nqgi5"]
-texture = ExtResource("4_rtw2f")
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_a5x2q"]
-texture = ExtResource("3_8ln24")
-
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vue75"]
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_sfc58"]
-texture = ExtResource("3_8ln24")
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ws82b"]
-texture = ExtResource("4_rtw2f")
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_v61vm"]
-texture = ExtResource("3_8ln24")
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_edj46"]
-texture = ExtResource("3_8ln24")
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2g6jg"]
-texture = ExtResource("4_rtw2f")
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jtp1l"]
-texture = ExtResource("3_8ln24")
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wgpin"]
-texture = ExtResource("3_8ln24")
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_s3o3i"]
-texture = ExtResource("4_rtw2f")
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_uyqge"]
-texture = ExtResource("3_8ln24")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_oa1go"]
 texture = ExtResource("5_oa1go")
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_tbmy8"]
-texture = ExtResource("3_8ln24")
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jk1qb"]
-texture = ExtResource("4_rtw2f")
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5dd4i"]
-texture = ExtResource("3_8ln24")
 
 [node name="MainMenu" type="Control" unique_id=812810107]
 layout_mode = 3
@@ -123,9 +78,9 @@ theme_override_colors/font_pressed_color = Color(0.15294118, 0.15294118, 0.15294
 theme_override_colors/font_hover_color = Color(0.15294118, 0.15294118, 0.15294118, 1)
 theme_override_fonts/font = ExtResource("2_wu84c")
 theme_override_font_sizes/font_size = 30
-theme_override_styles/normal = SubResource("StyleBoxTexture_8q0x2")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_nqgi5")
-theme_override_styles/hover = SubResource("StyleBoxTexture_a5x2q")
+theme_override_styles/normal = ExtResource("4_5dd4i")
+theme_override_styles/pressed = ExtResource("5_lgwnu")
+theme_override_styles/hover = ExtResource("5_lgwnu")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_vue75")
 text = "Continue
 "
@@ -136,9 +91,9 @@ size_flags_vertical = 3
 theme_override_colors/font_color = Color(0.9137255, 0.9137255, 0.9137255, 1)
 theme_override_fonts/font = ExtResource("2_wu84c")
 theme_override_font_sizes/font_size = 30
-theme_override_styles/normal = SubResource("StyleBoxTexture_sfc58")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_ws82b")
-theme_override_styles/hover = SubResource("StyleBoxTexture_v61vm")
+theme_override_styles/normal = ExtResource("4_5dd4i")
+theme_override_styles/pressed = ExtResource("5_lgwnu")
+theme_override_styles/hover = ExtResource("5_lgwnu")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_vue75")
 text = "Start Game
 "
@@ -149,9 +104,9 @@ size_flags_vertical = 3
 theme_override_colors/font_color = Color(0.9137255, 0.9137255, 0.9137255, 1)
 theme_override_fonts/font = ExtResource("2_wu84c")
 theme_override_font_sizes/font_size = 30
-theme_override_styles/normal = SubResource("StyleBoxTexture_edj46")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_2g6jg")
-theme_override_styles/hover = SubResource("StyleBoxTexture_jtp1l")
+theme_override_styles/normal = ExtResource("4_5dd4i")
+theme_override_styles/pressed = ExtResource("5_lgwnu")
+theme_override_styles/hover = ExtResource("5_lgwnu")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_vue75")
 text = "Settings"
 
@@ -161,9 +116,9 @@ size_flags_vertical = 3
 theme_override_colors/font_color = Color(0.9137255, 0.9137255, 0.9137255, 1)
 theme_override_fonts/font = ExtResource("2_wu84c")
 theme_override_font_sizes/font_size = 30
-theme_override_styles/normal = SubResource("StyleBoxTexture_wgpin")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_s3o3i")
-theme_override_styles/hover = SubResource("StyleBoxTexture_uyqge")
+theme_override_styles/normal = ExtResource("4_5dd4i")
+theme_override_styles/pressed = ExtResource("5_lgwnu")
+theme_override_styles/hover = ExtResource("5_lgwnu")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_vue75")
 text = "Exit"
 
@@ -231,9 +186,9 @@ grow_vertical = 0
 theme_override_colors/font_color = Color(0.9137255, 0.9137255, 0.9137255, 1)
 theme_override_fonts/font = ExtResource("2_wu84c")
 theme_override_font_sizes/font_size = 30
-theme_override_styles/normal = SubResource("StyleBoxTexture_tbmy8")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_jk1qb")
-theme_override_styles/hover = SubResource("StyleBoxTexture_5dd4i")
+theme_override_styles/normal = ExtResource("4_5dd4i")
+theme_override_styles/pressed = ExtResource("5_lgwnu")
+theme_override_styles/hover = ExtResource("5_lgwnu")
 text = "Close"
 
 [node name="click_sound" type="AudioStreamPlayer" parent="." unique_id=1176858109]
