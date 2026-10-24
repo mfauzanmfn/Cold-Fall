@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://depgocj3f7bvh" path="res://assets/UI&HUD/button/button-pressed.png" id="4_rtw2f"]
 [ext_resource type="Texture2D" uid="uid://r0f6vghy0bvo" path="res://assets/UI&HUD/menu panel/menu-container.png" id="5_oa1go"]
 [ext_resource type="AudioStream" uid="uid://bvbbuo2xcw3rl" path="res://assets/SFX/CLICK-button click.wav" id="5_rtw2f"]
-[ext_resource type="AudioStream" uid="uid://dhy4qtbho2jwh" path="res://assets/SFX/main_menu/MAIN MENU GAME REV.wav" id="7_oa1go"]
+[ext_resource type="AudioStream" uid="uid://bnh2v1w6onimc" path="res://assets/BGM/MAIN MENU GAME REV.wav" id="8_tbmy8"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8q0x2"]
 texture = ExtResource("3_8ln24")
@@ -240,7 +240,7 @@ text = "Close"
 stream = ExtResource("5_rtw2f")
 
 [node name="Menu_bgm" type="AudioStreamPlayer" parent="." unique_id=1236659369]
-stream = ExtResource("7_oa1go")
+stream = ExtResource("8_tbmy8")
 
 [connection signal="pressed" from="VBoxContainer/Continue_button" to="." method="_on_continue_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/Start_button" to="." method="_on_start_button_pressed"]

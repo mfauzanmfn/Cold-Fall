@@ -14,7 +14,7 @@ func _ready() -> void:
 	menu_bgm.play()
 	
 	SaveManager.load_game()
-	if !Player_Data.is_new_game:
+	if !Player_Data.is_tutorial:
 		continue_button.visible = true
 	
 	setting_panel.visible = false

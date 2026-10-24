@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://bm6hq61nujjb0"]
+[gd_scene format=3 uid="uid://dhgt3jwkewpcf"]
 
 [ext_resource type="Script" uid="uid://dbl7tlwclxfs6" path="res://scripts/VNScript.gd" id="1_fqvlb"]
 [ext_resource type="Texture2D" uid="uid://botm1f57feqiq" path="res://assets/dialogue_box/Normal Version/nametag-2.png" id="3_2lvrp"]
