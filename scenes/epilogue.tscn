@@ -12,7 +12,7 @@
 [ext_resource type="AudioStream" uid="uid://cvfbct0g0kylr" path="res://assets/SFX/epilogue/END-breath var 1.wav" id="11_8yude"]
 [ext_resource type="AudioStream" uid="uid://d2niupciqncge" path="res://assets/SFX/epilogue/END-glitch.wav" id="12_nscdx"]
 [ext_resource type="AudioStream" uid="uid://dagbwk08l6rde" path="res://assets/SFX/epilogue/END-Heavy Rain 2.wav" id="13_8yude"]
-[ext_resource type="AudioStream" uid="uid://cal850qllfwqf" path="res://assets/SFX/epilogue/ENDING GAME REV.wav" id="13_pqn56"]
+[ext_resource type="AudioStream" uid="uid://ct8mc3vas6v7w" path="res://assets/BGM/ENDING GAME REV.ogg" id="13_pqn56"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8yude"]
 texture = ExtResource("3_0d00e")

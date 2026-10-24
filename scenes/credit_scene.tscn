@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://f7kk2ff6pwtp" path="res://assets/UI&HUD/button/button.png" id="2_f4eow"]
 [ext_resource type="FontFile" uid="uid://byxex3bcboe0w" path="res://assets/fonts/Universal/IBMPlexSans_Condensed-Bold.ttf" id="2_nqgi5"]
 [ext_resource type="Texture2D" uid="uid://depgocj3f7bvh" path="res://assets/UI&HUD/button/button-pressed.png" id="3_8q0x2"]
-[ext_resource type="AudioStream" uid="uid://cal850qllfwqf" path="res://assets/SFX/epilogue/ENDING GAME REV.wav" id="4_f4eow"]
+[ext_resource type="AudioStream" uid="uid://ct8mc3vas6v7w" path="res://assets/BGM/ENDING GAME REV.ogg" id="4_f4eow"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_c34bh"]
 texture = ExtResource("2_f4eow")
