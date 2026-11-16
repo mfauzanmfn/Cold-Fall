@@ -17,21 +17,42 @@
 	"id": 3,
 	"karakter": "Gita",
 	"ekspresi": "",
-	"dialog": "Huh...?",
+	"dialog": "Hah...?",
 	"bg": "res://assets/BG/ayumi-kubo-qXo1aynWHvg-unsplash.jpg"
   },
   {
 	"id": 4,
 	"karakter": "Gita",
 	"ekspresi": "",
-	"dialog": "Apa... yang terjadi...? Badanku... dingin...",
+	"dialog": "Dingin sekali...",
+	"bg": "res://assets/BG/dark-alley.png"
+  },
+{
+	"id": 5,
+	"karakter": "Gita",
+	"ekspresi": "",
+	"dialog": "Tunggu... kenapa kompornya tidak terasa panas? Kenapa jari-jariku kaku sekali?",
 	"bg": "res://assets/BG/dark-alley.png"
   },
   {
-	"id": 5,
+	"id": 6,
+	"karakter": "Gita",
+	"ekspresi": "",
+	"dialog": "Tidak ada kedai besar. Tidak ada uang. Tidak ada siapa-siapa. Aku... belum beranjak dari gang ini sejak hari pertama.",
+	"bg": "res://assets/BG/dark-alley.png"
+  },
+  {
+	"id": 7,
+	"karakter": "Gita",
+	"ekspresi": "crying",
+	"dialog": "Paling tidak... di mimpiku tadi... rasanya sangat hangat...",
+	"bg": "res://assets/BG/dark-alley.png"
+  },
+  {
+	"id": 8,
 	"karakter": "Narrator",
 	"ekspresi": "",
-	"dialog": "FIN",
+	"dialog": "COLD FALL",
 	"bg": "res://assets/BG/black_screen.jpg"
   }
 ]
