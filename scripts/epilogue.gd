@@ -216,7 +216,7 @@ func koreografi_epilogue(id: int) -> void:
 			all_ui_dialog.position = posisi_awal_ui
 		4:
 			pass
-		5:
+		8:
 			efek_fade(0.5)
 			breath_sound.stop()
 			rain_sound.stop()
