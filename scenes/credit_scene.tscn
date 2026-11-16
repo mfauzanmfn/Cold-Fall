@@ -149,5 +149,6 @@ color = Color(0, 0, 0, 1)
 
 [node name="ending_song" type="AudioStreamPlayer" parent="." unique_id=1229618676]
 stream = ExtResource("4_f4eow")
+parameters/looping = true
 
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
